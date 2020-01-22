@@ -1,0 +1,5 @@
+/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/CMakeFiles/SFMLTest.dir
+/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/CMakeFiles/package_source.dir
+/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/CMakeFiles/package.dir

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="cis29group2game"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib64\;CMake Files\..\..\..\..\..\usr\lib64\cmake\;CMake Files\..\..\..\..\..\usr\lib64\cmake\SFML\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="SFMLTest">
+				<Option output="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/SFMLTest" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/../../../../include/c++/9.2.0"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/../../../../include/c++/9.2.0/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/../../../../include/c++/9.2.0/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 SFMLTest"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="SFMLTest/fast">
+				<Option output="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/SFMLTest" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/../../../../include/c++/9.2.0"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/../../../../include/c++/9.2.0/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/../../../../include/c++/9.2.0/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.0/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 SFMLTest/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="package_source">
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 package_source"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="package">
+				<Option working_dir="/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 package"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/michael/programming/CLionProjects/cis29group2game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Castle.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Character.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Knight.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Mage.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Ninja.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Player.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Spell.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/Characters/Tank.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/fxx/VertexMap.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/fxx/VertexMap.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Castle.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Character.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Knight.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Mage.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Ninja.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Player.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Spell.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/include/Tank.h">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/src/main.cpp">
+			<Option target="SFMLTest"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/../../../../../usr/lib64/cmake/SFML/SFMLConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/../../../../../usr/lib64/cmake/SFML/SFMLConfigDependencies.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/../../../../../usr/lib64/cmake/SFML/SFMLConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/../../../../../usr/lib64/cmake/SFML/SFMLSharedTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="/home/michael/programming/CLionProjects/cis29group2game/../../../../../usr/lib64/cmake/SFML/SFMLSharedTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\SFML\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

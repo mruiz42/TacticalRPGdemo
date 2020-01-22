@@ -2,4 +2,4 @@
 // Created by michael on 1/21/20.
 //
 
-#include "Spell.h"
+#include "../include/Spell.h"

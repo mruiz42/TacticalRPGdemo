@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/cis29group2game.dir/main.cpp.o  -o cis29group2game 
