@@ -5,7 +5,7 @@
 #ifndef CIS29GROUP2GAME_KNIGHT_H
 #define CIS29GROUP2GAME_KNIGHT_H
 
-
+// Medium defense, medium attack
 class Knight {
 
 };
