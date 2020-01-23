@@ -3,10 +3,14 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include "fxx/VertexMap.h"
+#include <string>
+const std::string root_path = "../";    // Linux
+// Can someone make a standard windows path that will work?
+// const std::string root_path = "C:/";    // Windows
 int main()
 {
     sf::Vertex vertex;
-    sf::RenderWindow window(sf::VideoMode(512, 256), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode(256, 256), "Tilemap");
     // define the level with an array of tile indices
     const int level[] =
             {
@@ -22,7 +26,7 @@ int main()
 
     // create the tilemap from the level definition
     VertexMap map;
-    if (!map.loadMap("../share/textures/tileset.png", sf::Vector2u(32, 32), level, 16, 8))
+    if (!map.loadMap(root_path + "share/textures/map_tiles.png", sf::Vector2u(16, 16), level, 16, 16))
         return -1;
 
     while (window.isOpen())
