@@ -9,10 +9,9 @@ project(cis29group2game)
 # set(SFML_DIR "<sfml root prefix>/lib/cmake/SFML")
 
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
-add_executable(SFMLTest src/main.cpp src/tct/VertexMap.cpp src/tact/VertexMap.h src/tact/Characters/Character.cpp
-        src/tact/include/Character.h src/tact/Characters/Knight.cpp src/tact/include/Knight.h
-        src/tact/Characters/Mage.cpp src/tact/include/Mage.h src/tact/Characters/Tank.cpp src/tact/include/Tank.h
-        src/tact/Characters/Ninja.cpp src/include/Ninja.h src/Characters/Spell.cpp src/include/Spell.h
-        src/Characters/Castle.cpp src/include/Castle.h src/Characters/Player.cpp src/include/Player.h src/tact/test.cpp
-        include/tact/test.h)
+add_executable(SFMLTest src/main.cpp src/tact/VertexMap.cpp include/tact/VertexMap.h src/tact/Character.cpp
+        include/tact/Character.h src/tact/Knight.cpp include/tact/Knight.h
+        src/tact/Mage.cpp include/tact/Mage.h src/tact/Tank.cpp include/tact/Tank.h
+        src/tact/Ninja.cpp include/tact/Ninja.h src/tact/Spell.cpp include/tact/Spell.h
+        src/tact/Castle.cpp include/tact/Castle.h src/tact/Player.cpp include/tact/Player.h)
 target_link_libraries(SFMLTest sfml-graphics sfml-audio)
