@@ -17,7 +17,7 @@ STTLIB	= $(LIBDIR)libgame.a
 
 # object files
 TACTOBJ	= $(TACTSRC)obj/
-SRCOBJ	= ./src/obj/
+SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o
@@ -34,8 +34,8 @@ $(OUTBIN) : $(OUTBINDEPS) $(STTLIB)
 $(STTLIB) : $(LIBDEP)
 	ar r $(STTLIB) $(LIBDEP)
 	
-$(SRCOBJ)main.o : ./src/main.cpp
-	$(COMPILE) ./src/main.cpp -o $(SRCOBJ)main.o
+$(SRCOBJ)main.o : $(SOURCE)main.cpp
+	$(COMPILE) $(SOURCE)main.cpp -o $(SRCOBJ)main.o
 	
 $(TACTOBJ)VertexMap.o : $(TACTSRC)VertexMap.o
 	$(COMPILE) $(TACTSRC)VertexMap.cpp -o $(TACTOBJ)VertexMap.o
