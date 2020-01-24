@@ -2,4 +2,4 @@
 // Created by michael on 1/21/20.
 //
 
-#include "../include/Ninja.h"
+#include "../../include/tact/Ninja.h"

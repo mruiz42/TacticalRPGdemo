@@ -1,8 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
-#include "fxx/VertexMap.h"
+#include "../include/tact/VertexMap.h"
 #include <string>
 const std::string root_path = "../";    // Linux
 // Can someone make a standard windows path that will work?
@@ -12,8 +11,7 @@ int main()
     sf::Vertex vertex;
     sf::RenderWindow window(sf::VideoMode(256, 256), "Tilemap");
     // define the level with an array of tile indices
-    const int level[] =
-            {
+    const int level[] = {
                     0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
                     1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,

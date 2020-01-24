@@ -6,11 +6,9 @@
 #define CIS29GROUP2GAME_TEST_H
 
 
-
 class test {
 
 };
-
 
 
 #endif //CIS29GROUP2GAME_TEST_H
