@@ -28,7 +28,7 @@ LIBDEP	= $(TACTOBJ)VertexMap.o $(TACTOBJ)Castle.o $(TACTOBJ)Character.o $(TACTOB
 
 # Rule to create the primary executable
 $(OUTBIN) : $(OUTBINDEPS) $(STTLIB) 
-	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(LINKSTT) -o $(OUTBIN)
+	$(BUILD) $(OUTBINDEPS) $(LINKSFML) -L $(LIBDIR) -o $(OUTBIN)
 	@echo './bin/somethingTactics.out' is built!
 	
 $(STTLIB) : $(LIBDEP)
