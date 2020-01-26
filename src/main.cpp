@@ -9,22 +9,23 @@ const std::string root_path = "./";    // Linux
 int main()
 {
     sf::Vertex vertex;
-    sf::RenderWindow window(sf::VideoMode(512, 256), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode(256, 128), "Tilemap");
+    window.setSize(sf::Vector2u(1024, 512));
     // define the level with an array of tile indices
     const int level[] = {
-                    4, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                    0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-                    1, 1, 0, 0, 0, 0, 0, 0, 3, 4, 3, 3, 3, 3, 3, 3,
-                    0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
-                    0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
-                    0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
-                    2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
-                    0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
+                      4,  0,  0,  0,  0,  0, 34,  7,  7,  7,  7,  7,  7,  7,  7, 53,
+                      0, 34,  7,  7,  7,  7, 50,  0,  0,  0,  0,  2,  0,  0,  0,  0,
+                      0,  8,  0,  0,  0,  0,  0,  0,  9, 54, 54, 54, 54, 54, 54, 54,
+                      0, 38,  0,  0,  2,  0,  9, 54, 41,  0,  4,  4,  4,  0,  0,  0,
+                      0, 49, 35,  0,  9, 54, 41,  0,  0,  0,  4,  4,  4,  2,  0,  0,
+                      0,  0,  8,  0, 55,  0,  2,  2,  0,  0,  4,  4,  4,  4,  2,  0,
+                      2,  0,  8,  0, 55,  0,  2,  2,  2,  0,  4,  4,  4,  4,  4,  4,
+                      0,  0, 51,  0, 55,  2,  2,  2,  0,  0,  0,  0,  4,  4,  4,  4,
             };
 
     // create the tilemap from the level definition
     VertexMap map;
-    if (!map.loadMap(root_path + "share/textures/map_tiles.png", sf::Vector2u(16, 16), level, 32, 32))
+    if (!map.loadMap(root_path + "share/textures/map_tiles.png", sf::Vector2u(16, 16), level, 16, 8))
         return -1;
 
     while (window.isOpen())
