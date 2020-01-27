@@ -37,31 +37,31 @@ $(STTLIB) : $(LIBDEP)
 $(SRCOBJ)main.o : $(SOURCE)main.cpp
 	$(COMPILE) $(SOURCE)main.cpp -o $(SRCOBJ)main.o
 	
-$(TACTOBJ)VertexMap.o : $(TACTSRC)VertexMap.o
+$(TACTOBJ)VertexMap.o : $(TACTSRC)VertexMap.cpp
 	$(COMPILE) $(TACTSRC)VertexMap.cpp -o $(TACTOBJ)VertexMap.o
 	
-$(TACTOBJ)Castle.o : $(TACTSRC)Castle.o
+$(TACTOBJ)Castle.o : $(TACTSRC)Castle.cpp
 	$(COMPILE) $(TACTSRC)Castle.cpp -o $(TACTOBJ)Castle.o
 	
-$(TACTOBJ)Character.o : $(TACTSRC)Character.o
+$(TACTOBJ)Character.o : $(TACTSRC)Character.cpp
 	$(COMPILE) $(TACTSRC)Character.cpp -o $(TACTOBJ)Character.o
 
-$(TACTOBJ)Knight.o : $(TACTSRC)Knight.o
+$(TACTOBJ)Knight.o : $(TACTSRC)Knight.cpp
 	$(COMPILE) $(TACTSRC)Knight.cpp -o $(TACTOBJ)Knight.o
 
-$(TACTOBJ)Mage.o : $(TACTSRC)Mage.o
+$(TACTOBJ)Mage.o : $(TACTSRC)Mage.cpp
 	$(COMPILE) $(TACTSRC)Mage.cpp -o $(TACTOBJ)Mage.o
 	
-$(TACTOBJ)Ninja.o : $(TACTSRC)Ninja.o
+$(TACTOBJ)Ninja.o : $(TACTSRC)Ninja.cpp
 	$(COMPILE) $(TACTSRC)Ninja.cpp -o $(TACTOBJ)Ninja.o
 	
-$(TACTOBJ)Player.o : $(TACTSRC)Player.o
+$(TACTOBJ)Player.o : $(TACTSRC)Player.cpp
 	$(COMPILE) $(TACTSRC)Player.cpp -o $(TACTOBJ)Player.o
 	
-$(TACTOBJ)Spell.o : $(TACTSRC)Spell.o
+$(TACTOBJ)Spell.o : $(TACTSRC)Spell.cpp
 	$(COMPILE) $(TACTSRC)Spell.cpp -o $(TACTOBJ)Spell.o
 	
-$(TACTOBJ)Tank.o : $(TACTSRC)Tank.o
+$(TACTOBJ)Tank.o : $(TACTSRC)Tank.cpp
 	$(COMPILE) $(TACTSRC)Tank.cpp -o $(TACTOBJ)Tank.o
 
 clean :
