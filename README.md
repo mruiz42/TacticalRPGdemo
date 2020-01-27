@@ -20,7 +20,9 @@ Picture stuff goes here
  * [ Additional windows requirements go here ]
 ##### How to run:
 `instructions go here`
- ### Credits
+## Gameplay
+##### [How to play instructions go here]
+ ## Credits
  * Music / Sprite / Art credits here
  * SFML
  https://www.sfml-dev.org/index.php
