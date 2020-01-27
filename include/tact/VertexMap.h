@@ -32,6 +32,8 @@ public:
                 // get the current tile number
                 int tileNumber = tiles[i + j * w];
 
+//                int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
+//                int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
                 // find its position in the tileset texture
                 int tu = tileNumber % 15;
                 int tv = tileNumber / 15;
@@ -45,6 +47,10 @@ public:
                 int top = j * tileSize.y;
                 int bottom = top + tileSize.y;
 
+//                quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
+//                quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
+//                quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
+//                quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
                 // define its 4 corners
                 quad[0].position = sf::Vector2f(left, top);
                 quad[1].position = sf::Vector2f(right, top);
@@ -56,7 +62,11 @@ public:
                 int texRight = texLeft + tileSize.x;
                 int texTop = tv * (tileSize.y+1);
                 int texBottom = texTop + tileSize.y;
-                
+
+//                quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
+//                quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
+//                quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
+//                quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
                 // define its 4 texture coordinates
                 quad[0].texCoords = sf::Vector2f(texLeft, texTop);
                 quad[1].texCoords = sf::Vector2f(texRight, texTop);
