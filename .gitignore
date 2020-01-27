@@ -10,3 +10,4 @@ CMakeLists.txt
 /bin/sfml-app
 /bin/somethingTactics.out
 /lib/libgame.a
+*.o
