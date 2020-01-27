@@ -3,15 +3,7 @@
 //
 
 #include "../../include/tact/VertexMap.h"
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Transformable.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <string>
-
-bool VertexMap::loadMap(const std::string& tileset, sf::Vector2u tileSize, const int* tiles,
-        unsigned int w, unsigned int h) {
+bool VertexMap::loadMap(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int w, unsigned int h) {
 // load the tileset texture
 if (!m_tileset.loadFromFile(tileset))
 return false;
@@ -72,15 +64,16 @@ quad[3].texCoords = sf::Vector2f(texLeft, texBottom);
 
 return true;
 
+
+
 }
-
 void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    // apply the transform
-    states.transform *= getTransform();
+// apply the transform
+states.transform *= getTransform();
 
-    // apply the tileset texture
-    states.texture = &m_tileset;
+// apply the tileset texture
+states.texture = &m_tileset;
 
-    // draw the vertex array
-    target.draw(m_vertices, states);
+// draw the vertex array
+target.draw(m_vertices, states);
 }
