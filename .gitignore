@@ -2,4 +2,8 @@
 /cmake-build-debug/
 /build/
 /.vscode/
-.idea
+/.idea/
+/.directory
+/bin/*.out
+*.o
+*.a

@@ -3,7 +3,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
-const std::string root_path = "./";    // Linux
+const std::string root_path = "../";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 int main()
