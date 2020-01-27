@@ -2,9 +2,11 @@
 /cmake-build-debug/
 /build/
 /.vscode/
-/bin/
 /.idea/
-/lib/
 /src/obj/
 /src/tact/obj/
 .directory
+CMakeLists.txt
+/bin/sfml-app
+/bin/somethingTactics.out
+/lib/libgame.a
