@@ -23,7 +23,7 @@ SRCOBJ	= $(SOURCE)obj/
 OUTBINDEPS	= $(SRCOBJ)main.o
 # library dependencies
 LIBDEP	= $(TACTOBJ)VertexMap.o $(TACTOBJ)Castle.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o $(TACTOBJ)Ninja.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
-	
+
 .PHONY : clean all run
 
 # Rule to create the primary executable
@@ -64,13 +64,15 @@ $(TACTOBJ)Spell.o : $(TACTSRC)Spell.cpp
 $(TACTOBJ)Tank.o : $(TACTSRC)Tank.cpp
 	$(COMPILE) $(TACTSRC)Tank.cpp -o $(TACTOBJ)Tank.o
 
+
+
 clean :
 	@rm -f $(SRCOBJ)main.o
 	@rm -f $(LIBOBJ)*.o
 	@rm -f $(TACTSRC)*/obj/*.o
 	@rm -f $(STTLIB)
 	@rm -f $(OUTBIN)
-	
+
 all : clean $(OUTBIN)
 
 run : $(OUTBIN)

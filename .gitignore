@@ -1,13 +1,18 @@
 # Project exclude paths
 /cmake-build-debug/
 /build/
-/.vscode/
-/.idea/
-/src/obj/
-/src/tact/obj/
+/.vscode
+/.idea
 .directory
 CMakeLists.txt
 /bin/sfml-app
 /bin/somethingTactics.out
 /lib/libgame.a
 *.o
+*.out
+# Exceptions
+!/bin/
+!/lib/
+!/src/obj/
+!/src/tact/obj/
+!.keep
