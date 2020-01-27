@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <string>
-/*
+
 bool VertexMap::loadMap(const std::string& tileset, sf::Vector2u tileSize, const int* tiles,
         unsigned int w, unsigned int h) {
 // load the tileset texture
@@ -84,8 +84,3 @@ void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // draw the vertex array
     target.draw(m_vertices, states);
 }
-sf::VertexArray m_vertices;
-sf::Texture m_tileset;
-
-}
-*/
