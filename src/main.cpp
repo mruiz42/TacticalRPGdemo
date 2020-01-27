@@ -3,13 +3,15 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
+
+#define window_size
 const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 int main()
 {
     sf::Vertex vertex;
-    sf::RenderWindow window(sf::VideoMode(256, 128), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode(640, 320), "Tilemap");
     window.setSize(sf::Vector2u(1024, 512));
     // define the level with an array of tile indices
     const int level[] = {
@@ -20,12 +22,12 @@ int main()
                       0, 49, 35,  0,  9, 54, 41,  0,  0,  0,  4,  4,  4,  2,  0,  0,
                       0,  0,  8,  0, 55,  0,  2,  2,  0,  0,  4,  4,  4,  4,  2,  0,
                       2,  0,  8,  0, 55,  0,  2,  2,  2,  0,  4,  4,  4,  4,  4,  4,
-                      0,  0, 51,  0, 55,  2,  2,  2,  0,  0,  0,  0,  4,  4,  4,  4,
+                      0,  0, 51,  0, 55,  2,  2,  2,  0,  0,  0,  0,  4,  4,  4,  4, 5
             };
 
     // create the tilemap from the level definition
     VertexMap map;
-    if (!map.loadMap(root_path + "share/textures/map_tiles.png", sf::Vector2u(16, 16), level, 16, 8))
+    if (!map.loadMap(root_path + "share/textures/map_tiles3.png", sf::Vector2u(16, 16), level, 16, 8))
         return -1;
 
     while (window.isOpen())
