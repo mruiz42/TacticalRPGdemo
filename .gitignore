@@ -2,8 +2,9 @@
 /cmake-build-debug/
 /build/
 /.vscode/
+/bin/
 /.idea/
 /.directory
-/bin/*.out
-*.o
-*.a
+/lib/
+/src/obj/
+/src/tact/obj/
