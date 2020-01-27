@@ -4,7 +4,7 @@
 /.vscode/
 /bin/
 /.idea/
-/.directory
 /lib/
 /src/obj/
 /src/tact/obj/
+/.directory
