@@ -14,9 +14,8 @@ Picture stuff goes here
 * GCC make
 ##### How to run:
 `make && make run`
- ###Windows
-
- ##### Requirements:
+###Windows
+##### Requirements:
  * SFML https://www.sfml-dev.org/tutorials/2.5/
  * [ Additional windows instructions go here ]
 ##### How to run:
