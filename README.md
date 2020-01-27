@@ -17,7 +17,7 @@ Picture stuff goes here
 ### Windows
 ##### Requirements:
  * SFML https://www.sfml-dev.org/tutorials/2.5/
- * [ Additional windows instructions go here ]
+ * [ Additional windows requirements go here ]
 ##### How to run:
 `instructions go here`
  ### Credits
