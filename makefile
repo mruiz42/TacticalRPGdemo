@@ -1,6 +1,6 @@
 CC      = g++
-FCLAGS  = -std=c++20  -Wall   -Wextra -pedantic
-INCLUDE = ./include/
+FCLAGS  = -std=c++14  -Wall   -Wextra -pedantic
+INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I $(INCLUDE) -c
 BUILD   = $(CC) $(CFLAGS) -I $(INCLUDE)
 OUTBIN     = ./bin/somethingTactics.out
@@ -20,9 +20,9 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	= $(SRCOBJ)main.o
+OUTBINDEPS	= $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o
 # library dependencies
-LIBDEP	= $(TACTOBJ)VertexMap.o $(TACTOBJ)Castle.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o $(TACTOBJ)Ninja.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
+LIBDEP	= $(TACTOBJ)Castle.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o $(TACTOBJ)Ninja.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
 
 .PHONY : clean all run
 
