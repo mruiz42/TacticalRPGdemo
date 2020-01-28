@@ -64,8 +64,6 @@ $(TACTOBJ)Spell.o : $(TACTSRC)Spell.cpp
 $(TACTOBJ)Tank.o : $(TACTSRC)Tank.cpp
 	$(COMPILE) $(TACTSRC)Tank.cpp -o $(TACTOBJ)Tank.o
 
-
-
 clean :
 	@rm -f $(SRCOBJ)main.o
 	@rm -f $(LIBOBJ)*.o
