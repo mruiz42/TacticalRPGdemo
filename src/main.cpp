@@ -21,10 +21,10 @@ int main()
     // define the level with an array of tile indices
     int level[num_tiles_total] = {};
     for (int i = 0; i < num_tiles_total; i++)
-        level[i] = 1;
+        level[i] = i;
     // create the tilemap from the level definition
     VertexMap map;
-    if (!map.loadMap(root_path + "share/textures/map_tiles32.png",
+    if (!map.loadMap(root_path + "share/textures/38052.png",
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
 
