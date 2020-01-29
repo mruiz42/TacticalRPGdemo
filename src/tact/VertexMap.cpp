@@ -6,7 +6,7 @@
 #include <iostream>
 
 bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& cur_img_path,
-                        sf::Vector2u tileSize, const int* tiles, unsigned int w, unsigned int h) {
+                        sf::Vector2u tileSize, const int* tiles, const unsigned int w, const unsigned int h) {
     // load the tileset texture
     if (!m_tileset.loadFromFile(tileset_img_path))
         return false;
