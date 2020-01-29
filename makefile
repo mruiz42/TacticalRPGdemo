@@ -1,6 +1,6 @@
 CC      = g++
-FCLAGS  = -std=c++20  -Wall   -Wextra -pedantic
-INCLUDE = ./include/
+FCLAGS  = -std=c++14  -Wall   -Wextra -pedantic
+INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I $(INCLUDE) -c
 BUILD   = $(CC) $(CFLAGS) -I $(INCLUDE)
 OUTBIN     = ./bin/somethingTactics.out
@@ -63,8 +63,6 @@ $(TACTOBJ)Spell.o : $(TACTSRC)Spell.cpp
 	
 $(TACTOBJ)Tank.o : $(TACTSRC)Tank.cpp
 	$(COMPILE) $(TACTSRC)Tank.cpp -o $(TACTOBJ)Tank.o
-
-
 
 clean :
 	@rm -f $(SRCOBJ)main.o
