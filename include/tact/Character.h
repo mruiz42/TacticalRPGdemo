@@ -5,9 +5,10 @@
 #ifndef CIS29GROUP2GAME_CHARACTER_H
 #define CIS29GROUP2GAME_CHARACTER_H
 #include <string>
-
+#include <SFML/Graphics/Sprite.hpp>
 class Character {
 private:
+    //sf::Sprite();
     std::string name;
     unsigned int level;
     unsigned int experience;
