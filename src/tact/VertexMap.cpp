@@ -48,7 +48,7 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
         //    quad[3].position = sf::Vector2f(left, bottom);
 
             // define top, bottom, left, and right of the tile on the texture
-            int texLeft = tu * (tileSize.x+2);
+            int texLeft = tu * (tileSize.x +2);
             int texRight = texLeft + tileSize.x;
             int texTop = tv * (tileSize.y+2);
             int texBottom = texTop + tileSize.y;
