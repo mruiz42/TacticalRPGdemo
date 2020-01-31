@@ -4,17 +4,26 @@
 
 #ifndef CIS29GROUP2GAME_MENU_H
 #define CIS29GROUP2GAME_MENU_H
-#include "SFML/Audio/Sound.hpp"
-#include "SFML/Graphics.hpp"
+
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+
+#define MAX_NUMBER_OF_ITEMS 3
 class Menu {
-private:
-    unsigned int width;
-    unsigned int height;
-    Menu(const unsigned int w, const unsigned int h);
+public:
+    float width;
+    float height;
+    Menu(float w, float h);
+    ~Menu();
     void draw(sf::RenderWindow &window);
     void moveUp();
     void moveDown();
+private:
     int getSelectedIdx();
-    void makeMenu();
+    int selectedItemIndex;
+    sf::Font font;
+    sf::Text menu[MAX_NUMBER_OF_ITEMS];
+    //void makeMenu();
 };
 #endif //CIS29GROUP2GAME_MENU_H

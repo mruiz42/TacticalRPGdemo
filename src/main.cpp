@@ -3,6 +3,8 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
+#include "../include/tact/Menu.h"
+#include <SFML/Graphics/Font.hpp>
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -17,6 +19,7 @@ int main()
     const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
     sf::Vertex vertex;
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tilemap");
+    Menu menu(window.getSize().x,window.getSize().y);
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
     // define the level with an array of tile indices
     int level[num_tiles_total] = {};
@@ -38,9 +41,15 @@ int main()
         }
 
         window.clear();
-        window.draw(map);
+        //window.draw(map);
+        menu.draw(window);
+
         window.display();
     }
+    window.clear();
+    
+   // window.display();
+
 
     return 0;
 }
