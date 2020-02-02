@@ -19,8 +19,9 @@ public:
     void draw(sf::RenderWindow &window);
     void moveUp();
     void moveDown();
+    int getSelectedIdx(){return selectedItemIndex;}
 private:
-    int getSelectedIdx();
+    
     int selectedItemIndex;
     sf::Font font;
     sf::Text menu[MAX_NUMBER_OF_ITEMS];

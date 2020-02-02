@@ -4,7 +4,10 @@
 #include "../include/tact/VertexMap.h"
 #include <string>
 #include "../include/tact/Menu.h"
-#include <SFML/Graphics/Font.hpp>
+#include <iostream>
+using std::cout;
+using std::endl;
+
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -36,8 +39,45 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            switch(event.type)
+            {
+            case sf::Event::KeyReleased:
+                switch(event.key.code)
+                {
+                case sf::Keyboard::Up:
+                    menu.moveUp();
+                    break;
+
+                case sf::Keyboard::Down:
+                    menu.moveDown();
+                    break;
+                    
+                case sf::Keyboard::Return:
+                    switch(menu.getSelectedIdx())
+                    {
+                        case 0:
+                            std::cout<<"Play button has been pressed"<<std::endl;
+                            break;
+                        case 1:
+                            std::cout<<"Option button has been pressed"<<std::endl;
+                            break;
+                        case 2:
+                            std::cout<<"Exit button has been pressed"<<std::endl; 
+                            window.close();
+                            break;                          
+                    }
+
+
+                }
+                break;
+            case sf::Event::Closed:
+                window.close();
+                break;
+            }
+            /*
             if (event.type == sf::Event::Closed)
                 window.close();
+            */
         }
 
         window.clear();

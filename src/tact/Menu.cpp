@@ -26,6 +26,8 @@ Menu::Menu(float width, float height)
     menu[2].setColor(sf::Color::White);
     menu[2].setString("Exit");
     menu[2].setPosition(sf::Vector2f(width/2, height/(MAX_NUMBER_OF_ITEMS+1)*3)); // divide by 2 so itll be centered, also height will be centered
+
+    selectedItemIndex = 0;
 }
 
 Menu::~Menu()
@@ -38,5 +40,25 @@ void Menu::draw(sf::RenderWindow &window)
     for(int i = 0;i<MAX_NUMBER_OF_ITEMS;i++)
     {
         window.draw(menu[i]);
+    }
+}
+
+void Menu::moveUp()
+{
+    if(selectedItemIndex - 1 >=0)
+    {
+        menu[selectedItemIndex].setColor(sf::Color::White);
+        selectedItemIndex--;
+        menu[selectedItemIndex].setColor(sf::Color::Red);
+    }
+}
+
+void Menu::moveDown()
+{
+    if(selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
+    {
+        menu[selectedItemIndex].setColor(sf::Color::White);
+        selectedItemIndex++;
+        menu[selectedItemIndex].setColor(sf::Color::Red);
     }
 }
