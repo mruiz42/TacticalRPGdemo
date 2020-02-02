@@ -6,7 +6,7 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-#define TEXTURE_SIZE 64
+#define TEXTURE_SIZE 32
 
 const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
@@ -26,7 +26,7 @@ int main()
         level[i] = 1;
     // create the tilemap from the level definition
     VertexMap map;
-    if (!map.loadMap(root_path + "share/textures/map_tiles64.png",
+    if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path + "share/sprites/cursor.png",
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
 
