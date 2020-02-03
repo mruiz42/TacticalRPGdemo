@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
+#include <iostream>
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -28,6 +32,27 @@ int main()
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
 
+	// add background music (stream directly from music file)
+	sf::Music music;
+	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
+		std::cout << "Error: backgound music." << std::endl;
+		return -1;
+	}
+	music.setVolume(50);  /// range 0 - 100
+	music.play();
+
+	// add sound effect (pre-load small audio file to memory for fast response)
+	// credit to https://www.noiseforfun.com/2012-sound-effects/menu-05-a/
+	sf::SoundBuffer buffer;
+	if(!buffer.loadFromFile(root_path + "share/audio/volume_change.wav")){
+		std::cout << "Error: sound effect." << std::endl;
+		return -1;
+	}
+	sf::Sound sound;
+	sound.setBuffer(buffer);
+	sound.setVolume(50);	/// range 0-100
+		
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -35,7 +60,25 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-        }
+			
+			if (event.type == sf::Event::EventType::KeyPressed){
+				// Up and down to control volume
+				if (event.key.code == sf::Keyboard::Key::Down){
+				  music.setVolume(music.getVolume() - 10);
+				  sound.setVolume(sound.getVolume() - 10);
+				  sound.play();
+				}
+				if (event.key.code == sf::Keyboard::Key::Up){
+				  music.setVolume(music.getVolume() + 10);
+				  sound.setVolume(sound.getVolume() + 10);
+				  sound.play();
+				  if (music.getVolume() >= 100){
+					  music.setVolume(100);
+					  sound.setVolume(100);
+				  }
+				}
+			}
+		}
 
         window.clear();
         window.draw(map);
