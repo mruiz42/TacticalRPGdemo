@@ -19,9 +19,11 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tilemap");
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
     // define the level with an array of tile indices
-    int level[num_tiles_total] = {};
-    for (int i = 0; i < num_tiles_total; i++)
-        level[i] = 1;
+    int level[num_tiles_x][num_tiles_y] = {};
+    for (int i = 0; i < num_tiles_x; i++)
+        for (int j = 0; j < num_tiles_y; j++)
+
+        level[i][j] = 1;
     // create the tilemap from the level definition
     VertexMap map;
     if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path+"share/sprites/cursor.png",
