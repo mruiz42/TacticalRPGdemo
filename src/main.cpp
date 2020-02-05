@@ -16,7 +16,7 @@ const std::string root_path = "./";    // Linux
 // const std::string root_path = "C:/";    // Windows
 int main()
 {
-    const unsigned int num_tiles_x = WINDOW_WIDTH / TEXTURE_SIZE;
+    const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
     const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
     const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
     sf::Vertex vertex;
