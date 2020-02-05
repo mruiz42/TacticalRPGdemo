@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Sound.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
+
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -12,9 +16,8 @@ const std::string root_path = "./";    // Linux
 // const std::string root_path = "C:/";    // Windows
 int main()
 {
-    const unsigned int num_tiles_x = WINDOW_WIDTH / TEXTURE_SIZE;
+    const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
     const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
-    const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
     sf::Vertex vertex;
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tilemap");
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
