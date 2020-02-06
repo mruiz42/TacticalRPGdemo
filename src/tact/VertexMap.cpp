@@ -6,7 +6,7 @@
 #include <iostream>
 
 bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& cur_img_path,
-                        sf::Vector2u tileSize, const int* tiles, const unsigned int w, const unsigned int h) {
+                        sf::Vector2u tileSize, int tiles[][22], const unsigned int w, const unsigned int h) {
     // load the tileset texture
     if (!m_tileset.loadFromFile(tileset_img_path))
         return false;
@@ -20,10 +20,10 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
     for (unsigned int i = 0; i < w; ++i)
         for (unsigned int j = 0; j < h; ++j) {
             // get the current tile number
-            int tileNumber = tiles[i + j * w];
+            int tileNumber = tiles[i][j];
             int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
             int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
-            //     find its position in the tileset_img_path texture
+            //     find its position in the tile1set_img_path texture
             //    int tu = tileNumber % 15;
             //    int tv = tileNumber / 15;
 
