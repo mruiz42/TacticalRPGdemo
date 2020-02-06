@@ -29,6 +29,7 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
 
             // get a pointer to the current tile's quad
             sf::Vertex* quad = &m_vertices[(i + j * w) * 4];
+            
 
             // define the top, bottom, left, and right of the tiles on the screen
             int left = i * tileSize.x;
@@ -65,11 +66,14 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
     // load cursor
     if (!m_cursor_texture.loadFromFile(cur_img_path, sf::IntRect(0,0,32,32)))
         return false;
-    m_cursor.setTexture(m_cursor_texture);
+    //m_cursor.setTexture(m_cursor_texture);
+    
 
 
         return true;
     }
+
+    
 
     void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         // apply the transform
