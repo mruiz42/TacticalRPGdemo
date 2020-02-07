@@ -6,7 +6,7 @@
 #include <iostream>
 
 bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& cur_img_path,
-                        sf::Vector2u tileSize, const int tiles[][22], const unsigned int w, const unsigned int h) {
+                        sf::Vector2u tileSize, int tiles[][22], const unsigned int w, const unsigned int h) {
     // load the tileset texture
     if (!m_tileset.loadFromFile(tileset_img_path))
         return false;
@@ -67,9 +67,13 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
     if (!m_cursor_texture.loadFromFile(cur_img_path, sf::IntRect(0,0,32,32)))
         return false;
     //m_cursor.setTexture(m_cursor_texture);
+    
+
 
         return true;
     }
+
+    
 
     void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         // apply the transform

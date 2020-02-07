@@ -4,7 +4,6 @@
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
-#include <SFML/Window/Joystick.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
 #include "../include/tact/Knight.h"
@@ -35,7 +34,7 @@ int main()
         level[i][j] = 1;
     // create the tilemap from the level definition
     VertexMap map;
-    if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path+"share/sprites/cursor.png",
+    if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path + "share/sprites/cursor.png",
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
     float changeX = 32;
@@ -61,33 +60,36 @@ int main()
 	sf::Sound sound;
 	sound.setBuffer(buffer);
 	sound.setVolume(50);	/// range 0-100
+		
 
     while (window.isOpen())
     {
-        sf::Joystick::update();
+        
         sf::Event event;
         while (window.pollEvent(event)) {
+            
             if (event.type == sf::Event::Closed)
                 window.close();
-            else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::JoystickButtonPressed)
+            else if (event.type == sf::Event::KeyPressed)
             {
-                if(event.key.code == sf::Keyboard::Right || sf::Joystick::isButtonPressed(0, 1))
+                if(event.key.code == sf::Keyboard::Right)
                 {
+                    
                     s.moveSprite(changeX,0);
                 }
 
-                if(event.key.code == sf::Keyboard::Left ||  sf::Joystick::isButtonPressed(0, 2))
+                if(event.key.code == sf::Keyboard::Left)
                 {
-
+                    
                     s.moveSprite(-changeX,0);
                 }
-                if(event.key.code == sf::Keyboard::Up ||  sf::Joystick::isButtonPressed(0, 3))
+                if(event.key.code == sf::Keyboard::Up)
                 {
-
+                    
                     s.moveSprite(0,-changeY);
                 }
 
-                if(event.key.code == sf::Keyboard::Down ||  sf::Joystick::isButtonPressed(0, 0))
+                if(event.key.code == sf::Keyboard::Down)
                 {
                     
                     s.moveSprite(0,changeY);
