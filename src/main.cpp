@@ -36,8 +36,6 @@ int main()
     if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path + "share/sprites/cursor.png",
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
-    float changeX = 32;
-    float changeY = 32;
     Cursor s("./share/sprites/cursor.png",0,0);
 
 	// add background music (stream directly from music file)
@@ -75,21 +73,21 @@ int main()
 
                 if(event.key.code == sf::Keyboard::D)
                 {
-                    s.moveSprite(changeX, 0);
+                    s.moveSprite(TEXTURE_SIZE, 0);
                 }
 
                 else if(event.key.code == sf::Keyboard::A)
                 {
-                    s.moveSprite(-changeX,0);
+                    s.moveSprite(-TEXTURE_SIZE,0);
                 }
                 else if(event.key.code == sf::Keyboard::W)
                 {
-                    s.moveSprite(0,-changeY);
+                    s.moveSprite(0,-TEXTURE_SIZE);
                 }
 
                 else if(event.key.code == sf::Keyboard::S)
                 {
-                    s.moveSprite(0,changeY);
+                    s.moveSprite(0,TEXTURE_SIZE);
                 }
             }
             // I love coding !!!!!!
@@ -100,16 +98,16 @@ int main()
                 std::cout << p_x << " " << p_y << std::endl;
                 // Up
                 if (p_y > 0)
-                    s.moveSprite(0, 32);
+                    s.moveSprite(0, TEXTURE_SIZE);
                 // Down
                 else if (p_y < 0)
-                    s.moveSprite(0, -32);
+                    s.moveSprite(0, -TEXTURE_SIZE);
                 // Left
                 else if (p_x < 0)
-                    s.moveSprite(-32, 0);
+                    s.moveSprite(-TEXTURE_SIZE, 0);
                 // Right
                 else if (p_x > 0)
-                    s.moveSprite(32, 0);
+                    s.moveSprite(TEXTURE_SIZE, 0);
             }
         }
 			
