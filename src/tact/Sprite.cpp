@@ -11,7 +11,6 @@ Sprite::Sprite (std::string s) {
         exit(1);
     }
     this->sprite.setTexture(this->texture);
-    this->sprite.setColor(sf::Color(255,255,255));
 
 
 }

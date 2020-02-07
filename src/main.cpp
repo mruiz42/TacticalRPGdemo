@@ -36,7 +36,9 @@ int main()
     if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path + "share/sprites/cursor.png",
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
-    Cursor s("./share/sprites/cursor.png",0,0);
+
+    // Cursor
+    Cursor cur("./share/sprites/cursor.png", 0, 0);
 
 	// add background music (stream directly from music file)
 	sf::Music music;
@@ -64,74 +66,76 @@ int main()
         
         sf::Event event;
         while (window.pollEvent(event)) {
-
+            // Poll for events
             if (event.type == sf::Event::Closed)
                 window.close();
-
+            // Keyboard input events
             else if (event.type == sf::Event::KeyPressed)
             {
-
+                // Right
                 if(event.key.code == sf::Keyboard::D)
                 {
-                    s.moveSprite(TEXTURE_SIZE, 0);
-                }
 
+                    cur.moveSprite(TEXTURE_SIZE, 0);
+                }
+                // Left
                 else if(event.key.code == sf::Keyboard::A)
                 {
-                    s.moveSprite(-TEXTURE_SIZE,0);
+                    cur.moveSprite(-TEXTURE_SIZE, 0);
                 }
+                // Up
                 else if(event.key.code == sf::Keyboard::W)
                 {
-                    s.moveSprite(0,-TEXTURE_SIZE);
+                    cur.moveSprite(0, -TEXTURE_SIZE);
                 }
-
+                // Down
                 else if(event.key.code == sf::Keyboard::S)
                 {
-                    s.moveSprite(0,TEXTURE_SIZE);
+                    cur.moveSprite(0, TEXTURE_SIZE);
                 }
-            }
-            // I love coding !!!!!!
+                // Volume Down
+                else if (event.key.code == sf::Keyboard::Key::Down){
+                    music.setVolume(music.getVolume() - 10);
+                    sound.setVolume(sound.getVolume() - 10);
+                    sound.play();
+                }
+                // Volume Up
+                else if (event.key.code == sf::Keyboard::Key::Up){
+                    music.setVolume(music.getVolume() + 10);
+                    sound.setVolume(sound.getVolume() + 10);
+                    sound.play();
+                    if (music.getVolume() >= 100){
+                        music.setVolume(100);
+                        sound.setVolume(100);
+                    }
+                }}
+            // Controller input events
             else if (event.type == sf::Event::JoystickMoved) {
                 // Get direction of D pad press
                 int p_x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
                 int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
-                std::cout << p_x << " " << p_y << std::endl;
                 // Up
                 if (p_y > 0)
-                    s.moveSprite(0, TEXTURE_SIZE);
+                    cur.moveSprite(0, TEXTURE_SIZE);
+
                 // Down
                 else if (p_y < 0)
-                    s.moveSprite(0, -TEXTURE_SIZE);
+                    cur.moveSprite(0, -TEXTURE_SIZE);
+
                 // Left
                 else if (p_x < 0)
-                    s.moveSprite(-TEXTURE_SIZE, 0);
+                    cur.moveSprite(-TEXTURE_SIZE, 0);
+
                 // Right
                 else if (p_x > 0)
-                    s.moveSprite(TEXTURE_SIZE, 0);
+                    cur.moveSprite(TEXTURE_SIZE, 0);
+
             }
         }
-			
-			if (event.type == sf::Event::EventType::KeyPressed){
-				// Up and down to control volume
-				if (event.key.code == sf::Keyboard::Key::Down){
-				  music.setVolume(music.getVolume() - 10);
-				  sound.setVolume(sound.getVolume() - 10);
-				  sound.play();
-				}
-				if (event.key.code == sf::Keyboard::Key::Up){
-				  music.setVolume(music.getVolume() + 10);
-				  sound.setVolume(sound.getVolume() + 10);
-				  sound.play();
-				  if (music.getVolume() >= 100){
-					  music.setVolume(100);
-					  sound.setVolume(100);
-				  }
-				}
-			}
-
+        // Refresh screen
         window.clear();
         window.draw(map);
-        window.draw(s.returnSprite());
+        window.draw(cur.returnSprite());
         window.display();
     }
 
