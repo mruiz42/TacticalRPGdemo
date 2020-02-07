@@ -9,7 +9,7 @@
 #include "../include/tact/Knight.h"
 #include "../include/tact/Character.h"
 #include <iostream>
-
+#include "../include/tact/Cursor.h"
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define TEXTURE_SIZE 32
@@ -38,7 +38,7 @@ int main()
         return -1;
     float changeX = 32;
     float changeY = 32;
-    Knight s;
+    Cursor s("./share/sprites/cursor.png",0,0);
 
 	// add background music (stream directly from music file)
 	sf::Music music;

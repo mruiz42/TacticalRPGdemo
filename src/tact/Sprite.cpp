@@ -3,6 +3,19 @@
 //
 
 #include "../../include/tact/Sprite.h"
+#include <iostream>
+Sprite::Sprite (std::string s) {
+    if (!texture.loadFromFile(s, sf::IntRect(0,0,32,32)))
+    {
+        std::cerr << "Couldn't load sprite:" << filename;
+        exit(1);
+    }
+    this->sprite.setTexture(this->texture);
+    this->sprite.setColor(sf::Color(255,255,255));
+
+
+}
+
 sf::Sprite Sprite::returnSprite()
 {
     return this->sprite;
