@@ -10,13 +10,11 @@
 #include <string>
 // Medium defense, medium attack
 class Knight : public Character {
-    private:
+private:
     Character knight;
     const std::string FileName = "./share/sprites/knight.png";
     sf::Texture knight_texture;
     sf::Sprite knight_sprite;
-    
-
     public:
     Knight();
     Knight(std::string newName,unsigned int newLevel, unsigned int experience,

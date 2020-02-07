@@ -30,7 +30,6 @@ int main()
     int level[num_tiles_x][num_tiles_y] = {};
     for (int i = 0; i < num_tiles_x; i++)
         for (int j = 0; j < num_tiles_y; j++)
-
         level[i][j] = 1;
     // create the tilemap from the level definition
     VertexMap map;
@@ -60,40 +59,57 @@ int main()
 	sf::Sound sound;
 	sound.setBuffer(buffer);
 	sound.setVolume(50);	/// range 0-100
-		
+    std::cout << sf::Joystick::getButtonCount(0) << std::endl;
 
     while (window.isOpen())
     {
         
         sf::Event event;
         while (window.pollEvent(event)) {
-            
+
             if (event.type == sf::Event::Closed)
                 window.close();
+
             else if (event.type == sf::Event::KeyPressed)
             {
-                if(event.key.code == sf::Keyboard::Right)
+
+                if(event.key.code == sf::Keyboard::D)
                 {
-                    
-                    s.moveSprite(changeX,0);
+                    s.moveSprite(changeX, 0);
                 }
 
-                if(event.key.code == sf::Keyboard::Left)
+                else if(event.key.code == sf::Keyboard::A)
                 {
-                    
                     s.moveSprite(-changeX,0);
                 }
-                if(event.key.code == sf::Keyboard::Up)
+                else if(event.key.code == sf::Keyboard::W)
                 {
-                    
                     s.moveSprite(0,-changeY);
                 }
 
-                if(event.key.code == sf::Keyboard::Down)
+                else if(event.key.code == sf::Keyboard::S)
                 {
-                    
                     s.moveSprite(0,changeY);
                 }
+            }
+            // I love coding !!!!!!
+            else if (event.type == sf::Event::JoystickMoved) {
+                // Get direction of D pad press
+                int p_x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
+                int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
+                std::cout << p_x << " " << p_y << std::endl;
+                // Up
+                if (p_y > 0)
+                    s.moveSprite(0, 32);
+                // Down
+                else if (p_y < 0)
+                    s.moveSprite(0, -32);
+                // Left
+                else if (p_x < 0)
+                    s.moveSprite(-32, 0);
+                // Right
+                else if (p_x > 0)
+                    s.moveSprite(32, 0);
             }
         }
 			
@@ -114,7 +130,6 @@ int main()
 				  }
 				}
 			}
-		
 
         window.clear();
         window.draw(map);
