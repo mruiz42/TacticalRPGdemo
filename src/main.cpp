@@ -10,6 +10,7 @@
 #include "../include/tact/Character.h"
 #include <iostream>
 #include "../include/tact/Cursor.h"
+
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define TEXTURE_SIZE 32
@@ -75,23 +76,26 @@ int main()
                 // Right
                 if(event.key.code == sf::Keyboard::D)
                 {
-
-                    cur.moveSprite(TEXTURE_SIZE, 0);
+                    if (cur.returnSprite().getPosition().x < 992)
+                        cur.moveSprite(TEXTURE_SIZE, 0);
                 }
                 // Left
                 else if(event.key.code == sf::Keyboard::A)
                 {
-                    cur.moveSprite(-TEXTURE_SIZE, 0);
+                    if (cur.returnSprite().getPosition().x > 0)
+                        cur.moveSprite(-TEXTURE_SIZE, 0);
                 }
                 // Up
                 else if(event.key.code == sf::Keyboard::W)
                 {
-                    cur.moveSprite(0, -TEXTURE_SIZE);
+                    if (cur.returnSprite().getPosition().y > 0)
+                        cur.moveSprite(0, -TEXTURE_SIZE);
                 }
                 // Down
                 else if(event.key.code == sf::Keyboard::S)
                 {
-                    cur.moveSprite(0, TEXTURE_SIZE);
+                    if (cur.returnSprite().getPosition().y < 672)
+                        cur.moveSprite(0, TEXTURE_SIZE);
                 }
                 // Volume Down
                 else if (event.key.code == sf::Keyboard::Key::Down){
@@ -114,21 +118,27 @@ int main()
                 // Get direction of D pad press
                 int p_x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
                 int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
-                // Up
-                if (p_y > 0)
-                    cur.moveSprite(0, TEXTURE_SIZE);
-
                 // Down
-                else if (p_y < 0)
-                    cur.moveSprite(0, -TEXTURE_SIZE);
-
+                if (p_y > 0) {
+                    if (cur.returnSprite().getPosition().y < 672)
+                        cur.moveSprite(0, TEXTURE_SIZE);
+                }
+                // Up
+                else if (p_y < 0) {
+                    if (cur.returnSprite().getPosition().y > 0)
+                        cur.moveSprite(0, -TEXTURE_SIZE);
+                }
                 // Left
-                else if (p_x < 0)
-                    cur.moveSprite(-TEXTURE_SIZE, 0);
-
+                else if (p_x < 0) {
+                    if (cur.returnSprite().getPosition().x > 0)
+                        cur.moveSprite(-TEXTURE_SIZE, 0);
+                }
                 // Right
-                else if (p_x > 0)
-                    cur.moveSprite(TEXTURE_SIZE, 0);
+                else if (p_x > 0) {
+                    if (cur.returnSprite().getPosition().x < 992)
+                        cur.moveSprite(TEXTURE_SIZE, 0);
+                }
+                std::cout << "(" << cur.returnSprite().getPosition().x << "," << cur.returnSprite().getPosition().y << std::endl;
 
             }
         }
