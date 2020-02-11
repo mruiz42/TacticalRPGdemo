@@ -12,7 +12,7 @@
 #include "../include/tact/Cursor.h"
 
 #define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_HEIGHT 704
 #define TEXTURE_SIZE 32
 
 const std::string root_path = "./";    // Linux
