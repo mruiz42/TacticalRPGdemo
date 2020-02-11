@@ -16,7 +16,7 @@ protected:
     sf::Sprite sprite;
 public:
     Sprite(std::string);
-    sf::Sprite returnSprite();
+    sf::Sprite getSprite();
     void moveSprite(float x, float y);
 };
 
