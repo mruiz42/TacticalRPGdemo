@@ -15,7 +15,7 @@ Sprite::Sprite (std::string s) {
 
 }
 
-sf::Sprite Sprite::returnSprite()
+sf::Sprite Sprite::getSprite()
 {
     return this->sprite;
 }

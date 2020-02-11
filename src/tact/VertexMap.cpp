@@ -64,10 +64,9 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
             quad[3].texCoords = sf::Vector2f(texLeft, texBottom);
             }
     // load cursor
-    if (!m_cursor_texture.loadFromFile(cur_img_path, sf::IntRect(0,0,32,32)))
+    if (!m_cursor_texture.loadFromFile(cur_img_path, sf::IntRect(0,0,32,32))) {
         return false;
-    //m_cursor.setTexture(m_cursor_texture);
-    
+    }
 
 
         return true;
@@ -83,5 +82,4 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
         // draw the vertex array
         target.draw(m_vertices, states);
         target.draw(m_cursor, states);
-
     }
