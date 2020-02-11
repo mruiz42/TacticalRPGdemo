@@ -20,7 +20,7 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	= $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
+OUTBINDEPS	= $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
 # library dependencies
 LIBDEP	= $(TACTOBJ)Castle.o $(TACTOBJ)Mage.o $(TACTOBJ)Ninja.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
 
@@ -70,6 +70,8 @@ $(TACTOBJ)Sprite.o : $(TACTSRC)Sprite.cpp
 $(TACTOBJ)Cursor.o : $(TACTSRC)Cursor.cpp
 	$(COMPILE) $(TACTSRC)Cursor.cpp -o $(TACTOBJ)Cursor.o
 
+$(TACTOBJ)Sidebar.o : $(TACTSRC)Sidebar.cpp
+	$(COMPILE) $(TACTSRC)Sidebar.cpp -o $(TACTOBJ)Sidebar.o
 clean :
 	@rm -f $(SRCOBJ)main.o
 	@rm -f $(LIBOBJ)*.o
