@@ -10,6 +10,7 @@
 #include "../include/tact/Character.h"
 #include <iostream>
 #include "../include/tact/Cursor.h"
+#include "../include/tact/Sidebar.h"
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 704
@@ -21,6 +22,8 @@ const std::string root_path = "./";    // Linux
 
 int main()
 {
+    Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
+
     const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
     const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
     const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
@@ -76,25 +79,25 @@ int main()
                 // Right
                 if(event.key.code == sf::Keyboard::D)
                 {
-                    if (cur.returnSprite().getPosition().x < 992)
+                    if (cur.getSprite().getPosition().x < 992)
                         cur.moveSprite(TEXTURE_SIZE, 0);
                 }
                 // Left
                 else if(event.key.code == sf::Keyboard::A)
                 {
-                    if (cur.returnSprite().getPosition().x > 0)
+                    if (cur.getSprite().getPosition().x > 0)
                         cur.moveSprite(-TEXTURE_SIZE, 0);
                 }
                 // Up
                 else if(event.key.code == sf::Keyboard::W)
                 {
-                    if (cur.returnSprite().getPosition().y > 0)
+                    if (cur.getSprite().getPosition().y > 0)
                         cur.moveSprite(0, -TEXTURE_SIZE);
                 }
                 // Down
                 else if(event.key.code == sf::Keyboard::S)
                 {
-                    if (cur.returnSprite().getPosition().y < 672)
+                    if (cur.getSprite().getPosition().y < 672)
                         cur.moveSprite(0, TEXTURE_SIZE);
                 }
                 // Volume Down
@@ -120,32 +123,33 @@ int main()
                 int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
                 // Down
                 if (p_y > 0) {
-                    if (cur.returnSprite().getPosition().y < 672)
+                    if (cur.getSprite().getPosition().y < 672)
                         cur.moveSprite(0, TEXTURE_SIZE);
                 }
                 // Up
                 else if (p_y < 0) {
-                    if (cur.returnSprite().getPosition().y > 0)
+                    if (cur.getSprite().getPosition().y > 0)
                         cur.moveSprite(0, -TEXTURE_SIZE);
                 }
                 // Left
                 else if (p_x < 0) {
-                    if (cur.returnSprite().getPosition().x > 0)
+                    if (cur.getSprite().getPosition().x > 0)
                         cur.moveSprite(-TEXTURE_SIZE, 0);
                 }
                 // Right
                 else if (p_x > 0) {
-                    if (cur.returnSprite().getPosition().x < 992)
+                    if (cur.getSprite().getPosition().x < 992)
                         cur.moveSprite(TEXTURE_SIZE, 0);
                 }
-                std::cout << "(" << cur.returnSprite().getPosition().x << "," << cur.returnSprite().getPosition().y << std::endl;
+                std::cout << "(" << cur.getSprite().getPosition().x << "," << cur.getSprite().getPosition().y << std::endl;
 
             }
         }
         // Refresh screen
         window.clear();
         window.draw(map);
-        window.draw(cur.returnSprite());
+        window.draw(cur.getSprite());
+        window.draw(sidebar);
         window.display();
     }
 
