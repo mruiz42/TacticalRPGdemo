@@ -20,6 +20,52 @@ const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 
+///#pragma once
+#define MAX_NUM_SIDEBAR_ITEMS 3
+class Sidekick
+{
+public:
+	Sidekick(float width, float height)
+	{
+		if(!font.loadFromFile(root_path + "share/resources/arial.ttf"))
+		{ exit(101); }
+		
+		sidekick[0].setFont(font);
+		sidekick[0].setFillColor(sf::Color::Red);
+		sidekick[0].setString("ATTACK");
+		sidekick[0].setCharacterSize(40);
+		sidekick[0].setPosition(sf::Vector2f(1077, 560));
+		
+		sidekick[1].setFont(font);
+		sidekick[1].setFillColor(sf::Color::White);
+		sidekick[1].setString("DEFEND");
+		sidekick[1].setCharacterSize(40);
+		sidekick[1].setPosition(sf::Vector2f(1070, 600));
+		
+		sidekick[2].setFont(font);
+		sidekick[2].setFillColor(sf::Color::White);
+		sidekick[2].setString("MOVE");
+		sidekick[2].setCharacterSize(40);
+		sidekick[2].setPosition(sf::Vector2f(1094, 640));
+	}
+	~Sidekick(){}
+	
+	void draw(sf::RenderWindow &window)
+	{
+		for(int i =0; i < MAX_NUM_SIDEBAR_ITEMS; i++)
+			window.draw(sidekick[i]);
+	}
+	void MoveUp();
+	void MoveDown();
+private:
+	int selectedItemIndex;
+	sf::Font font;
+	sf::Text sidekick[MAX_NUM_SIDEBAR_ITEMS];
+};
+	
+	
+	
+
 int main()
 {
     Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
@@ -46,7 +92,7 @@ int main()
 
 	// add background music (stream directly from music file)
 	sf::Music music;
-	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
+	if(!music.openFromFile(root_path + "share/audio/BattleTheme.wav")){
 		std::cout << "Error: backgound music." << std::endl;
 		return -1;
 	}
@@ -64,6 +110,11 @@ int main()
 	sound.setBuffer(buffer);
 	sound.setVolume(50);	/// range 0-100
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
+	
+	/// add sidekick
+	Sidekick sidekick(window.getSize().x, window.getSize().y);
+	
+	
 
     while (window.isOpen())
     {
@@ -101,13 +152,13 @@ int main()
                         cur.moveSprite(0, TEXTURE_SIZE);
                 }
                 // Volume Down
-                else if (event.key.code == sf::Keyboard::Key::Down){
+                else if (event.key.code == sf::Keyboard::Key::Dash){
                     music.setVolume(music.getVolume() - 10);
                     sound.setVolume(sound.getVolume() - 10);
                     sound.play();
                 }
                 // Volume Up
-                else if (event.key.code == sf::Keyboard::Key::Up){
+                else if (event.key.code == sf::Keyboard::Key::Equal){
                     music.setVolume(music.getVolume() + 10);
                     sound.setVolume(sound.getVolume() + 10);
                     sound.play();
@@ -150,7 +201,9 @@ int main()
         window.draw(map);
         window.draw(cur.getSprite());
         window.draw(sidebar);
+		sidekick.draw(window);
         window.display();
+		
     }
 
     return 0;
