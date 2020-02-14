@@ -72,7 +72,6 @@ $(TACTOBJ)Cursor.o : $(TACTSRC)Cursor.cpp
 
 $(TACTOBJ)Sidebar.o : $(TACTSRC)Sidebar.cpp
 	$(COMPILE) $(TACTSRC)Sidebar.cpp -o $(TACTOBJ)Sidebar.o
-
 clean :
 	@rm -f $(SRCOBJ)main.o
 	@rm -f $(LIBOBJ)*.o
