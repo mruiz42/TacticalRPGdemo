@@ -15,8 +15,9 @@
 
 class VertexMap : public sf::Drawable, public sf::Transformable {
 public:
-    bool loadMap(const std::string& tileset_img_path, const std::string& cur_img_path, sf::Vector2u tileSize,
-            int tiles[][22], const unsigned int w, const unsigned int h);
+    VertexMap();
+        bool loadMap(const std::string& tileset_img_path, const std::string& cur_img_path, sf::Vector2u tileSize,
+            const unsigned int w, const unsigned int h);
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     sf::VertexArray m_vertices;
@@ -24,6 +25,7 @@ private:
     sf::Texture m_cursor_texture;
     sf::Texture m_sidebar_texture;
     sf::Sprite m_cursor;
+    std::vector<std::vector<int> > tiles;
 };
 
 
