@@ -22,6 +22,7 @@ private:
             unsigned int newSpeed, unsigned int newSpecialAttack, unsigned int newSpecialDefense);
     sf::Sprite returnSprite();
     void moveSprite(float,float);
+    void resizeSprite(float,float);
 };
 
 

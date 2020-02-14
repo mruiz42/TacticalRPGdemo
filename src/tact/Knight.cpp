@@ -48,3 +48,8 @@ void Knight :: moveSprite(float x, float y)
 {
     knight_sprite.move(sf::Vector2f(x,y));
 }
+
+void Knight ::resizeSprite(float x,float y)
+{
+    knight_sprite.setScale(sf::Vector2f(x,y));
+}

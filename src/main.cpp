@@ -40,6 +40,9 @@ int main()
     // Cursor
     Cursor cur("./share/sprites/cursor.png", 0, 0);
 
+    //Knight
+    Knight k;
+
 	// add background music (stream directly from music file)
 	sf::Music music;
 	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
@@ -96,6 +99,15 @@ int main()
                     if (cur.getSprite().getPosition().y < 672)
                         cur.moveSprite(0, TEXTURE_SIZE);
                 }
+
+                else if (event.key.code == sf :: Keyboard::Return)
+                {
+                    if (cur.returnSprite().getPosition() == k.returnSprite().getPosition())
+                    {
+                        
+                        k.resizeSprite(1.1,1.1);
+                    }
+                }
                 // Volume Down
                 else if (event.key.code == sf::Keyboard::Key::Down){
                     music.setVolume(music.getVolume() - 10);
@@ -146,6 +158,8 @@ int main()
         window.draw(map);
         window.draw(cur.getSprite());
         window.draw(sidebar);
+        window.draw(k.returnSprite());
+        window.draw(cur.returnSprite());
         window.display();
     }
 
