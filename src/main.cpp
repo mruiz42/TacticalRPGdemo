@@ -31,22 +31,25 @@ public:
 		{ exit(101); }
 		
 		sidekick[0].setFont(font);
-		sidekick[0].setFillColor(sf::Color::Red);
-		sidekick[0].setString("ATTACK");
-		sidekick[0].setCharacterSize(40);
-		sidekick[0].setPosition(sf::Vector2f(1077, 560));
-		
-		sidekick[1].setFont(font);
-		sidekick[1].setFillColor(sf::Color::White);
-		sidekick[1].setString("DEFEND");
-		sidekick[1].setCharacterSize(40);
-		sidekick[1].setPosition(sf::Vector2f(1070, 600));
-		
-		sidekick[2].setFont(font);
-		sidekick[2].setFillColor(sf::Color::White);
-		sidekick[2].setString("MOVE");
-		sidekick[2].setCharacterSize(40);
-		sidekick[2].setPosition(sf::Vector2f(1094, 640));
+        sidekick[0].setFillColor(sf::Color::Red);
+        sidekick[0].setString("ATTACK");
+        sidekick[0].setCharacterSize(32);
+        int p0w = 1024 + 256/2 - sidekick[0].getLocalBounds().width/2;
+        sidekick[0].setPosition(sf::Vector2f(p0w, 560));
+
+        sidekick[1].setFont(font);
+        sidekick[1].setFillColor(sf::Color::White);
+        sidekick[1].setString("DEFEND");
+        sidekick[1].setCharacterSize(32);
+        int p1w = 1024 + 256/2 - sidekick[1].getLocalBounds().width/2;
+        sidekick[1].setPosition(sf::Vector2f(p1w, 600));
+
+        sidekick[2].setFont(font);
+        sidekick[2].setFillColor(sf::Color::White);
+        sidekick[2].setString("MOVE");
+        sidekick[2].setCharacterSize(32);
+        int p2w = 1024 + 256/2 - sidekick[2].getLocalBounds().width/2;
+        sidekick[2].setPosition(sf::Vector2f(p2w, 640));
 	}
 	~Sidekick(){}
 	
@@ -118,80 +121,85 @@ int main()
         sf::Event event;
         while (window.pollEvent(event)) {
             // Poll for events
-            if (event.type == sf::Event::Closed)
-                window.close();
-            // Keyboard input events
-            else if (event.type == sf::Event::KeyPressed)
-            {
-                // Right
-                if(event.key.code == sf::Keyboard::D)
-                {
-                    if (cur.getSprite().getPosition().x < 992)
-                        cur.moveSprite(TEXTURE_SIZE, 0);
-                }
-                // Left
-                else if(event.key.code == sf::Keyboard::A)
-                {
-                    if (cur.getSprite().getPosition().x > 0)
-                        cur.moveSprite(-TEXTURE_SIZE, 0);
-                }
-                // Up
-                else if(event.key.code == sf::Keyboard::W)
-                {
-                    if (cur.getSprite().getPosition().y > 0)
-                        cur.moveSprite(0, -TEXTURE_SIZE);
-                }
-                // Down
-                else if(event.key.code == sf::Keyboard::S)
-                {
-                    if (cur.getSprite().getPosition().y < 672)
-                        cur.moveSprite(0, TEXTURE_SIZE);
-                }
-                // Volume Down
-                else if (event.key.code == sf::Keyboard::Key::Dash){
-                    music.setVolume(music.getVolume() - 10);
-                    sound.setVolume(sound.getVolume() - 10);
-                    sound.play();
-                }
-                // Volume Up
-                else if (event.key.code == sf::Keyboard::Key::Equal){
-                    music.setVolume(music.getVolume() + 10);
-                    sound.setVolume(sound.getVolume() + 10);
-                    sound.play();
-                    if (music.getVolume() >= 100){
-                        music.setVolume(100);
-                        sound.setVolume(100);
-                    }
-                }}
-            // Controller input events
-            else if (event.type == sf::Event::JoystickMoved) {
-                // Get direction of D pad press
-                int p_x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
-                int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
-                // Down
-                if (p_y > 0) {
-                    if (cur.getSprite().getPosition().y < 672)
-                        cur.moveSprite(0, TEXTURE_SIZE);
-                }
-                // Up
-                else if (p_y < 0) {
-                    if (cur.getSprite().getPosition().y > 0)
-                        cur.moveSprite(0, -TEXTURE_SIZE);
-                }
-                // Left
-                else if (p_x < 0) {
-                    if (cur.getSprite().getPosition().x > 0)
-                        cur.moveSprite(-TEXTURE_SIZE, 0);
-                }
-                // Right
-                else if (p_x > 0) {
-                    if (cur.getSprite().getPosition().x < 992)
-                        cur.moveSprite(TEXTURE_SIZE, 0);
-                }
-                std::cout << "(" << cur.getSprite().getPosition().x << "," << cur.getSprite().getPosition().y << std::endl;
-
+			switch(event.type)
+			{
+				case sf::Event::Closed:	
+					window.close();
+					break;
+					
+				case sf::Event::KeyPressed:     // Keyboard input events
+					switch(event.key.code)
+					{
+						case sf::Keyboard::D:   // Right
+							if (cur.getSprite().getPosition().x < 992)
+								cur.moveSprite(TEXTURE_SIZE, 0);
+							break;
+							
+						case sf::Keyboard::A:  // Left
+							if (cur.getSprite().getPosition().x > 0)
+								cur.moveSprite(-TEXTURE_SIZE, 0);
+							break;
+							
+						case sf::Keyboard::W: // UP
+							if (cur.getSprite().getPosition().y > 0)
+								cur.moveSprite(0, -TEXTURE_SIZE);
+							break;
+							
+						case sf::Keyboard::S: // DOWN
+							if (cur.getSprite().getPosition().y < 672)
+								cur.moveSprite(0, TEXTURE_SIZE);
+							break;
+						
+						case sf::Keyboard::Key::Dash: // Volume Down
+							music.setVolume(music.getVolume() - 10);
+							sound.setVolume(sound.getVolume() - 10);
+							sound.play();
+							break;
+						case sf::Keyboard::Key::Equal:  // Volume Up
+							music.setVolume(music.getVolume() + 10);
+							sound.setVolume(sound.getVolume() + 10);
+							sound.play();
+							if (music.getVolume() >= 100){
+								music.setVolume(100);
+								sound.setVolume(100);
+							}
+							break;
+					}
+					
+				case sf::Event::MouseButtonPressed:  // Mouse events
+					if(event.key.code == sf::Mouse::Left)
+						std::cout << "Mouse left button pressed" << std:: endl;
+					break;
+			}
+			if(event.type == sf::Event::JoystickMoved)  // Controller input events
+			{
+					// Get direction of D pad press
+					int p_x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
+					int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
+						// Down
+					if (p_y > 0) {
+						if (cur.getSprite().getPosition().y < 672)
+							cur.moveSprite(0, TEXTURE_SIZE);
+					}
+					// Up
+					else if (p_y < 0) {
+						if (cur.getSprite().getPosition().y > 0)
+							cur.moveSprite(0, -TEXTURE_SIZE);
+					}
+					// Left
+					else if (p_x < 0) {
+						if (cur.getSprite().getPosition().x > 0)
+							cur.moveSprite(-TEXTURE_SIZE, 0);
+					}
+					// Right
+					else if (p_x > 0) {
+						if (cur.getSprite().getPosition().x < 992)
+							cur.moveSprite(TEXTURE_SIZE, 0);
+					}
+					std::cout << "(" << cur.getSprite().getPosition().x << "," << cur.getSprite().getPosition().y << std::endl;
             }
-        }
+			///std::cout << sf::Mouse::getPosition(window).x << std::endl;
+		}
         // Refresh screen
         window.clear();
         window.draw(map);
@@ -199,9 +207,6 @@ int main()
         window.draw(sidebar);
 		sidekick.draw(window);
         window.display();
-		
     }
-
     return 0;
-
 }
