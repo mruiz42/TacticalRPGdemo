@@ -8,7 +8,8 @@
 #include <SFML/Graphics/Sprite.hpp>
 class Character {
 private:
-    //sf::Sprite();
+    sf::Sprite sidebar_sprite;
+    sf::Sprite map_sprite;
     std::string name;
     unsigned int level;
     unsigned int experience;

@@ -12,13 +12,15 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <iostream>
+// we wanna display character picture, name, hp, mp, (stats?) then user options
 class Sidebar : public sf::Drawable, public sf::Transformable {
 private:
-    sf::Texture background;
+    sf::Texture sidebar_background;
     sf::Sprite sidebar;
+
 public:
     Sidebar(std::string);
-    sf::Texture getBackground() const { return this->background; }
+    sf::Texture getBackground() const { return this->sidebar_background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

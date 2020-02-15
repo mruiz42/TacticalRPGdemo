@@ -27,26 +27,29 @@ class Sidekick
 public:
 	Sidekick(float width, float height)
 	{
-		if(!font.loadFromFile(root_path + "share/resources/arial.ttf"))
+		if(!font.loadFromFile(root_path + "share/resources/Hack.ttf"))
 		{ exit(101); }
 		
 		sidekick[0].setFont(font);
 		sidekick[0].setFillColor(sf::Color::Red);
 		sidekick[0].setString("ATTACK");
-		sidekick[0].setCharacterSize(40);
-		sidekick[0].setPosition(sf::Vector2f(1077, 560));
-		
+		sidekick[0].setCharacterSize(32);
+        int p0w = 1024 + 256/2 - sidekick[0].getLocalBounds().width/2;
+        sidekick[0].setPosition(sf::Vector2f(p0w, 560));
+
 		sidekick[1].setFont(font);
 		sidekick[1].setFillColor(sf::Color::White);
 		sidekick[1].setString("DEFEND");
-		sidekick[1].setCharacterSize(40);
-		sidekick[1].setPosition(sf::Vector2f(1070, 600));
-		
+		sidekick[1].setCharacterSize(32);
+        int p1w = 1024 + 256/2 - sidekick[1].getLocalBounds().width/2;
+        sidekick[1].setPosition(sf::Vector2f(p1w, 600));
+
 		sidekick[2].setFont(font);
 		sidekick[2].setFillColor(sf::Color::White);
 		sidekick[2].setString("MOVE");
-		sidekick[2].setCharacterSize(40);
-		sidekick[2].setPosition(sf::Vector2f(1094, 640));
+		sidekick[2].setCharacterSize(32);
+        int p2w = 1024 + 256/2 - sidekick[2].getLocalBounds().width/2;
+        sidekick[2].setPosition(sf::Vector2f(p2w, 640));
 	}
 	~Sidekick(){}
 	
@@ -62,9 +65,6 @@ private:
 	sf::Font font;
 	sf::Text sidekick[MAX_NUM_SIDEBAR_ITEMS];
 };
-	
-	
-	
 
 int main()
 {
@@ -88,10 +88,10 @@ int main()
 
 	// add background music (stream directly from music file)
 	sf::Music music;
-	if(!music.openFromFile(root_path + "share/audio/BattleTheme.wav")){
-		std::cout << "Error: backgound music." << std::endl;
-		return -1;
-	}
+//	if(!music.openFromFile(root_path + "share/audio/BattleTheme.wav")){
+//		std::cout << "Error: backgound music." << std::endl;
+//		return -1;
+//	}
 	music.setVolume(50);  /// range 0 - 100
 	music.play();
 
