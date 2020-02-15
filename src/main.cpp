@@ -20,6 +20,8 @@ const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 
+
+
 int main()
 {
     Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
@@ -41,8 +43,10 @@ int main()
     Cursor cur("./share/sprites/cursor.png", 0, 0);
 
     //Knight
-    Knight k;
-
+    Knight k1(2);
+    Knight k2(2);
+    Knight* negativeX = new Knight(2);
+    bool status = false;
 	// add background music (stream directly from music file)
 	sf::Music music;
 	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
@@ -100,13 +104,20 @@ int main()
                         cur.moveSprite(0, TEXTURE_SIZE);
                 }
 
-                else if (event.key.code == sf :: Keyboard::Return)
+                else if (event.key.code == sf :: Keyboard::Return && status == false)
                 {
-                    if (cur.returnSprite().getPosition() == k.returnSprite().getPosition())
+                    
+                    if (cur.getSprite().getPosition() == k1.returnSprite().getPosition())
                     {
-                        
-                        k.resizeSprite(1.1,1.1);
+                        status = true;
                     }
+                }
+
+                else if (event.key.code == sf:: Keyboard :: Return && status == true)
+                {
+                     k1.set(cur.getSprite().getPosition());
+                     status = false;
+                        
                 }
                 // Volume Down
                 else if (event.key.code == sf::Keyboard::Key::Down){
@@ -157,12 +168,16 @@ int main()
         window.clear();
         window.draw(map);
         window.draw(cur.getSprite());
+       
         window.draw(sidebar);
-        window.draw(k.returnSprite());
-        window.draw(cur.returnSprite());
+        window.draw(k1.returnSprite());
+        //window.draw(negativeX->returnSprite());
+        
         window.display();
     }
 
     return 0;
 
 }
+
+
