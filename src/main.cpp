@@ -20,54 +20,8 @@ const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 
-///#pragma once
-#define MAX_NUM_SIDEBAR_ITEMS 3
-class Sidekick
-{
-public:
-	Sidekick(float width, float height)
-	{
-		if(!font.loadFromFile(root_path + "share/resources/arial.ttf"))
-		{ exit(101); }
-		
-		sidekick[0].setFont(font);
-        sidekick[0].setFillColor(sf::Color::Red);
-        sidekick[0].setString("ATTACK");
-        sidekick[0].setCharacterSize(32);
-        int p0w = 1024 + 256/2 - sidekick[0].getLocalBounds().width/2;
-        sidekick[0].setPosition(sf::Vector2f(p0w, 560));
+///#pragma once ???
 
-        sidekick[1].setFont(font);
-        sidekick[1].setFillColor(sf::Color::White);
-        sidekick[1].setString("DEFEND");
-        sidekick[1].setCharacterSize(32);
-        int p1w = 1024 + 256/2 - sidekick[1].getLocalBounds().width/2;
-        sidekick[1].setPosition(sf::Vector2f(p1w, 600));
-
-        sidekick[2].setFont(font);
-        sidekick[2].setFillColor(sf::Color::White);
-        sidekick[2].setString("MOVE");
-        sidekick[2].setCharacterSize(32);
-        int p2w = 1024 + 256/2 - sidekick[2].getLocalBounds().width/2;
-        sidekick[2].setPosition(sf::Vector2f(p2w, 640));
-	}
-	~Sidekick(){}
-	
-	void draw(sf::RenderWindow &window)
-	{
-		for(int i =0; i < MAX_NUM_SIDEBAR_ITEMS; i++)
-			window.draw(sidekick[i]);
-	}
-	void MoveUp();
-	void MoveDown();
-private:
-	int selectedItemIndex;
-	sf::Font font;
-	sf::Text sidekick[MAX_NUM_SIDEBAR_ITEMS];
-};
-	
-	
-	
 
 int main()
 {
@@ -110,10 +64,8 @@ int main()
 	sound.setVolume(50);	/// range 0-100
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
 	
-	/// add sidekick
-	Sidekick sidekick(window.getSize().x, window.getSize().y);
-	
-	
+	/// display character's info on sidebar
+	sidebar.createStat(window.getSize().x, window.getSize().y, root_path + "share/resources/ALGER.ttf");
 
     while (window.isOpen())
     {
@@ -205,7 +157,7 @@ int main()
         window.draw(map);
         window.draw(cur.getSprite());
         window.draw(sidebar);
-		sidekick.draw(window);
+		sidebar.drawStat(window);
         window.display();
     }
     return 0;
