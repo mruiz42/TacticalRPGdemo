@@ -16,6 +16,13 @@
 #define WINDOW_HEIGHT 704
 #define TEXTURE_SIZE 32
 
+const int HP_MAX = 200;
+const int HP_MIN = 0;
+const int HP_RAISE = 5;
+const int HP_DROP = 10;
+static int HP = 100;
+const std::string fontFileName = "share/resources/ALGER.ttf";
+
 const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
@@ -25,6 +32,7 @@ const std::string root_path = "./";    // Linux
 
 int main()
 {
+
     Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
 
     const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
@@ -65,7 +73,7 @@ int main()
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
 	
 	/// display character's info on sidebar
-	sidebar.createStat(window.getSize().x, window.getSize().y, root_path + "share/resources/ALGER.ttf");
+	sidebar.createStat(window.getSize().x, window.getSize().y, root_path + fontFileName);
 
     while (window.isOpen())
     {
@@ -119,8 +127,10 @@ int main()
 					}
 					
 				case sf::Event::MouseButtonPressed:  // Mouse events
-					if(event.key.code == sf::Mouse::Left)
+					if(event.key.code == sf::Mouse::Left){
+						sidebar.hp_raise(HP, HP_MAX, HP_RAISE, window.getSize().x, window.getSize().y, root_path + fontFileName, window);
 						std::cout << "Mouse left button pressed" << std:: endl;
+					}
 					break;
 			}
 			if(event.type == sf::Event::JoystickMoved)  // Controller input events
