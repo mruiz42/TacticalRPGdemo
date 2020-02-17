@@ -45,7 +45,7 @@ int main()
     //Knight
     Knight k1(2);
     Knight k2(2);
-    Knight* negativeX = new Knight(2);
+    
     bool status = false;
 	// add background music (stream directly from music file)
 	sf::Music music;
@@ -103,16 +103,20 @@ int main()
                     if (cur.getSprite().getPosition().y < 672)
                         cur.moveSprite(0, TEXTURE_SIZE);
                 }
+                
 
+                // use to select a sprite
                 else if (event.key.code == sf :: Keyboard::Return && status == false)
                 {
                     
                     if (cur.getSprite().getPosition() == k1.returnSprite().getPosition())
                     {
                         status = true;
+                        k1.spriteFade();
                     }
                 }
 
+                //use to select for a sprite to move
                 else if (event.key.code == sf:: Keyboard :: Return && status == true)
                 {
                      k1.set(cur.getSprite().getPosition());
@@ -171,7 +175,11 @@ int main()
        
         window.draw(sidebar);
         window.draw(k1.returnSprite());
-        //window.draw(negativeX->returnSprite());
+        window.draw(k1.return_Negative_x());
+        window.draw(k1.return_Negative_y());
+        window.draw(k1.return_Postive_x());
+        window.draw(k1.return_Postive_y());
+        
         
         window.display();
     }

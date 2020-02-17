@@ -16,6 +16,17 @@ Knight::Knight(int colorSelect)
     
         knight_sprite.setTexture(knight_texture);
         knight_sprite.setColor(sf::Color(255,255,255));
+        
+        knight_sprite_Negative_x.setTexture(knight_texture);
+        knight_sprite_Negative_y.setTexture(knight_texture);
+        knight_sprite_Postive_x.setTexture(knight_texture);
+        knight_sprite_Postive_y.setTexture(knight_texture);
+
+        knight_sprite_Postive_x.setColor(sf::Color(255,255,255,128));
+        knight_sprite_Postive_y.setColor(sf::Color(255,255,255,128));
+        knight_sprite_Negative_x.setColor(sf::Color(255,255,255,128));
+        knight_sprite_Negative_y.setColor(sf::Color(255,255,255,128));
+
     }
 
     else if (colorSelect == 2) //Green Knight
@@ -29,7 +40,16 @@ Knight::Knight(int colorSelect)
     
         knight_sprite.setTexture(knight_texture);
         knight_sprite.setColor(sf::Color(255,255,255));
-        knight_sprite.move(sf::Vector2f(32.f,32.f));
+
+        knight_sprite_Negative_x.setTexture(knight_texture);
+        knight_sprite_Negative_y.setTexture(knight_texture);
+        knight_sprite_Postive_x.setTexture(knight_texture);
+        knight_sprite_Postive_y.setTexture(knight_texture);
+
+        knight_sprite_Postive_x.setColor(sf::Color(255,255,255,128));
+        knight_sprite_Postive_y.setColor(sf::Color(255,255,255,128));
+        knight_sprite_Negative_x.setColor(sf::Color(255,255,255,128));
+        knight_sprite_Negative_y.setColor(sf::Color(255,255,255,128));
     }
     
     
@@ -74,13 +94,41 @@ void Knight ::resizeSprite(float x,float y)
     knight_sprite.setScale(sf::Vector2f(x,y));
 }
 
-void Knight::spriteFade(Knight passedKnight)
+void Knight::spriteFade()
 {
-    Knight* negativeX = new Knight(2);
+    knight_sprite_Negative_x.move(sf::Vector2f(-32.f,0.f));
+    knight_sprite_Negative_y.move(sf::Vector2f(0.f,-32.f));
+    knight_sprite_Postive_x.move(sf::Vector2f(32.f,0.f));
+    knight_sprite_Postive_y.move(sf::Vector2f(0.f,32.f));
    
 }
+
 
 void Knight::set(const sf::Vector2f & input)
 {
     knight_sprite.setPosition(input);
+    knight_sprite_Negative_x.setPosition(input);
+    knight_sprite_Negative_y.setPosition(input);
+    knight_sprite_Postive_x.setPosition(input);
+    knight_sprite_Postive_y.setPosition(input);
+}
+
+sf::Sprite Knight:: return_Negative_x()
+{
+    return knight_sprite_Negative_x;
+}
+
+sf::Sprite Knight:: return_Negative_y()
+{
+    return knight_sprite_Negative_y;
+}
+
+sf::Sprite Knight:: return_Postive_x()
+{
+    return knight_sprite_Postive_x;
+}
+
+sf::Sprite Knight:: return_Postive_y()
+{
+    return knight_sprite_Postive_y;
 }

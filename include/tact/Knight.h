@@ -17,6 +17,10 @@ private:
     std::string FileNameGreen = "./share/sprites/Game/newKnightGreen.png";
     sf::Texture knight_texture;
     sf::Sprite knight_sprite;
+    sf::Sprite knight_sprite_Negative_y;
+    sf::Sprite knight_sprite_Negative_x;
+    sf::Sprite knight_sprite_Postive_x;
+    sf::Sprite knight_sprite_Postive_y;
     public:
     Knight(int);
     Knight(std::string newName,unsigned int newLevel, unsigned int experience,
@@ -26,9 +30,14 @@ private:
     sf::Sprite returnSprite();
     void moveSprite(float,float);
     void resizeSprite(float,float);
-    void spriteFade(Knight);
-    void set(const sf::Vector2f&);
+    void spriteFade();
     
+
+    void set(const sf::Vector2f&);
+    sf::Sprite return_Negative_x();
+    sf::Sprite return_Negative_y();
+    sf::Sprite return_Postive_x();
+    sf::Sprite return_Postive_y();    
 };
 
 
