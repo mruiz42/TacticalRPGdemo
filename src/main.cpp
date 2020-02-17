@@ -209,7 +209,7 @@ int main()
 					}
 					std::cout << "(" << cur.getSprite().getPosition().x << "," << cur.getSprite().getPosition().y << std::endl;
             }
-			///std::cout << sf::Mouse::getPosition(window).x << std::endl;
+			std::cout << sf::Mouse::getPosition(window).x << "," << sf::Mouse::getPosition(window).y << std::endl;
 		}
         // Refresh screen
         window.clear();
