@@ -102,6 +102,10 @@ int main()
 //		std::cout << "Error: backgound music." << std::endl;
 //		return -1;
 //	}
+//	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
+//		std::cout << "Error: backgound music." << std::endl;
+//		return -1;
+//	}
 	music.setVolume(50);  /// range 0 - 100
 	music.play();
 
@@ -116,7 +120,7 @@ int main()
 	sound.setBuffer(buffer);
 	sound.setVolume(50);	/// range 0-100
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
-	
+
 	/// display character's info on sidebar
 	sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_path + fontFileName);
 
