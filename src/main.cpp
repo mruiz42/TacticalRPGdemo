@@ -49,10 +49,10 @@ int main()
     bool status = false;
 	// add background music (stream directly from music file)
 	sf::Music music;
-	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
-		std::cout << "Error: backgound music." << std::endl;
-		return -1;
-	}
+//	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
+//		std::cout << "Error: backgound music." << std::endl;
+//		return -1;
+//	}
 	music.setVolume(50);  /// range 0 - 100
 	music.play();
 
