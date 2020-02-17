@@ -12,16 +12,33 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <iostream>
-// we wanna display character picture, name, hp, mp, (stats?) then user options
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <sstream>
+
+const int MAX_NUM_STAT_ITEMS = 10;
+const int WORDHEIGHT = 40;
+
 class Sidebar : public sf::Drawable, public sf::Transformable {
 private:
-    sf::Texture sidebar_background;
+    sf::Texture background;
     sf::Sprite sidebar;
+
+	sf::Font font;
+	sf::Text stat[MAX_NUM_STAT_ITEMS];
+	sf::Text HPtext;
+
 
 public:
     Sidebar(std::string);
-    sf::Texture getBackground() const { return this->sidebar_background; }
+    sf::Texture getBackground() const { return this->background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+	void createStat(float const width, float const height, std::string filename);
+	void drawStat(sf::RenderTarget &window);
+
+	void hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window);
+
 };
 
 
