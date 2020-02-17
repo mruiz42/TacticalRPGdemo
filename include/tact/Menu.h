@@ -5,6 +5,7 @@
 #ifndef CIS29GROUP2GAME_MENU_H
 #define CIS29GROUP2GAME_MENU_H
 
+#include <SFML/Audio.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>

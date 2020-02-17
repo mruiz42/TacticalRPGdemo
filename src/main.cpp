@@ -66,8 +66,6 @@ int main()
                             window.close();
                             break;                          
                     }
-
-
                 }
                 break;
             case sf::Event::Closed:
