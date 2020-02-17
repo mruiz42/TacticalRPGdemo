@@ -21,7 +21,7 @@ const int HP_MIN = 0;
 const int HP_RAISE = 5;
 const int HP_DROP = 10;
 static int HP = 100;
-const std::string fontFileName = "share/resources/ALGER.ttf";
+const std::string fontFileName = "share/resources/Hack.ttf";
 
 const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?

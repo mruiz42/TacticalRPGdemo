@@ -5,10 +5,10 @@
 #include "../../include/tact/Sidebar.h"
 
 Sidebar::Sidebar(std::string filename){
-    if(!this->sidebar_background.loadFromFile(filename, sf::IntRect(0, 0, 256, 704))) {
+    if(!this->background.loadFromFile(filename, sf::IntRect(0, 0, 256, 704))) {
         std::cout << "Could not open: " + filename << std::endl;
     }
-    sidebar.setTexture(sidebar_background);
+    sidebar.setTexture(background);
     sidebar.setPosition(1024,0);
 }
 
@@ -16,7 +16,7 @@ void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // apply the transform
     states.transform *= getTransform();
     // apply the tileset texture
-    states.texture = &sidebar_background;
+    states.texture = &background;
     // draw the vertex array
     target.draw(sidebar, states);
 }
@@ -26,7 +26,7 @@ void Sidebar::createStat(float const width, float const height, std::string file
 		std::cout << "Could not open: " + filename << std::endl;
 	}
 	
-	std::string stat_name[MAX_NUM_STAT_ITEMS] = {"Player Red", "Level", "Exp", "HP", "MP", "Attack", "Defense", "Speed", "Special\nAttack", "Special\nDefense"};
+	std::string stat_name[MAX_NUM_STAT_ITEMS] = {"Player Red", "LV", "EXP", "HP", "MP", "ATK", "DEF", "SPD", "SP.ATK", "SP.DEF"};
 	
 	for(int i = 0; i < MAX_NUM_STAT_ITEMS; i++) {
 		int pw = 1024 + 20 - stat[i].getLocalBounds().width/2;
@@ -35,7 +35,7 @@ void Sidebar::createStat(float const width, float const height, std::string file
 		stat[i].setFillColor(sf::Color::Red);
 		stat[i].setOutlineColor(sf::Color::Yellow);
 		stat[i].setString(stat_name[i]);
-		stat[i].setCharacterSize(32);
+		stat[i].setCharacterSize(16);
 		if(i < 9)
 			stat[i].setPosition(sf::Vector2f(pw, height/4 + i * WORDHEIGHT));
 		else 
