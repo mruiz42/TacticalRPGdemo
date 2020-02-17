@@ -27,19 +27,23 @@ void Sidebar::createStat(float const width, float const height, std::string file
 	}
 	
 	std::string stat_name[MAX_NUM_STAT_ITEMS] = {"Player Red", "LV", "EXP", "HP", "MP", "ATK", "DEF", "SPD", "SP.ATK", "SP.DEF"};
-	
+
 	for(int i = 0; i < MAX_NUM_STAT_ITEMS; i++) {
 		int pw = 1024 + 20 - stat[i].getLocalBounds().width/2;
-
+		int ph =
 		stat[i].setFont(font);
-		stat[i].setFillColor(sf::Color::Red);
-		stat[i].setOutlineColor(sf::Color::Yellow);
+		stat[i].setFillColor(sf::Color::White);
+		stat[i].setOutlineColor(sf::Color::Red);
 		stat[i].setString(stat_name[i]);
 		stat[i].setCharacterSize(16);
-		if(i < 9)
-			stat[i].setPosition(sf::Vector2f(pw, height/4 + i * WORDHEIGHT));
-		else 
-			stat[i].setPosition(sf::Vector2f(pw, height/4 + i * WORDHEIGHT + 40));
+		if(i == 0)
+			stat[i].setPosition(sf::Vector2f(pw, 10));
+		else if ( i != 0 && i < 9){
+            stat[i].setPosition(sf::Vector2f(pw, 10));
+
+        }
+		else
+			stat[i].setPosition(sf::Vector2f(pw, height/4));
 	}
 }
 
@@ -60,6 +64,7 @@ void Sidebar::hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float cons
 	HPtext.setCharacterSize(32);
 	HPtext.setPosition(sf::Vector2f(pw, height/4 + 3 * WORDHEIGHT));
 	std::stringstream ss;
+
 	for(int i = 0; i <= HP_RAISE && HP <= HP_MAX; i++, HP++) {
 		ss << HP;
 		HPtext.setString(ss.str());

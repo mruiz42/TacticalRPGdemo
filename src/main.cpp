@@ -21,7 +21,7 @@ const int HP_MIN = 0;
 const int HP_RAISE = 5;
 const int HP_DROP = 10;
 static int HP = 100;
-const std::string fontFileName = "share/resources/Hack.ttf";
+const std::string fontFileName = "share/resources/PressStart2P-Regular.ttf";
 
 const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
@@ -34,7 +34,7 @@ class Sidekick
 public:
 	Sidekick(float width, float height)
 	{
-		if(!font.loadFromFile(root_path + "share/resources/Hack.ttf"))
+		if(!font.loadFromFile(root_path + "share/resources/ChunkyDunk.ttf"))
 		{ exit(101); }
 
 		sidekick[0].setFont(font);
@@ -118,7 +118,7 @@ int main()
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
 	
 	/// display character's info on sidebar
-	sidebar.createStat(window.getSize().x, window.getSize().y, root_path + fontFileName);
+	sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_path + fontFileName);
 
     while (window.isOpen())
     {

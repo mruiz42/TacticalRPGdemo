@@ -17,7 +17,6 @@
 #include <sstream>
 
 const int MAX_NUM_STAT_ITEMS = 10;
-const int WORDHEIGHT = 40;
 
 class Sidebar : public sf::Drawable, public sf::Transformable {
 private:
