@@ -27,7 +27,6 @@ const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 
-///#pragma once
 #define MAX_NUM_SIDEBAR_ITEMS 3
 class Sidekick
 {
@@ -72,7 +71,6 @@ private:
 	sf::Font font;
 	sf::Text sidekick[MAX_NUM_SIDEBAR_ITEMS];
 };
-///#pragma once ???
 
 
 int main()
@@ -209,7 +207,7 @@ int main()
 					}
 					std::cout << "(" << cur.getSprite().getPosition().x << "," << cur.getSprite().getPosition().y << std::endl;
             }
-			std::cout << sf::Mouse::getPosition(window).x << "," << sf::Mouse::getPosition(window).y << std::endl;
+//			std::cout << sf::Mouse::getPosition(window).x << "," << sf::Mouse::getPosition(window).y << std::endl;
 		}
         // Refresh screen
         window.clear();
