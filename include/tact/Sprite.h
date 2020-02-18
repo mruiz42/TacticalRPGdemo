@@ -14,10 +14,21 @@ protected:
     std::string filename;
     sf::Texture texture;
     sf::Sprite sprite;
+    sf::Sprite sprite_Negative_y;
+    sf::Sprite sprite_Negative_x;
+    sf::Sprite sprite_Positive_x;
+    sf::Sprite sprite_Positive_y;
 public:
     Sprite(std::string);
     sf::Sprite getSprite();
     void moveSprite(float x, float y);
+    void spriteFade();
+    void set(const sf::Vector2f&);
+    
+    sf::Sprite return_Negative_x();
+    sf::Sprite return_Negative_y();
+    sf::Sprite return_Postive_x();
+    sf::Sprite return_Postive_y();    
 };
 
 

@@ -20,6 +20,10 @@ const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 
+//Sprites File Path
+std::string FileNamePurple = "./share/sprites/Game/newKnightPurple.png";
+std::string FileNameGreen = "./share/sprites/Game/newKnightGreen.png";
+
 
 
 int main()
@@ -43,8 +47,8 @@ int main()
     Cursor cur("./share/sprites/cursor.png", 0, 0);
 
     //Knight
-    Knight k1(2);
-    Knight k2(2);
+    Knight k1(FileNamePurple,32,32);
+    
     
     bool status = false;
 	// add background music (stream directly from music file)
@@ -109,18 +113,19 @@ int main()
                 else if (event.key.code == sf :: Keyboard::Return && status == false)
                 {
                     
-                    if (cur.getSprite().getPosition() == k1.returnSprite().getPosition())
+                    if (cur.getSprite().getPosition() == k1.getSprite().getPosition())
                     {
                         status = true;
                         k1.spriteFade();
+                        
                     }
                 }
 
                 //use to select for a sprite to move
                 else if (event.key.code == sf:: Keyboard :: Return && status == true)
                 {
-                     k1.set(cur.getSprite().getPosition());
-                     status = false;
+                    k1.set(cur.getSprite().getPosition());
+                    status = false;
                         
                 }
                 // Volume Down
@@ -174,7 +179,7 @@ int main()
         window.draw(cur.getSprite());
        
         window.draw(sidebar);
-        window.draw(k1.returnSprite());
+        window.draw(k1.getSprite());
         window.draw(k1.return_Negative_x());
         window.draw(k1.return_Negative_y());
         window.draw(k1.return_Postive_x());

@@ -10,34 +10,19 @@
 #include "Sprite.h"
 #include <string>
 // Medium defense, medium attack
-class Knight : public Character {
+class Knight : public Sprite, public Character {
 private:
     Character knight;
-    std::string FileNamePurple = "./share/sprites/Game/newKnightPurple.png";
-    std::string FileNameGreen = "./share/sprites/Game/newKnightGreen.png";
-    sf::Texture knight_texture;
-    sf::Sprite knight_sprite;
-    sf::Sprite knight_sprite_Negative_y;
-    sf::Sprite knight_sprite_Negative_x;
-    sf::Sprite knight_sprite_Postive_x;
-    sf::Sprite knight_sprite_Postive_y;
-    public:
-    Knight(int);
-    Knight(std::string newName,unsigned int newLevel, unsigned int experience,
-            unsigned int newHitPoints, unsigned int newManaPoints,unsigned int newAttack,unsigned int newDefense,
-            unsigned int newSpeed, unsigned int newSpecialAttack, unsigned int newSpecialDefense);
+    int x_pos;
+    int y_pos;
     
-    sf::Sprite returnSprite();
-    void moveSprite(float,float);
-    void resizeSprite(float,float);
-    void spriteFade();
+public:
+    Knight(std::string s, int x, int y);
+    
     
 
-    void set(const sf::Vector2f&);
-    sf::Sprite return_Negative_x();
-    sf::Sprite return_Negative_y();
-    sf::Sprite return_Postive_x();
-    sf::Sprite return_Postive_y();    
+    
+     
 };
 
 
