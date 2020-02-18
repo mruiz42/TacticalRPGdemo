@@ -59,23 +59,42 @@ void Sidebar::drawStat(sf::RenderTarget &window) {
 		window.draw(stat[i]);
 }
 
-void Sidebar::hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window) {
+void Sidebar::setStats(Character &c1, float const width, float const height, std::string filename) {
 	if(!font.loadFromFile(filename)) {
 		std::cout << "Could not open: " + filename << std::endl;
 	}
-	
-	int pw = 1024 + 20 - 1024/2 + 30;
-	HPtext.setFont(font);
-	HPtext.setFillColor(sf::Color::Black);
-	HPtext.setOutlineColor(sf::Color::Yellow);
-	HPtext.setCharacterSize(32);
-	HPtext.setPosition(sf::Vector2f(pw, height/4 + 3 * 40));
-	std::stringstream ss;
-
-	for(int i = 0; i <= HP_RAISE && HP <= HP_MAX; i++, HP++) {
-		ss << HP;
-		HPtext.setString(ss.str());
-		window.draw(HPtext);
-		std::cout << "HP" << HP << std::endl;
+	for(int i = 0; i < MAX_NUM_STAT_ITEMS-1; i++) {
+		stats[i].setFont(font);
+		stats[i].setFillColor(sf::Color::Black);
+		stats[i].setOutlineColor(sf::Color::Yellow);
+		stats[i].setCharacterSize(12);
+		if (i < 5) {
+            int pw = 1240;
+            stats[i].setPosition(sf::Vector2f(pw, (i+1) * 32));
+        }
+		else if( i >= 5 && i < 8 ){
+		    int pw = 1126;
+            stats[i].setPosition(sf::Vector2f(pw, (i) * 32));
+        }
+		else {
+            int pw = 1240;
+            stats[i].setPosition(sf::Vector2f(pw, (i-2) * 32));
+        }
+		std::stringstream ss;
+		if (i == 0) ss << c1.get_level();
+		else if (i == 1) ss << c1.get_experience();
+		else if (i == 2) ss << c1.get_hit_points();
+		else if (i == 3) ss << c1.get_mana_points();
+		else if (i == 4) ss << c1.get_attack();
+		else if (i == 5) ss << c1.get_defense();
+		else if (i == 6) ss << c1.get_speed();
+		else if (i == 7) ss << c1.get_special_attack();
+		else if (i == 8) ss << c1.get_special_defense();
+		stats[i].setString(ss.str());
 	}
+}
+
+void Sidebar::drawStats(sf::RenderTarget &window) {
+	for(int i =0; i < MAX_NUM_STAT_ITEMS-1; i++)
+		window.draw(stats[i]);
 }

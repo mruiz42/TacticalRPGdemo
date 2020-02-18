@@ -15,6 +15,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <sstream>
+#include "./Character.h"
 
 const int MAX_NUM_STAT_ITEMS = 10;
 
@@ -25,7 +26,7 @@ private:
 
 	sf::Font font;
 	sf::Text stat[MAX_NUM_STAT_ITEMS];
-	sf::Text HPtext;
+	sf::Text stats[MAX_NUM_STAT_ITEMS-1];
 
 
 public:
@@ -36,7 +37,8 @@ public:
 	void createStat(float const width, float const height, std::string filename);
 	void drawStat(sf::RenderTarget &window);
 
-	void hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window);
+	void setStats(Character &c1, float const width, float const height, std::string filename);
+	void drawStats(sf::RenderTarget &window);
 
 };
 

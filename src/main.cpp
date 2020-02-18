@@ -11,16 +11,12 @@
 #include <iostream>
 #include "../include/tact/Cursor.h"
 #include "../include/tact/Sidebar.h"
-
+#include "../include/tact/Character.h"
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 704
 #define TEXTURE_SIZE 32
 
-const int HP_MAX = 200;
-const int HP_MIN = 0;
-const int HP_RAISE = 5;
-const int HP_DROP = 10;
-static int HP = 100;
+
 const std::string fontFileName = "share/resources/PressStart2P-Regular.ttf";
 
 const std::string root_path = "./";    // Linux
@@ -28,58 +24,9 @@ const std::string root_path = "./";    // Linux
 // const std::string root_path = "C:/";    // Windows
 
 ///#pragma once
-#define MAX_NUM_SIDEBAR_ITEMS 3
-class Sidekick
-{
-public:
-	Sidekick(float width, float height)
-	{
-		if(!font.loadFromFile(root_path + "share/resources/ChunkyDunk.ttf"))
-		{ exit(101); }
-
-		sidekick[0].setFont(font);
-		sidekick[0].setFillColor(sf::Color::Red);
-		sidekick[0].setString("ATTACK");
-		sidekick[0].setCharacterSize(32);
-        int p0w = 1024 + 256/2 - sidekick[0].getLocalBounds().width/2;
-        sidekick[0].setPosition(sf::Vector2f(p0w, 560));
-
-		sidekick[1].setFont(font);
-		sidekick[1].setFillColor(sf::Color::White);
-		sidekick[1].setString("DEFEND");
-		sidekick[1].setCharacterSize(32);
-        int p1w = 1024 + 256/2 - sidekick[1].getLocalBounds().width/2;
-        sidekick[1].setPosition(sf::Vector2f(p1w, 600));
-
-		sidekick[2].setFont(font);
-		sidekick[2].setFillColor(sf::Color::White);
-		sidekick[2].setString("MOVE");
-		sidekick[2].setCharacterSize(32);
-        int p2w = 1024 + 256/2 - sidekick[2].getLocalBounds().width/2;
-        sidekick[2].setPosition(sf::Vector2f(p2w, 640));
-	}
-	~Sidekick(){}
-
-	void draw(sf::RenderWindow &window)
-	{
-		for(int i =0; i < MAX_NUM_SIDEBAR_ITEMS; i++)
-			window.draw(sidekick[i]);
-	}
-	void MoveUp();
-	void MoveDown();
-private:
-	int selectedItemIndex;
-	sf::Font font;
-	sf::Text sidekick[MAX_NUM_SIDEBAR_ITEMS];
-};
-///#pragma once ???
-
 
 int main()
 {
-
-    Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
-
     const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
     const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
     const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
@@ -120,13 +67,17 @@ int main()
 	sound.setBuffer(buffer);
 	sound.setVolume(50);	/// range 0-100
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
-
-	/// display character's info on sidebar
-	sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_path + fontFileName);
-
+	
+	Character c1;
+	c1.set_hit_points(100);
+	
+	
     while (window.isOpen())
     {
-        
+        /// display character's info on sidebar
+		Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
+		sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_path + fontFileName);
+		sidebar.setStats(c1, window.getSize().x, window.getSize().y, root_path + fontFileName);
         sf::Event event;
         while (window.pollEvent(event)) {
             // Poll for events
@@ -177,8 +128,9 @@ int main()
 
 				case sf::Event::MouseButtonPressed:  // Mouse events
 					if(event.key.code == sf::Mouse::Left){
-						sidebar.hp_raise(HP, HP_MAX, HP_RAISE, window.getSize().x, window.getSize().y, root_path + fontFileName, window);
-						std::cout << "Mouse left button pressed" << std:: endl;
+						int currentHP = c1.get_hit_points() - 1;
+					    c1.set_hit_points(currentHP);
+					    std::cout << "Mouse left button pressed" << std:: endl;
 					}
 					break;
 			}
@@ -211,12 +163,14 @@ int main()
             }
 			std::cout << sf::Mouse::getPosition(window).x << "," << sf::Mouse::getPosition(window).y << std::endl;
 		}
+		
         // Refresh screen
         window.clear();
         window.draw(map);
         window.draw(cur.getSprite());
         window.draw(sidebar);
 		sidebar.drawStat(window);
+		sidebar.drawStats(window);
         window.display();
     }
     return 0;
