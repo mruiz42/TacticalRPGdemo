@@ -9,7 +9,9 @@
 #include<SFML/Graphics/Transformable.hpp>
 #include<SFML/System/Time.hpp>
 #include<SFML/Graphics/PrimitiveType.hpp>
-#include<iostream>
+#include<SFML/Graphics/Vertex.hpp>
+#include<SFML/Graphics/VertexArray.hpp>
+#include<cmath>
 
 class ParticleSystem : public sf::Drawable, public sf::Transformable
 {

@@ -3,6 +3,7 @@
 //
 
 #include "../../include/tact/Menu.h"
+#include "../../include/tact/Particle.h"
 
 #include <iostream>
 Menu::Menu(float width, float height)
@@ -36,12 +37,14 @@ Menu::~Menu()
 
 void Menu::draw(sf::RenderWindow &window)
 {
+    /*
     sf::Music music;
+    
     if(!music.openFromFile(""))
     {
         std::cout<<"ERROR"<<std::endl;
     }
-    music.play();
+    music.play();*/
     sf::Texture texture;
     texture.loadFromFile("share/textures/NEW_menu.png");
     sf::Sprite sprite;
