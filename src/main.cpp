@@ -28,55 +28,8 @@ const std::string root_path = "./";    // Linux
 // Can someone make a standard windows path that will work?
 // const std::string root_path = "C:/";    // Windows
 
-#define MAX_NUM_SIDEBAR_ITEMS 3
-class Sidekick
-{
-public:
-	Sidekick(float width, float height)
-	{
-		if(!font.loadFromFile(root_path + "share/resources/ChunkyDunk.ttf"))
-		{ exit(101); }
-
-		sidekick[0].setFont(font);
-		sidekick[0].setFillColor(sf::Color::Red);
-		sidekick[0].setString("ATTACK");
-		sidekick[0].setCharacterSize(32);
-        int p0w = 1024 + 256/2 - sidekick[0].getLocalBounds().width/2;
-        sidekick[0].setPosition(sf::Vector2f(p0w, 560));
-
-		sidekick[1].setFont(font);
-		sidekick[1].setFillColor(sf::Color::White);
-		sidekick[1].setString("DEFEND");
-		sidekick[1].setCharacterSize(32);
-        int p1w = 1024 + 256/2 - sidekick[1].getLocalBounds().width/2;
-        sidekick[1].setPosition(sf::Vector2f(p1w, 600));
-
-		sidekick[2].setFont(font);
-		sidekick[2].setFillColor(sf::Color::White);
-		sidekick[2].setString("MOVE");
-		sidekick[2].setCharacterSize(32);
-        int p2w = 1024 + 256/2 - sidekick[2].getLocalBounds().width/2;
-        sidekick[2].setPosition(sf::Vector2f(p2w, 640));
-	}
-	~Sidekick(){}
-
-	void draw(sf::RenderWindow &window)
-	{
-		for(int i =0; i < MAX_NUM_SIDEBAR_ITEMS; i++)
-			window.draw(sidekick[i]);
-	}
-	void MoveUp();
-	void MoveDown();
-private:
-	int selectedItemIndex;
-	sf::Font font;
-	sf::Text sidekick[MAX_NUM_SIDEBAR_ITEMS];
-};
-
-
 int main()
 {
-
     Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
 
     const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
@@ -129,6 +82,9 @@ int main()
         
         sf::Event event;
         while (window.pollEvent(event)) {
+            if (c_map.getSpritemap()[cur.y_pos][cur.x_pos] != nullptr) {
+                sidebar.set
+            }
             // Poll for events
 			switch(event.type)
 			{
