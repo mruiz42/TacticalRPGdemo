@@ -5,6 +5,7 @@
 #ifndef CIS29GROUP2GAME_CHARACTER_H
 #define CIS29GROUP2GAME_CHARACTER_H
 #include <string>
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "Sprite.h"
@@ -28,10 +29,10 @@ public:
 //    Character();
     Character(std::string);
     Character(const Character&) = default;
-    sf::Texture get_texture() { return this->texture; }
-    sf::Sprite get_sidebar_sprite() { return this->sidebar_sprite; }
-    sf::Sprite get_map_sprite() { return this->map_sprite; }
-    std::string get_name() { return this->name; }
+    sf::Texture& get_texture() { return this->texture; }
+    sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
+    sf::Sprite& get_map_sprite() { return this->map_sprite; }
+    std::string& get_name() { return this->name; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
     unsigned int get_hit_points() { return this->hit_points; }
@@ -42,10 +43,10 @@ public:
     unsigned int get_special_attack() { return this->special_attack; }
     unsigned int get_special_defense() { return this->special_defense; }
 
-    void set_texture(sf::Texture texture) { this->texture = texture; }
-    void set_sidebar_sprite(sf::Sprite sidebar_sprite) {this->sidebar_sprite = sidebar_sprite; }
-    void set_map_sprite(sf::Sprite map_sprite) { this->map_sprite = map_sprite; }
-    void set_name(std::string name) { this->name = name; }
+    void set_texture(sf::Texture& texture) { this->texture = texture; }
+    void set_sidebar_sprite(sf::Sprite& sidebar_sprite) {this->sidebar_sprite = sidebar_sprite; }
+    void set_map_sprite(sf::Sprite& map_sprite) { this->map_sprite = map_sprite; }
+    void set_name(std::string& name) { this->name = name; }
     void set_level(unsigned int level) { this->level = level;}
     void set_experience(unsigned int experience) { this->experience = experience; }
     void set_hit_points(unsigned int hit_points) { this->hit_points = hit_points; }

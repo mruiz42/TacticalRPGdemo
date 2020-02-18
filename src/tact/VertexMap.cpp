@@ -88,5 +88,4 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
         // draw the vertex array
         target.draw(m_vertices, states);
         target.draw(m_cursor, states);
-
     }

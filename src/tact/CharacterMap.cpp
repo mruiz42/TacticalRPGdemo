@@ -12,7 +12,7 @@ CharacterMap::CharacterMap(){
             map[y].push_back(nullptr);
         }
     }
-    map[1][1] = new Ninja("share/sprites/ninja.png");
+    map[18][3] = new Ninja("share/sprites/ninja.png");
 
 }
 CharacterMap::~CharacterMap() {
@@ -29,11 +29,16 @@ std::vector<std::vector<Character*> > CharacterMap::getSpritemap(){
 }
 
 void CharacterMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    // apply the transform
-    states.transform *= getTransform();
-    // apply the tileset texture
-    states.texture = map[1][1]->;
-    // draw the vertex array
-    target.draw(m_vertices, states);
+    for (int y = 0; y < 22; ++y){
+        for (int x = 0; x < 32; ++x){
+            if (map[y][x] != nullptr){
+                map[y][x]->get_map_sprite().setOrigin(map[y][x]->get_map_sprite().getLocalBounds().width, 0);
+                map[y][x]->get_map_sprite().setScale({-1,1});
+                map[y][x]->get_map_sprite().setPosition(x*32,y*32);
+                target.draw(map[y][x]->get_map_sprite(), states);
+
+            }
+        }
+    }
 
 }

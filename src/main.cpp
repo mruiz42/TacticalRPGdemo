@@ -214,6 +214,7 @@ int main()
         // Refresh screen
         window.clear();
         window.draw(v_map);
+        window.draw(c_map);
         window.draw(cur.get_sprite());
         window.draw(sidebar);
 		sidebar.drawStat(window);
