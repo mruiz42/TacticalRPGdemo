@@ -30,7 +30,7 @@ const std::string root_path = "./";    // Linux
 
 int main()
 {
-    Sidebar sidebar(root_path + "share/textures/sidebar_background.png");
+    Sidebar sidebar(root_path + "share/textures/sidebar_background.png", root_path + "share/resources/ChunkyDunk.ttf");
 
     const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
     const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
@@ -81,10 +81,17 @@ int main()
     {
         
         sf::Event event;
+        // <Main game loop>
         while (window.pollEvent(event)) {
-            if (c_map.getSpritemap()[cur.y_pos][cur.x_pos] != nullptr) {
-                sidebar.set
+
+            sidebar.setTurn("- Player 1 turn -");	void updateStatbar(Character *);
+
+            if (c_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] != nullptr) {
+                sidebar.updateStatbar(c_map.get_character_at(cur.x_pos / 32, cur.y_pos / 32));
+                std::cout<< cur.x_pos/32 << " " << cur.y_pos/32 << "\n";
+
             }
+            else { sidebar.clear();                std::cout << cur.x_pos/32 << " " << cur.y_pos/32 << "\n"; }
             // Poll for events
 			switch(event.type)
 			{
@@ -133,7 +140,7 @@ int main()
 
 				case sf::Event::MouseButtonPressed:  // Mouse events
 					if(event.key.code == sf::Mouse::Left){
-						sidebar.hp_raise(HP, HP_MAX, HP_RAISE, window.getSize().x, window.getSize().y, root_path + fontFileName, window);
+//						sidebar.hp_raise(HP, HP_MAX, HP_RAISE, window.getSize().x, window.getSize().y, root_path + fontFileName, window);
 						std::cout << "Mouse left button pressed" << std:: endl;
 					}
 					break;

@@ -17,7 +17,8 @@ public:
     CharacterMap();
     ~CharacterMap();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    std::vector<std::vector<Character*> > getSpritemap();
+    std::vector<std::vector<Character*> >& getSpritemap();
+    Character* get_character_at(int, int);
 };
 
 

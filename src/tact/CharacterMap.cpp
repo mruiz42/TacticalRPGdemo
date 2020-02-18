@@ -13,6 +13,7 @@ CharacterMap::CharacterMap(){
         }
     }
     map[18][3] = new Ninja("share/sprites/ninja.png");
+    map[1][1] = new Ninja("share/sprites/ninja.png");
 
 }
 CharacterMap::~CharacterMap() {
@@ -24,7 +25,7 @@ CharacterMap::~CharacterMap() {
         }
     }
 }
-std::vector<std::vector<Character*> > CharacterMap::getSpritemap(){
+std::vector<std::vector<Character*> >& CharacterMap::getSpritemap(){
     return this->map;
 }
 
@@ -41,4 +42,7 @@ void CharacterMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
         }
     }
 
+}
+Character* CharacterMap::get_character_at(int x, int y){
+    return this->map[x][y];
 }

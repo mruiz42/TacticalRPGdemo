@@ -19,7 +19,7 @@ public:
     Sprite(std::string);
     std::string get_filename();
     sf::Texture get_texture();
-    sf::Sprite get_sprite();
+    sf::Sprite& get_sprite();
 
     void set_filename(std::string&);
     void set_texture(sf::Texture&);

@@ -22,7 +22,7 @@ sf::Texture Sprite::get_texture() {
     return this->texture;
 }
 
-sf::Sprite Sprite::get_sprite()
+sf::Sprite& Sprite::get_sprite()
 {
     return this->sprite;
 }
@@ -40,4 +40,5 @@ void Sprite::set_sprite(sf::Sprite& sprite) {
 void Sprite::moveSprite(float x, float y)
 {
     sprite.move(sf::Vector2f(x,y));
+
 }

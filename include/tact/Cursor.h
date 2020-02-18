@@ -12,6 +12,7 @@ public:
     int x_pos;
     int y_pos;
     Cursor(std::string s, int x, int y);
+    virtual void moveSprite(float x, float y);
 
 
 };
