@@ -3,3 +3,6 @@
 //
 
 #include "../../include/tact/Ninja.h"
+Ninja::Ninja(std::string filename) : Character(filename) {
+
+}

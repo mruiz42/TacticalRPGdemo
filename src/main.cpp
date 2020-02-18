@@ -11,6 +11,7 @@
 #include <iostream>
 #include "../include/tact/Cursor.h"
 #include "../include/tact/Sidebar.h"
+#include "../include/tact/CharacterMap.h"
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 704
@@ -86,9 +87,10 @@ int main()
     // define the level with an array of tile indices
 
     // create the tilemap from the level definition
-    VertexMap map;
-    if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path + "share/sprites/cursor.png",
-            sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y))
+    VertexMap v_map;
+    CharacterMap c_map;
+    if (!v_map.loadMap(root_path + "share/textures/map_tiles32.png", root_path + "share/sprites/cursor.png",
+                       sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y))
         return -1;
 
     // Cursor
@@ -138,22 +140,22 @@ int main()
 					switch(event.key.code)
 					{
 						case sf::Keyboard::D:   // Right
-							if (cur.getSprite().getPosition().x < 992)
+							if (cur.get_sprite().getPosition().x < 992)
 								cur.moveSprite(TEXTURE_SIZE, 0);
 							break;
 
 						case sf::Keyboard::A:  // Left
-							if (cur.getSprite().getPosition().x > 0)
+							if (cur.get_sprite().getPosition().x > 0)
 								cur.moveSprite(-TEXTURE_SIZE, 0);
 							break;
 
 						case sf::Keyboard::W: // UP
-							if (cur.getSprite().getPosition().y > 0)
+							if (cur.get_sprite().getPosition().y > 0)
 								cur.moveSprite(0, -TEXTURE_SIZE);
 							break;
 
 						case sf::Keyboard::S: // DOWN
-							if (cur.getSprite().getPosition().y < 672)
+							if (cur.get_sprite().getPosition().y < 672)
 								cur.moveSprite(0, TEXTURE_SIZE);
 							break;
 
@@ -187,32 +189,32 @@ int main()
 					int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
 						// Down
 					if (p_y > 0) {
-						if (cur.getSprite().getPosition().y < 672)
+						if (cur.get_sprite().getPosition().y < 672)
 							cur.moveSprite(0, TEXTURE_SIZE);
 					}
 					// Up
 					else if (p_y < 0) {
-						if (cur.getSprite().getPosition().y > 0)
+						if (cur.get_sprite().getPosition().y > 0)
 							cur.moveSprite(0, -TEXTURE_SIZE);
 					}
 					// Left
 					else if (p_x < 0) {
-						if (cur.getSprite().getPosition().x > 0)
+						if (cur.get_sprite().getPosition().x > 0)
 							cur.moveSprite(-TEXTURE_SIZE, 0);
 					}
 					// Right
 					else if (p_x > 0) {
-						if (cur.getSprite().getPosition().x < 992)
+						if (cur.get_sprite().getPosition().x < 992)
 							cur.moveSprite(TEXTURE_SIZE, 0);
 					}
-					std::cout << "(" << cur.getSprite().getPosition().x << "," << cur.getSprite().getPosition().y << std::endl;
+					std::cout << "(" << cur.get_sprite().getPosition().x << "," << cur.get_sprite().getPosition().y << std::endl;
             }
 //			std::cout << sf::Mouse::getPosition(window).x << "," << sf::Mouse::getPosition(window).y << std::endl;
 		}
         // Refresh screen
         window.clear();
-        window.draw(map);
-        window.draw(cur.getSprite());
+        window.draw(v_map);
+        window.draw(cur.get_sprite());
         window.draw(sidebar);
 		sidebar.drawStat(window);
         window.display();

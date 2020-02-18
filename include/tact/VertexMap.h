@@ -23,7 +23,6 @@ private:
     sf::VertexArray m_vertices;
     sf::Texture m_tileset;
     sf::Texture m_cursor_texture;
-    sf::Texture m_sidebar_texture;
     sf::Sprite m_cursor;
     std::vector<std::vector<int> > tiles;
 };

@@ -30,6 +30,7 @@ VertexMap::VertexMap() {
             {39,39,39,39,39,39,39,39,46,46,39,39,39,39,39,39,39,39,39,46,46,48,39,39,39,46,46,48,39,39,69,69}
     };
 }
+
 bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& cur_img_path,
                         sf::Vector2u tileSize, const unsigned int w, const unsigned int h) {
     // load the tileset texture
@@ -76,13 +77,8 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
     if (!m_cursor_texture.loadFromFile(cur_img_path, sf::IntRect(0,0,32,32))) {
         return false;
     }
-
-
-
         return true;
     }
-
-    
 
     void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         // apply the transform

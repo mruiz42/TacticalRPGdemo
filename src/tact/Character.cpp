@@ -5,15 +5,31 @@
 #include "../../include/tact/Character.h"
 
 
-Character::Character(){
-    std::string name = "";
-    unsigned int level = 0;
-    unsigned int experience = 0;
-    unsigned int hit_points = 0;
-    unsigned int mana_points = 0;
-    unsigned int attack = 0;
-    unsigned int defense = 0;
-    unsigned int speed = 0;
-    unsigned int special_attack = 0;
-    unsigned int special_defense = 0;
+//Character::Character(){
+//    name = "";
+//    level = 0;
+//    experience = 0;
+//    hit_points = 0;
+//    mana_points = 0;
+//    attack = 0;
+//    defense = 0;
+//    speed = 0;
+//    special_attack = 0;
+//    special_defense = 0;
+//}
+
+Character::Character(std::string filename){
+    texture.loadFromFile(filename);
+    sidebar_sprite.setTexture(texture);
+    map_sprite.setTexture(texture);
+    name = "";
+    level = 0;
+    experience = 0;
+    hit_points = 0;
+    mana_points = 0;
+    attack = 0;
+    defense = 0;
+    speed = 0;
+    special_attack = 0;
+    special_defense = 0;
 }

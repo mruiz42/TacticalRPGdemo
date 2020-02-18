@@ -15,8 +15,15 @@ protected:
     sf::Texture texture;
     sf::Sprite sprite;
 public:
+    Sprite();
     Sprite(std::string);
-    sf::Sprite getSprite();
+    std::string get_filename();
+    sf::Texture get_texture();
+    sf::Sprite get_sprite();
+
+    void set_filename(std::string&);
+    void set_texture(sf::Texture&);
+    void set_sprite(sf::Sprite&);
     void moveSprite(float x, float y);
 };
 

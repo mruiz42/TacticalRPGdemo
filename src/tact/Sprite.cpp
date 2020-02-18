@@ -4,6 +4,7 @@
 
 #include "../../include/tact/Sprite.h"
 #include <iostream>
+
 Sprite::Sprite (std::string s) {
     if (!texture.loadFromFile(s, sf::IntRect(0,0,32,32)))
     {
@@ -15,9 +16,25 @@ Sprite::Sprite (std::string s) {
 
 }
 
-sf::Sprite Sprite::getSprite()
+
+
+sf::Texture Sprite::get_texture() {
+    return this->texture;
+}
+
+sf::Sprite Sprite::get_sprite()
 {
     return this->sprite;
+}
+
+void Sprite::set_filename(std::string& filename) {
+    this->filename = filename;
+}
+void Sprite::set_texture(sf::Texture& texture) {
+    this->texture = texture;
+}
+void Sprite::set_sprite(sf::Sprite& sprite) {
+    this->sprite = sprite;
 }
 
 void Sprite::moveSprite(float x, float y)

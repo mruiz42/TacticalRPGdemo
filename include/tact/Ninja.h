@@ -7,7 +7,9 @@
 #include "Character.h"
 // Attack increase in forest, high critical
 
-class Ninja : private Character {
-
+class Ninja : public Character {
+private:
+public:
+    Ninja(std::string filename);
 };
 #endif //CIS29GROUP2GAME_NINJA_H
