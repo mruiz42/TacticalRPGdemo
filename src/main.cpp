@@ -5,6 +5,8 @@
 #include <string>
 #include "../include/tact/Menu.h"
 #include <iostream>
+#include "../include/tact/Particle.h"
+
 using std::cout;
 using std::endl;
 
@@ -17,11 +19,12 @@ const std::string root_path = "./";    // Linux
 // const std::string root_path = "C:/";    // Windows
 int main()
 {
+
     const unsigned int num_tiles_x = WINDOW_WIDTH / TEXTURE_SIZE;
     const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
     const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
     sf::Vertex vertex;
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Menu");
     Menu menu(window.getSize().x,window.getSize().y);
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
     // define the level with an array of tile indices
@@ -33,6 +36,9 @@ int main()
     if (!map.loadMap(root_path + "share/textures/map_tiles32.png", root_path+"share/sprites/cursor.png",
             sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), level, num_tiles_x, num_tiles_y))
         return -1;
+
+    ParticleSystem particles(1000);
+    sf:: Clock clock;
 
     while (window.isOpen())
     {
@@ -72,22 +78,24 @@ int main()
                 window.close();
                 break;
             }
-            /*
-            if (event.type == sf::Event::Closed)
-                window.close();
-            */
+
+        
         }
-
+        sf::Vector2i mouse = sf::Mouse::getPosition(window);
+        particles.setEmitter(window.mapPixelToCoords(mouse));
+        //update it
+        sf::Time elapsed = clock.restart();
+        particles.update(elapsed);
+        //draw it
         window.clear();
-        //window.draw(map);
+        window.draw(particles);
+        
         menu.draw(window);
-
-        window.display();
-    }
-    window.clear();
     
-   // window.display();
-
+        window.display();
+     
+    }
+    //window.clear();
 
     return 0;
 }
