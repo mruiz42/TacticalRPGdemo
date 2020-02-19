@@ -1,9 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Audio/Music.hpp>
-#include <SFML/Audio/Sound.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
 #include "../include/tact/VertexMap.h"
 #include <string>
 #include "../include/tact/Knight.h"
@@ -12,6 +9,8 @@
 #include "../include/tact/Cursor.h"
 #include "../include/tact/Sidebar.h"
 #include "../include/tact/Character.h"
+#include "../include/tact/Music.h"
+#include "../include/tact/Sound.h"
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 704
 #define TEXTURE_SIZE 32
@@ -24,6 +23,7 @@ const std::string root_path = "./";    // Linux
 // const std::string root_path = "C:/";    // Windows
 
 ///#pragma once
+
 
 int main()
 {
@@ -42,35 +42,26 @@ int main()
 
     // Cursor
     Cursor cur("./share/sprites/cursor.png", 0, 0);
-
-	// add background music (stream directly from music file)
-	sf::Music music;
-//	if(!music.openFromFile(root_path + "share/audio/BattleTheme.wav")){
-//		std::cout << "Error: backgound music." << std::endl;
-//		return -1;
-//	}
-//	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
-//		std::cout << "Error: backgound music." << std::endl;
-//		return -1;
-//	}
-	music.setVolume(50);  /// range 0 - 100
-	music.play();
-
-	// add sound effect (pre-load small audio file to memory for fast response)
+	
+	// Music menuMusic("./share/audio/Vanadiel_March.wav");
+	Music gameMusic("./share/audio/BattleTheme.wav");
+	Sound adjustVolumeSound("./share/audio/volume_change.wav");
 	// credit to https://www.noiseforfun.com/2012-sound-effects/menu-05-a/
-	sf::SoundBuffer buffer;
-	if(!buffer.loadFromFile(root_path + "share/audio/volume_change.wav")){
-		std::cout << "Error: sound effect." << std::endl;
-		return -1;
-	}
-	sf::Sound sound;
-	sound.setBuffer(buffer);
-	sound.setVolume(50);	/// range 0-100
+	
     std::cout << sf::Joystick::getButtonCount(0) << std::endl;
 	
 	Character c1;
 	c1.set_hit_points(100);
 	
+	
+	/* turn loop
+	while( (at least one character of player one HP positive) 
+		   && (at least one character of player two HP positive))
+	{
+		player one's turn
+		player two's turn
+	}
+	*/
 	
     while (window.isOpen())
     {
@@ -111,18 +102,12 @@ int main()
 							break;
 
 						case sf::Keyboard::Key::Dash: // Volume Down
-							music.setVolume(music.getVolume() - 10);
-							sound.setVolume(sound.getVolume() - 10);
-							sound.play();
+							gameMusic.lowerVolume();
+							adjustVolumeSound.lowerVolume();
 							break;
 						case sf::Keyboard::Key::Equal:  // Volume Up
-							music.setVolume(music.getVolume() + 10);
-							sound.setVolume(sound.getVolume() + 10);
-							sound.play();
-							if (music.getVolume() >= 100){
-								music.setVolume(100);
-								sound.setVolume(100);
-							}
+							gameMusic.raiseVolume();
+							adjustVolumeSound.raiseVolume();
 							break;
 					}
 

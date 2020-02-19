@@ -81,15 +81,18 @@ void Sidebar::setStats(Character &c1, float const width, float const height, std
             stats[i].setPosition(sf::Vector2f(pw, (i-2) * 32));
         }
 		std::stringstream ss;
-		if (i == 0) ss << c1.get_level();
-		else if (i == 1) ss << c1.get_experience();
-		else if (i == 2) ss << c1.get_hit_points();
-		else if (i == 3) ss << c1.get_mana_points();
-		else if (i == 4) ss << c1.get_attack();
-		else if (i == 5) ss << c1.get_defense();
-		else if (i == 6) ss << c1.get_speed();
-		else if (i == 7) ss << c1.get_special_attack();
-		else if (i == 8) ss << c1.get_special_defense();
+		switch(i)
+		{
+			case 0: ss << c1.get_level(); break;
+			case 1: ss << c1.get_experience(); break;
+			case 2: ss << c1.get_hit_points(); break;
+			case 3: ss << c1.get_mana_points(); break;
+			case 4: ss << c1.get_attack(); break;
+			case 5: ss << c1.get_defense(); break;
+			case 6: ss << c1.get_speed(); break;
+			case 7: ss << c1.get_special_attack(); break;
+			case 8: ss << c1.get_special_defense(); break;
+		}
 		stats[i].setString(ss.str());
 	}
 }
