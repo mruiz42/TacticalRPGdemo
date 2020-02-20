@@ -7,17 +7,24 @@
 
 #include <string>
 #include "Castle.h"
+#include <SFML/Window/Joystick.hpp>
+
 class Player {
 private:
-    std::string player_name;
+    int player_id;
     unsigned int number_units;
+    sf::Joystick js;
+
 
 public:
-    std::string get_player_name() { return this->player_name; }
+    int get_player_name() { return this->player_id; }
     unsigned int get_number_units() {return this->number_units; }
+    sf::Joystick& get_js() { return this->js; }
 
-    void set_player_name(std::string player_name) { this->player_name = player_name; }
+    void set_player_name(int player_id) { this->player_id = player_id; }
     void set_number_units(unsigned int number_units) {this->number_units; }
+    void set_js(sf::Joystick& js);
+
 };
 
 
