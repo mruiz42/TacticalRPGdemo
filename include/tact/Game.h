@@ -25,7 +25,10 @@
 #include "Character.h"
 #include "Cursor.h"
 #include "CharacterMap.h"
+#include "HumanPlayer.h"
+
 #include <iostream>
+
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/textures/map_tiles32.png";
 const std::string font_path = "share/resources/PressStart2P-Regular.ttf";
@@ -42,7 +45,7 @@ private:
     sf::SoundBuffer buffer;
     sf::Event event;
     Sidebar sidebar;
-
+    HumanPlayer players[2];
 public:
     Game();
     int play_game(sf::RenderWindow&);

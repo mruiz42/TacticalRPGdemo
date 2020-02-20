@@ -64,7 +64,8 @@ int Game::play_game(sf::RenderWindow& window) {
 //            else if (v_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] < 69){
 //
 //            }
-            else { sidebar.clear();                std::cout << cur.x_pos/32 << " " << cur.y_pos/32 << "\n"; }
+            else { sidebar.clear();
+            std::cout << cur.x_pos/32 << " " << cur.y_pos/32 << "\n"; }
             // Poll for events
             switch(event.type)
             {

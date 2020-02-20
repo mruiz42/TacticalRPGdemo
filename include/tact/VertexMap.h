@@ -19,9 +19,7 @@ private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     sf::VertexArray m_vertices;
     sf::Texture m_tileset;
-    sf::Texture m_cursor_texture;
-//    sf::Sprite m_cursor;
-    std::vector<std::vector<int> > tiles;
+    std::vector<std::vector<int> > map;
 
 public:
     VertexMap();

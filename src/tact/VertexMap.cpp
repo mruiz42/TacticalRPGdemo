@@ -5,7 +5,7 @@
 #include "../../include/tact/VertexMap.h"
 #include <iostream>
 VertexMap::VertexMap() {
-    tiles = {
+    map = {
             {69,48,39,5,0,0,0,0,0,0,0,0,7,46,46,46,69,259,69,69,69,69,69,69,69,69,69,69,69,69,39,39,39},
             {69,48,39,1,39,69,69,39,39,69,69,46,11,0,0,0,0,29,0,0,0,0,0,0,0,0,0,0,7,39,39,39},
             {69,48,39,1,39,39,39,39,39,39,39,39,39,39,39,39,39,259,39,39,39,39,127,128,128,129,39,39,1,39,39,39},
@@ -47,7 +47,7 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
         for (unsigned int y = 0; y < h; ++y)
         {
             /// get the current tile number
-            int tileNumber = tiles[y][x];
+            int tileNumber = map[y][x];
             int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
             int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
             // get a pointer to the current tile's quad
@@ -73,10 +73,6 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
             quad[2].texCoords = sf::Vector2f(texRight, texBottom);
             quad[3].texCoords = sf::Vector2f(texLeft, texBottom);
         }
-    // load cursor
-    if (!m_cursor_texture.loadFromFile(cur_img_path, sf::IntRect(0,0,32,32))) {
-        return false;
-    }
         return true;
     }
 
