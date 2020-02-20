@@ -20,9 +20,9 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	=    $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
+OUTBINDEPS	= $(TACTOBJ)Coordinate.o $(TACTOBJ)Controller.o  $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)HumanPlayer.o $(TACTOBJ)Game.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
 # library dependencies
-LIBDEP	= $(TACTOBJ)Fortress.o $(TACTOBJ)Controller.o $(TACTOBJ)HumanPlayer.o $(TACTOBJ)Game.o $(TACTOBJ)Mage.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
+LIBDEP	=    $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
 
 .PHONY : clean all run
 
@@ -37,8 +37,14 @@ $(STTLIB) : $(LIBDEP)
 $(SRCOBJ)main.o : $(SOURCE)main.cpp
 	$(COMPILE) $(SOURCE)main.cpp -o $(SRCOBJ)main.o
 
+$(TACTOBJ)Coordinate.o : $(TACTSRC)Coordinate.cpp
+	$(COMPILE) $(TACTSRC)Coordinate.cpp -o $(TACTOBJ)Coordinate.o
+
 $(TACTOBJ)Controller.o : $(TACTSRC)Controller.cpp
 	$(COMPILE) $(TACTSRC)Controller.cpp -o $(TACTOBJ)Controller.o
+
+$(TACTOBJ)Player.o : $(TACTSRC)Player.cpp
+	$(COMPILE) $(TACTSRC)Player.cpp -o $(TACTOBJ)Player.o
 
 $(TACTOBJ)HumanPlayer.o : $(TACTSRC)HumanPlayer.cpp
 	$(COMPILE) $(TACTSRC)HumanPlayer.cpp -o $(TACTOBJ)HumanPlayer.o
