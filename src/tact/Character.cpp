@@ -18,6 +18,16 @@ Character::Character(){
     special_defense = 0;
 }
 
+Character::Character(Coordinate xy) {
+    this->xy.x = xy.x;
+    this->xy.y = xy.y;
+}
+
+Character::Character(int x, int y) {
+    this->xy.x = x;
+    this->xy.y = y;
+}
+
 Character::Character(std::string filename){
     texture.loadFromFile(filename);
     sidebar_sprite.setTexture(texture);
@@ -38,3 +48,4 @@ void Character::set_coordinate(int x, int y) {
     this->xy.x = x;
     this->xy.y = y;
 }
+

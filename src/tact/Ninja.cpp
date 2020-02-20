@@ -17,6 +17,7 @@ Ninja::Ninja() : Character() {
     sidebar_sprite.setTexture(texture);
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
+    this->name = "Ninja";
     this->level = 1;
     this->experience = 0;
     this->hit_points = 100;
@@ -28,8 +29,9 @@ Ninja::Ninja() : Character() {
     this->special_defense = 26;
 }
 
-Ninja::Ninja(std::string filename) : Character(filename) {
+Ninja::Ninja(int x, int y) : Character(x, y) {
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
+    this->name = "Ninja";
     this->level = 1;
     this->experience = 0;
     this->hit_points = 100;

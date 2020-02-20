@@ -12,6 +12,6 @@ class Ninja : public Character {
 private:
 public:
     Ninja();
-    Ninja(std::string filename);
+    Ninja(int x, int y);
 };
 #endif //CIS29GROUP2GAME_NINJA_H

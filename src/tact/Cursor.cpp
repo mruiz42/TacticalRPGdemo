@@ -25,6 +25,11 @@ Cursor::Cursor(int x, int y) {
     this->xy.y = y;
 }
 
+void Cursor::set_coordinate(int x, int y) {
+    std::cout << x << " " << y << std::endl;
+    this->xy.x = x;
+    this->xy.y = y;
+}
 void Cursor::moveSprite(float x, float y)
 {
     this->sprite.move(sf::Vector2f(x,y));

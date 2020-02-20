@@ -27,6 +27,7 @@ public:
     sf::Sprite get_sprite() { return this->sprite; }
     void set_x(int x) { this->xy.x = x; }
     void set_y(int y) { this->xy.y = y; }
+    void set_coordinate(int x, int y);
     void set_coordinate(Coordinate& coordinate) { this->xy = coordinate; }
 };
 

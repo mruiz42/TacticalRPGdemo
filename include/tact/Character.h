@@ -29,13 +29,15 @@ protected:
     unsigned int special_defense;
 public:
     Character();
+    Character(Coordinate xy);
+    Character(int x, int y);
     Character(std::string);
     Character(const Character&) = default;
     sf::Texture& get_texture() { return this->texture; }
     sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
     sf::Sprite& get_map_sprite() { return this->map_sprite; }
     std::string& get_name() { return this->name; }
-    Coordinate get_coordinate() { return this->xy; }
+    Coordinate& get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
     unsigned int get_hit_points() { return this->hit_points; }

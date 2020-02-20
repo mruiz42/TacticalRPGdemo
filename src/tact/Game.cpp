@@ -9,19 +9,19 @@ Game::Game() : cur(0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path) {
     players[0].set_player_id(0);
     players[1].set_player_id(1);
+
     check_controllers();
     std::cout << "- Start Game -\n";
     players[0].set_is_turn(true);
 //    players[0].get_fort()->set_coordinate(17, 2);
     players[0].set_fort_coord(2, 17);
-
     players[1].set_fort_coord(29, 4);
 
     for (int p = 0; p < 2; p++) {
         HumanPlayer* p_ptr = &players[p];
+//        p_ptr[p].get_squadron().resize(p_ptr->get_number_units());
         for (int s = 0; s < players[p].get_number_units(); s++) {
-            Character* c_ptr = &players[p].get_squadron()[s];
-            c_map.getSpritemap()[p_ptr->get_fort().get_coordinate().y + 1 + s][p_ptr->get_fort().get_coordinate().x + s] = &players[p].get_squadron()[s];
+            p_ptr->get_squadron().push_back(new Ninja(p_ptr->get_fort().get_coordinate().x + s, p_ptr->get_fort().get_coordinate().y + 1 + s));
         }
     }
 
@@ -114,8 +114,12 @@ int Game::play_game(sf::RenderWindow& window) {
                                 sound.setVolume(100);
                             }
                             break;
-//                        case sf::Keyboard::Key::Q:
+                        case sf::Keyboard::Key::Q:
+                            Character* ptr = get_current_player().get_squadron()[0];
+                            std::cout << ptr->get_coordinate().get_x() << " " << ptr->get_coordinate().get_y() << std::endl;
+                            cur.set_coordinate(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
 
+                            break;
                     }
 
                 case sf::Event::MouseButtonPressed:  // Mouse events

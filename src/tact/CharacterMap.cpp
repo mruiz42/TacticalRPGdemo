@@ -17,12 +17,12 @@ CharacterMap::CharacterMap(){
 //    map[1][1] = new Ninja("share/sprites/ninja.png");
 //    map[1][11] = new Ninja("share/sprites/ninja.png");
 
-    for (int y = 0; y < 22; ++y){
-        for (int x = 0; x < 32; ++x){
-            std::cout << map[y][x] << "\t";
-        }
-        std::cout << std::endl;
-    }
+//    for (int y = 0; y < 22; ++y){
+//        for (int x = 0; x < 32; ++x){
+//            std::cout << map[y][x] << "\t";
+//        }
+//        std::cout << std::endl;
+//    }
 }
 
 CharacterMap::~CharacterMap() {
