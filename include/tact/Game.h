@@ -25,15 +25,28 @@
 #include "Character.h"
 #include "Cursor.h"
 #include "CharacterMap.h"
-
 #include <iostream>
-const std::string fontFileName = "share/resources/PressStart2P-Regular.ttf";
-const std::string root_path = "./";    // Linux
+const std::string root_prefix = "./";    // Linux
+const std::string map_texture_path = "share/textures/map_tiles32.png";
+const std::string font_path = "share/resources/PressStart2P-Regular.ttf";
+const std::string sidebar_font_path = "share/resources/ChunkyDunk.ttf";
+const std::string sidebar_bg_path = "share/textures/sidebar_background.png";
+const std::string cur_path = "share/sprites/cursor.png";
 
 class Game {
-public:
-    int play(sf::RenderWindow&);
 private:
+    sf::Music music;
+    Cursor cur;
+    VertexMap v_map;
+    CharacterMap c_map;
+    sf::SoundBuffer buffer;
+    sf::Event event;
+    Sidebar sidebar;
+
+public:
+    Game();
+    int play_game(sf::RenderWindow&);
+    int toggle_music();
 
 };
 

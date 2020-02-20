@@ -14,17 +14,21 @@
 #include <string>
 
 class VertexMap : public sf::Drawable, public sf::Transformable {
-public:
-    VertexMap();
-        bool loadMap(const std::string& tileset_img_path, const std::string& cur_img_path, sf::Vector2u tileSize,
-            const unsigned int w, const unsigned int h);
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     sf::VertexArray m_vertices;
     sf::Texture m_tileset;
     sf::Texture m_cursor_texture;
-    sf::Sprite m_cursor;
+//    sf::Sprite m_cursor;
     std::vector<std::vector<int> > tiles;
+
+public:
+    VertexMap();
+    bool loadMap(const std::string& tileset_img_path, const std::string& cur_img_path, sf::Vector2u tileSize,
+                 const unsigned int w, const unsigned int h);
+
+
 };
 
 
