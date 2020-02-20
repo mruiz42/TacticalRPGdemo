@@ -4,18 +4,27 @@
 
 #include "../../include/tact/CharacterMap.h"
 #include "../../include/tact/Ninja.h"
-
+#include <iostream>
 CharacterMap::CharacterMap(){
     map.resize(22);
     for (int y = 0; y < 22; ++y){
+        map[y].resize(32);
         for (int x = 0; x < 32; ++x){
-            map[y].push_back(nullptr);
+            map[y][x] = nullptr;
         }
     }
     map[2][2] = new Ninja("share/sprites/ninja.png");
     map[1][1] = new Ninja("share/sprites/ninja.png");
-    map[13][3] = new Ninja("share/sprites/ninja.png");
+    map[1][11] = new Ninja("share/sprites/ninja.png");
+
+    for (int y = 0; y < 22; ++y){
+        for (int x = 0; x < 32; ++x){
+            std::cout << map[y][x] << "\t";
+        }
+        std::cout << std::endl;
+    }
 }
+
 CharacterMap::~CharacterMap() {
     for (int y = 0; y < 22; ++y){
         for (int x = 0; x < 32; ++x) {
@@ -43,5 +52,5 @@ void CharacterMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 }
 Character* CharacterMap::get_character_at(int x, int y){
-    return this->map[x][y];
+    return this->map[y][x];
 }
