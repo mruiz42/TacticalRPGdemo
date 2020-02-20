@@ -33,3 +33,8 @@ Character::Character(std::string filename){
     special_attack = 0;
     special_defense = 0;
 }
+
+void Character::set_coordinate(int x, int y) {
+    this->xy.x = x;
+    this->xy.y = y;
+}

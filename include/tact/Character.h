@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "Sprite.h"
+#include "Coordinate.h"
 
 class Character {
 protected:
@@ -16,6 +17,7 @@ protected:
     sf::Sprite sidebar_sprite;
     sf::Sprite map_sprite;
     std::string name;
+    Coordinate xy;
     unsigned int level;
     unsigned int experience;
     unsigned int hit_points;
@@ -33,6 +35,7 @@ public:
     sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
     sf::Sprite& get_map_sprite() { return this->map_sprite; }
     std::string& get_name() { return this->name; }
+    Coordinate get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
     unsigned int get_hit_points() { return this->hit_points; }
@@ -47,6 +50,8 @@ public:
     void set_sidebar_sprite(sf::Sprite& sidebar_sprite) {this->sidebar_sprite = sidebar_sprite; }
     void set_map_sprite(sf::Sprite& map_sprite) { this->map_sprite = map_sprite; }
     void set_name(std::string& name) { this->name = name; }
+    void set_coordinate(int, int);
+    void set_coordinate(Coordinate);
     void set_level(unsigned int level) { this->level = level;}
     void set_experience(unsigned int experience) { this->experience = experience; }
     void set_hit_points(unsigned int hit_points) { this->hit_points = hit_points; }

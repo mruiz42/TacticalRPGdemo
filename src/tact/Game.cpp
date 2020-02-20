@@ -12,6 +12,18 @@ Game::Game() : cur(root_prefix + cur_path, 0, 0),
     check_controllers();
     std::cout << "- Start Game -\n";
     players[0].set_is_turn(true);
+//    players[0].get_fort()->set_coordinate(17, 2);
+    players[0].set_fort_coord(2, 17);
+
+    players[1].set_fort_coord(29, 4);
+
+    for (int p = 0; p < 2; p++) {
+        HumanPlayer* p_ptr = &players[p];
+        for (int s = 0; s < players[p].get_number_units(); s++) {
+            Character* c_ptr = &players[p].get_squadron()[s];
+            c_map.getSpritemap()[p_ptr->get_fort().get_coordinate().y + 1 + s][p_ptr->get_fort().get_coordinate().x + s] = &players[p].get_squadron()[s];
+        }
+    }
 
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
@@ -112,7 +124,6 @@ int Game::play_game(sf::RenderWindow& window) {
                     break;
             }
 
-            std::cout << "hi " << get_current_player_id();
             get_current_player().get_controller().poll(event, cur, get_current_player_id());
         }
         // Refresh screen

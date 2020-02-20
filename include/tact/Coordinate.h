@@ -7,12 +7,10 @@
 
 
 class Coordinate {
-private:
+public:
     int x;
     int y;
-public:
-    void set_coordinates(int x, int y);
-    void set_coordinates(Coordinate& coordinate);
+    void set_coordinate(int,int);
     void set_x(int x);
     void set_y(int y);
 

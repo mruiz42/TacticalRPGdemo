@@ -13,6 +13,10 @@ CharacterMap::CharacterMap(){
             map[y][x] = nullptr;
         }
     }
+//    map[2][2] = new Ninja("share/sprites/ninja.png");
+//    map[1][1] = new Ninja("share/sprites/ninja.png");
+//    map[1][11] = new Ninja("share/sprites/ninja.png");
+
     for (int y = 0; y < 22; ++y){
         for (int x = 0; x < 32; ++x){
             std::cout << map[y][x] << "\t";
