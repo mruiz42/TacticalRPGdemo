@@ -14,3 +14,11 @@ HumanPlayer::HumanPlayer() {
     }
 
 }
+
+HumanPlayer::~HumanPlayer(){
+    for (int i = 0; i < number_units; i++){
+        if (&squadron[i] != nullptr){
+            delete &squadron[i];
+        }
+    }
+}

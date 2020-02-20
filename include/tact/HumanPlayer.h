@@ -18,7 +18,7 @@ private:
     Controller controller;
 public:
     HumanPlayer();
-
+    ~HumanPlayer();
     Fortress& get_fort() { return this->fort; }
     Character* get_squadron() { return this->squadron; }
     unsigned int get_player_id() { return this->player_id; }
