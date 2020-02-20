@@ -17,8 +17,10 @@ public:
     CharacterMap();
     ~CharacterMap();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    std::vector<std::vector<Character*> >& getSpritemap();
+    std::vector<std::vector<Character*> >& get_map();
     Character* get_character_at(int, int);
+    Character* get_character_at(Coordinate coordinate);
+    void set_character_at(Coordinate coordinate, Character*);
 };
 
 

@@ -12,8 +12,11 @@
     unsigned int special_defense;*/
 
 #include "../../include/tact/Ninja.h"
+
 Ninja::Ninja() : Character() {
-    texture.loadFromFile(ninja_spritesheet_path);
+    if (!texture.loadFromFile(ninja_spritesheet_path)){
+        std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
+    }
     sidebar_sprite.setTexture(texture);
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));

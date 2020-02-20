@@ -12,6 +12,8 @@ private:
     Coordinate xy;
 public:
     Fortress();
+    Fortress(int x, int y) : xy(x, y) {}
+    Fortress(Coordinate xy) : xy(xy) {}
     unsigned int get_hit_points() { return this->hit_points; }
     Coordinate& get_coordinate() { return this->xy; }
 

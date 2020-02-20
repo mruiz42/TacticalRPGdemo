@@ -6,23 +6,21 @@
 
 
 Game::Game() : cur(0, 0),
-    sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path) {
-    players[0].set_player_id(0);
-    players[1].set_player_id(1);
+    sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
+    player1(Coordinate(17, 5)),
+    player2(Coordinate(5, 13))
+    {
+    player1.set_player_id(0);
+    player2.set_player_id(1);
 
     check_controllers();
     std::cout << "- Start Game -\n";
-    players[0].set_is_turn(true);
-//    players[0].get_fort()->set_coordinate(17, 2);
-    players[0].set_fort_coord(2, 17);
-    players[1].set_fort_coord(29, 4);
+    player1.set_is_turn(true);
 
-    for (int p = 0; p < 2; p++) {
-        HumanPlayer* p_ptr = &players[p];
+
 //        p_ptr[p].get_squadron().resize(p_ptr->get_number_units());
-        for (int s = 0; s < players[p].get_number_units(); s++) {
-            p_ptr->get_squadron().push_back(new Ninja(p_ptr->get_fort().get_coordinate().x + s, p_ptr->get_fort().get_coordinate().y + 1 + s));
-        }
+    for (int s = 0; s < player1.get_number_units(); s++) {
+        player1.get_squadron().push_back(new Ninja(player1.get_fort().get_coordinate().x + s, player1.get_fort().get_coordinate().y + 1 + s));
     }
 
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
@@ -57,11 +55,13 @@ int Game::play_game(sf::RenderWindow& window) {
 
     while (window.isOpen())
     {
+        update_map();
+
         while (window.pollEvent(event)) {
             sidebar.setTurn("- Player 1 turn -");
             void updateStatbar(Character *);
 
-            if (c_map.getSpritemap()[cur.get_x()/32][cur.get_y()/32] != nullptr) {
+            if (c_map.get_map()[cur.get_x() / 32][cur.get_y() / 32] != nullptr) {
                 sidebar.updateStatbar(c_map.get_character_at(cur.get_x() / 32, cur.get_y() / 32));
             }
             else if (v_map.get_type_at(cur.get_x()/32, cur.get_y()/32) >= 69){
@@ -134,6 +134,12 @@ int Game::play_game(sf::RenderWindow& window) {
         }
         // Refresh screen
         window.clear();
+//        for (int y = 0; y < 22; ++y){
+//            for (int x = 0; x < 32; ++x){
+//                std::cout << c_map.getSpritemap()[y][x] << "\t";
+//             }
+//            std::cout << std::endl;
+//    }
         window.draw(v_map);
         window.draw(c_map);
         window.draw(cur.get_sprite());
@@ -152,15 +158,15 @@ int Game::toggle_music() {
 
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
-    if (players[0].get_is_turn()){
-        std::cout << "- Player " + std::to_string(players[1].get_player_id()) << "'s Turn begin -\n";
-        players[0].set_is_turn(false);
-        players[1].set_is_turn(true);
+    if (player1.get_is_turn()){
+        std::cout << "- Player " + std::to_string(player2.get_player_id()) << "'s Turn begin -\n";
+        player1.set_is_turn(false);
+        player2.set_is_turn(true);
     }
-    else if (players[1].get_is_turn()) {
-        std::cout << "Player " + std::to_string(players[0].get_player_id()) << "'s Turn begin -\n";
-        players[1].set_is_turn(false);
-        players[0].set_is_turn(true);
+    else if (player2.get_is_turn()) {
+        std::cout << "Player " + std::to_string(player1.get_player_id()) << "'s Turn begin -\n";
+        player2.set_is_turn(false);
+        player1.set_is_turn(true);
     }
     else {
         std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
@@ -168,11 +174,11 @@ int Game::swap_turns(){
 }
 
 HumanPlayer& Game::get_current_player() {
-    if (players[0].get_is_turn()) {
-        return players[0];
+    if (player1.get_is_turn()) {
+        return player1;
     }
-    else if (players[1].get_is_turn()) {
-        return players[1];
+    else if (player2.get_is_turn()) {
+        return player2;
     }
     else {
         std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
@@ -180,11 +186,11 @@ HumanPlayer& Game::get_current_player() {
 }
 
 int Game::get_current_player_id() {
-    if (players[0].get_is_turn()) {
-        return players[0].get_player_id();
+    if (player1.get_is_turn()) {
+        return player1.get_player_id();
     }
-    else if (players[1].get_is_turn()) {
-        return players[1].get_player_id();
+    else if (player2.get_is_turn()) {
+        return player2.get_player_id();
     }
     else {
         std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
@@ -193,11 +199,22 @@ int Game::get_current_player_id() {
 
 
 int Game::check_controllers() {
-    if (players[0].get_controller().get_js().isConnected(0) && players[0].get_controller().get_js().isConnected(1)) {
+    if (player1.get_controller().get_js().isConnected(0) && player1.get_controller().get_js().isConnected(1)) {
         return 0;
     }
     else {
         std::cout << "Only one controller detected! " << std::endl;
-        return 420;
+        return 1001;
+    }
+}
+
+void Game::update_map() {
+    for (int i = 0; i < player1.get_squadron().size(); i++) {
+        std::cout << player1.get_squadron().at(i) << std::endl;
+        c_map.set_character_at(player1.get_squadron().at(i)->get_coordinate(), player1.get_squadron().at(i));
+    }
+    for (int i = 0; i < player2.get_squadron().size(); i++) {
+        std::cout << player2.get_squadron().at(i) << std::endl;
+        c_map.set_character_at(player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }

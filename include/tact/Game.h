@@ -48,7 +48,9 @@ private:
     sf::SoundBuffer buffer;
     sf::Event event;
     Sidebar sidebar;
-    HumanPlayer players[2];
+    HumanPlayer player1;
+    HumanPlayer player2;
+
 public:
     Game();
     int play_game(sf::RenderWindow&);
@@ -57,6 +59,7 @@ public:
     HumanPlayer& get_current_player();
     int get_current_player_id();
     int check_controllers();
+    void update_map();
 };
 
 

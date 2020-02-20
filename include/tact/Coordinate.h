@@ -8,6 +8,8 @@
 
 class Coordinate {
 public:
+    Coordinate() = default;
+    Coordinate (int x, int y) : x(x), y(y) {}
     int x;
     int y;
     void set_coordinate(int,int);

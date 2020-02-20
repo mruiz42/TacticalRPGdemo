@@ -8,7 +8,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "Sprite.h"
 #include "Coordinate.h"
 
 class Character {

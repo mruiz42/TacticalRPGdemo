@@ -11,6 +11,7 @@ private:
     Controller controller;
 public:
     HumanPlayer();
+    HumanPlayer(Coordinate);
     ~HumanPlayer();
     Controller& get_controller() { return this->controller;}
     void set_controller(Controller& controller) { this->controller = controller; }

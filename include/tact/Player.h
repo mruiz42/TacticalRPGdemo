@@ -6,6 +6,7 @@
 #define CIS29GROUP2GAME_PLAYER_H
 #include "Fortress.h"
 #include "Character.h"
+#include "Coordinate.h"
 #include "Controller.h"
 #include "Ninja.h"
 
@@ -18,13 +19,13 @@ protected:
     bool is_turn;
 public:
     Player();
+    Player(Coordinate xy);
     ~Player();
     Fortress& get_fort() { return this->fort; }
     std::vector<Character *>& get_squadron() { return this->squadron; }
     unsigned int get_player_id() { return this->player_id; }
     unsigned int get_number_units() {return this->number_units; }
     bool get_is_turn() { return this->is_turn; }
-
 
     void set_fort(Fortress fort) { this->fort = fort; }
     void set_fort_coord(int x, int y) { this->fort.set_coordinate(x, y); }
