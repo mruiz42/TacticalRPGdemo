@@ -104,9 +104,8 @@ int Game::play_game(sf::RenderWindow& window) {
                             break;
                         case sf::Keyboard::Key::Q:
                             Character* ptr = get_current_player().get_squadron()[0];
-                            std::cout << ptr->get_coordinate().get_x() << " " << ptr->get_coordinate().get_y() << std::endl;
                             cur.set_coordinate(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
-
+                            cur.jump_to(cur.get_coordinate().get_x(), cur.get_coordinate().get_y());
                             break;
                     }
 

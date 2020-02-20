@@ -29,6 +29,8 @@ public:
     void set_y(int y) { this->xy.y = y; }
     void set_coordinate(int x, int y);
     void set_coordinate(Coordinate& coordinate) { this->xy = coordinate; }
+
+    void jump_to(float, float);
 };
 
 

@@ -36,3 +36,9 @@ void Cursor::moveSprite(float x, float y)
     this->xy.x = this->sprite.getPosition().x;
     this->xy.y = this->sprite.getPosition().y;
 }
+
+void Cursor::jump_to(float x, float y){
+    y *= 32;
+    x *= 32;
+    this->sprite.setPosition(x, y);
+}
