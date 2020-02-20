@@ -14,12 +14,6 @@ Game::Game() : cur(0, 0),
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
 
-
-//        p_ptr[p].get_squadron().resize(p_ptr->get_number_units());
-    for (int s = 0; s < player1.get_number_units(); s++) {
-        player1.get_squadron().push_back(new Ninja(player1.get_fort().get_coordinate().x + s, player1.get_fort().get_coordinate().y + 1 + s));
-    }
-
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
     }
