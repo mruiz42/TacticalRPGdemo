@@ -54,7 +54,7 @@ int Game::play_game(sf::RenderWindow& window) {
     while (window.isOpen())
     {
         while (window.pollEvent(event)) {
-            sidebar.setTurn("- Player 1 turn -");
+            sidebar.setTurn("- HumanPlayer 1 turn -");
             void updateStatbar(Character *);
 
             if (c_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] != nullptr) {

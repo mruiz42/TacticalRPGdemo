@@ -20,9 +20,9 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	=  $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
+OUTBINDEPS	=   $(TACTOBJ)Fortress.o $(TACTOBJ)Controller.o $(TACTOBJ)HumanPlayer.o  $(TACTOBJ)Game.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
 # library dependencies
-LIBDEP	= $(TACTOBJ)Castle.o $(TACTOBJ)Mage.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
+LIBDEP	= $(TACTOBJ)Mage.o $(TACTOBJ)Player.o $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
 
 .PHONY : clean all run
 
@@ -33,16 +33,19 @@ $(OUTBIN) : $(OUTBINDEPS) $(STTLIB)
 	
 $(STTLIB) : $(LIBDEP)
 	ar r $(STTLIB) $(LIBDEP)
-	
+
 $(SRCOBJ)main.o : $(SOURCE)main.cpp
 	$(COMPILE) $(SOURCE)main.cpp -o $(SRCOBJ)main.o
-	
+
+$(TACTOBJ)HumanPlayer.o : $(TACTSRC)HumanPlayer.cpp
+	$(COMPILE) $(TACTSRC)HumanPlayer.cpp -o $(TACTOBJ)HumanPlayer.o
+
+$(TACTOBJ)Controller.o : $(TACTSRC)Controller.cpp
+	$(COMPILE) $(TACTSRC)Controller.cpp -o $(TACTOBJ)Controller.o
+
 $(TACTOBJ)VertexMap.o : $(TACTSRC)VertexMap.cpp
 	$(COMPILE) $(TACTSRC)VertexMap.cpp -o $(TACTOBJ)VertexMap.o
-	
-$(TACTOBJ)Castle.o : $(TACTSRC)Castle.cpp
-	$(COMPILE) $(TACTSRC)Castle.cpp -o $(TACTOBJ)Castle.o
-	
+
 $(TACTOBJ)Character.o : $(TACTSRC)Character.cpp
 	$(COMPILE) $(TACTSRC)Character.cpp -o $(TACTOBJ)Character.o
 
@@ -54,9 +57,9 @@ $(TACTOBJ)Mage.o : $(TACTSRC)Mage.cpp
 	
 $(TACTOBJ)Ninja.o : $(TACTSRC)Ninja.cpp
 	$(COMPILE) $(TACTSRC)Ninja.cpp -o $(TACTOBJ)Ninja.o
-	
-$(TACTOBJ)Player.o : $(TACTSRC)Player.cpp
-	$(COMPILE) $(TACTSRC)Player.cpp -o $(TACTOBJ)Player.o
+
+$(TACTOBJ)Fortress.o : $(TACTSRC)Fortress.cpp
+	$(COMPILE) $(TACTSRC)Fortress.cpp -o $(TACTOBJ)Fortress.o
 	
 $(TACTOBJ)Spell.o : $(TACTSRC)Spell.cpp
 	$(COMPILE) $(TACTSRC)Spell.cpp -o $(TACTOBJ)Spell.o
@@ -76,6 +79,8 @@ $(TACTOBJ)Sidebar.o : $(TACTSRC)Sidebar.cpp
 $(TACTOBJ)CharacterMap.o : $(TACTSRC)CharacterMap.cpp
 	$(COMPILE) $(TACTSRC)CharacterMap.cpp -o $(TACTOBJ)CharacterMap.o
 
+$(TACTOBJ)Game.o : $(TACTSRC)Game.cpp
+	$(COMPILE) $(TACTSRC)Game.cpp -o $(TACTOBJ)Game.o
 
 clean :
 	@rm -f $(SRCOBJ)main.o

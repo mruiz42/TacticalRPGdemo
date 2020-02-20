@@ -3,3 +3,7 @@
 //
 
 #include "../../include/tact/HumanPlayer.h"
+//
+//HumanPlayer::HumanPlayer() {
+//
+//}

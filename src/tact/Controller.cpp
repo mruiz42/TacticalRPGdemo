@@ -3,11 +3,6 @@
 //
 #include "../../include/tact/Controller.h"
 
-
-Controller::Controller() {
-
-}
-
 void Controller::poll(sf::Event& event, Cursor& cur ) const {
             if(event.type == sf::Event::JoystickMoved)  // Controller input events
             {
