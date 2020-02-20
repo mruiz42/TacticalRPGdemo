@@ -32,7 +32,7 @@ const std::string root_path = "./";    // Linux
 
 class Game {
 public:
-    int load_game(sf::RenderWindow&);
+    int play(sf::RenderWindow&);
 private:
 
 };

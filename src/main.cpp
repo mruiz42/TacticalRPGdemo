@@ -11,10 +11,10 @@ static int HP = 100;
 
 int main()
 {
+    // Create window
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "[Untitled game]");
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
-    // define the level with an array of tile indices
     Game game;
-    game.load_game(window);
+    game.play(window);
     return 0;
 }

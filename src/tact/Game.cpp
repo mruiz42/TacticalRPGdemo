@@ -4,7 +4,7 @@
 
 #include "../../include/tact/Game.h"
 
-int Game::load_game(sf::RenderWindow& window) {
+int Game::play(sf::RenderWindow&) {
 
     Sidebar sidebar(root_path + "share/textures/sidebar_background.png", root_path + "share/resources/ChunkyDunk.ttf");
 
