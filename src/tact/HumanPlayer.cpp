@@ -12,7 +12,7 @@ HumanPlayer::HumanPlayer() : Player() {
     }
 
 }
-HumanPlayer::HumanPlayer(Coordinate xy) : Player(xy) {
+HumanPlayer::HumanPlayer(int id, Coordinate xy) : Player(id, xy) {
     is_turn = false;
     number_units = 3;
     for (int i = 0; i < number_units; i++){

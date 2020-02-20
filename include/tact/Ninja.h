@@ -13,6 +13,7 @@ class Ninja : public Character {
 private:
 public:
     Ninja();
+    Ninja(Coordinate xy);
     Ninja(int x, int y);
 };
 #endif //CIS29GROUP2GAME_NINJA_H

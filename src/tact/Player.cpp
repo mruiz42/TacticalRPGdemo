@@ -8,7 +8,7 @@ Player::Player(){
     is_turn = false;
     number_units = 3;
 }
-Player::Player(Coordinate xy) : fort(xy) {}
+Player::Player(int id, Coordinate xy) : player_id(id), fort(xy) {}
 
 Player::~Player() {
 

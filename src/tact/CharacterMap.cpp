@@ -5,7 +5,7 @@
 #include "../../include/tact/CharacterMap.h"
 #include "../../include/tact/Ninja.h"
 #include <iostream>
-CharacterMap::CharacterMap(){
+CharacterMap::CharacterMap() {
     map.resize(22);
     for (int y = 0; y < 22; ++y){
         map[y].resize(32);

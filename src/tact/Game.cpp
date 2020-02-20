@@ -7,12 +7,9 @@
 
 Game::Game() : cur(0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
-    player1(Coordinate(17, 5)),
-    player2(Coordinate(5, 13))
+    player1(0, Coordinate(2, 17)),
+    player2(1, Coordinate(29, 3))
     {
-    player1.set_player_id(0);
-    player2.set_player_id(1);
-
     check_controllers();
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
@@ -52,16 +49,13 @@ Game::Game() : cur(0, 0),
 }
 
 int Game::play_game(sf::RenderWindow& window) {
-
     while (window.isOpen())
     {
         update_map();
 
         while (window.pollEvent(event)) {
             sidebar.setTurn("- Player 1 turn -");
-            void updateStatbar(Character *);
-
-            if (c_map.get_map()[cur.get_x() / 32][cur.get_y() / 32] != nullptr) {
+            if (c_map.get_map()[cur.get_y() / 32][cur.get_x() / 32] != nullptr) {
                 sidebar.updateStatbar(c_map.get_character_at(cur.get_x() / 32, cur.get_y() / 32));
             }
             else if (v_map.get_type_at(cur.get_x()/32, cur.get_y()/32) >= 69){
@@ -209,12 +203,15 @@ int Game::check_controllers() {
 }
 
 void Game::update_map() {
+    for (int y = 0; y < 22; ++y) {
+        for (int x = 0; x < 32; ++x) {
+            c_map.get_map()[y][x] = nullptr;
+        }
+    }
     for (int i = 0; i < player1.get_squadron().size(); i++) {
-        std::cout << player1.get_squadron().at(i) << std::endl;
         c_map.set_character_at(player1.get_squadron().at(i)->get_coordinate(), player1.get_squadron().at(i));
     }
     for (int i = 0; i < player2.get_squadron().size(); i++) {
-        std::cout << player2.get_squadron().at(i) << std::endl;
         c_map.set_character_at(player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }

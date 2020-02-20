@@ -19,7 +19,7 @@ protected:
     bool is_turn;
 public:
     Player();
-    Player(Coordinate xy);
+    Player(int, Coordinate);
     ~Player();
     Fortress& get_fort() { return this->fort; }
     std::vector<Character *>& get_squadron() { return this->squadron; }
