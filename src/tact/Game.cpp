@@ -5,7 +5,7 @@
 #include "../../include/tact/Game.h"
 
 
-Game::Game() : cur(root_prefix + cur_path, 0, 0),
+Game::Game() : cur(0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path) {
     players[0].set_player_id(0);
     players[1].set_player_id(1);
@@ -61,10 +61,10 @@ int Game::play_game(sf::RenderWindow& window) {
             sidebar.setTurn("- Player 1 turn -");
             void updateStatbar(Character *);
 
-            if (c_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] != nullptr) {
-                sidebar.updateStatbar(c_map.get_character_at(cur.x_pos / 32, cur.y_pos / 32));
+            if (c_map.getSpritemap()[cur.get_x()/32][cur.get_y()/32] != nullptr) {
+                sidebar.updateStatbar(c_map.get_character_at(cur.get_x() / 32, cur.get_y() / 32));
             }
-            else if (v_map.get_type_at(cur.x_pos/32, cur.y_pos/32) >= 69){
+            else if (v_map.get_type_at(cur.get_x()/32, cur.get_y()/32) >= 69){
 //                std::cout << "impassible " << std::endl;
             }
             else {
@@ -114,6 +114,8 @@ int Game::play_game(sf::RenderWindow& window) {
                                 sound.setVolume(100);
                             }
                             break;
+//                        case sf::Keyboard::Key::Q:
+
                     }
 
                 case sf::Event::MouseButtonPressed:  // Mouse events

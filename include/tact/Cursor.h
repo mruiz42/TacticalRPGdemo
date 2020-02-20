@@ -6,15 +6,28 @@
 #define CIS29GROUP2GAME_CURSOR_H
 #include "Sprite.h"
 #include <string>
+#include "Coordinate.h"
+#include <iostream>
+const std::string cur_path = "share/sprites/cursor.png";
 
-class Cursor : public Sprite {
+class Cursor {
+private:
+    sf::Texture texture;
+    sf::Sprite sprite;
+    Coordinate xy;
+
 public:
-    int x_pos;
-    int y_pos;
-    Cursor(std::string s, int x, int y);
+    Cursor();
+    Cursor(int x, int y);
     virtual void moveSprite(float x, float y);
 
-
+    int get_x() { return this->xy.x; }
+    int get_y() { return this->xy.y; }
+    Coordinate& get_coordinate() { return this-> xy; }
+    sf::Sprite get_sprite() { return this->sprite; }
+    void set_x(int x) { this->xy.x = x; }
+    void set_y(int y) { this->xy.y = y; }
+    void set_coordinate(Coordinate& coordinate) { this->xy = coordinate; }
 };
 
 

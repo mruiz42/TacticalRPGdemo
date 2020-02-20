@@ -33,7 +33,6 @@ const std::string map_texture_path = "share/textures/map_tiles32.png";
 const std::string font_path = "share/resources/PressStart2P-Regular.ttf";
 const std::string sidebar_font_path = "share/resources/ChunkyDunk.ttf";
 const std::string sidebar_bg_path = "share/textures/sidebar_background.png";
-const std::string cur_path = "share/sprites/cursor.png";
 const std::string vol_change_sound_path = "share/audio/volume_change.wav";
 const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
 const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
