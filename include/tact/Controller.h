@@ -10,14 +10,13 @@
 class Controller {
 private:
     sf::Joystick js;
-
+    bool is_active;
 public:
-
     sf::Joystick& get_js() { return this->js; }
-
     void set_js(sf::Joystick& js);
-
+    Controller();
 };
+
 
 
 #endif //CIS29GROUP2GAME_CONTROLLER_H

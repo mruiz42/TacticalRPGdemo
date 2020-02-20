@@ -3,3 +3,7 @@
 //
 
 #include "../../include/tact/Controller.h"
+
+Controller::Controller() {
+
+}
