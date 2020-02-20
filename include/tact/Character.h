@@ -26,7 +26,7 @@ protected:
     unsigned int special_attack;
     unsigned int special_defense;
 public:
-//    Character();
+    Character();
     Character(std::string);
     Character(const Character&) = default;
     sf::Texture& get_texture() { return this->texture; }

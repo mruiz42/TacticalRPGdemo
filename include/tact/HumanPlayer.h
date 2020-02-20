@@ -7,17 +7,17 @@
 #include "Fortress.h"
 #include "Character.h"
 #include "Controller.h"
-
+#include "Ninja.h"
 class HumanPlayer {
 private:
     Fortress fort;
-    Character** characters; // is this right? If i want a 'dynamic array' of new Characters?
+    Character* squaderon; // is this right? If i want a 'dynamic array' of new Characters?
     unsigned int player_id;
     unsigned int number_units;
     bool is_turn;
     Controller controller;
 public:
-    HumanPlayer() {}
+    HumanPlayer();
     Fortress get_fort() { return this->fort; }
     unsigned int get_player_id() { return this->player_id; }
     unsigned int get_number_units() {return this->number_units; }

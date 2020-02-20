@@ -7,27 +7,15 @@
 
 Game::Game() : cur(root_prefix + cur_path, 0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path) {
-    players[0].set_player_id(1);
-    players[1].set_player_id(2);
+    players[0].set_player_id(0);
+    players[1].set_player_id(1);
     check_controllers();
     std::cout << "- Start Game -\n";
     players[0].set_is_turn(true);
-}
-int Game::play_game(sf::RenderWindow& window) {
 
-
-    const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
-    const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
-    const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
-
-    // create the tilemap from the level definition
-
-    if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path,
-                       sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y))
-        return -1;
-
-    // Cursor
-
+    if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
+//        return -1;
+    }
     // add background music (stream directly from music file)
 //	if(!music.openFromFile(root_path + "share/audio/BattleTheme.wav")){
 //		std::cout << "Error: backgound music." << std::endl;
@@ -42,17 +30,18 @@ int Game::play_game(sf::RenderWindow& window) {
 
     // add sound effect (pre-load small audio file to memory for fast response)
     // credit to https://www.noiseforfun.com/2012-sound-effects/menu-05-a/
-    if(!buffer.loadFromFile(root_prefix + "share/audio/volume_change.wav")){
-        std::cout << "Error: sound effect." << std::endl;
-        return -1;
+    if(!buffer.loadFromFile(root_prefix + vol_change_sound_path)){
+        std::cout << "Error: sound effect: " + vol_change_sound_path + " could not be loaded." << std::endl;
+//        return -1;
     }
-    sf::Sound sound;
     sound.setBuffer(buffer);
     sound.setVolume(50);	/// range 0-100
-    std::cout << sf::Joystick::getButtonCount(0) << std::endl;
 
     /// display character's info on sidebar
     sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_prefix + font_path);
+}
+
+int Game::play_game(sf::RenderWindow& window) {
 
     while (window.isOpen())
     {
@@ -123,7 +112,8 @@ int Game::play_game(sf::RenderWindow& window) {
                     break;
             }
 
-            get_current_player().get_controller().poll(event, cur, get_current_player_id_idx());
+            std::cout << "hi " << get_current_player_id();
+            get_current_player().get_controller().poll(event, cur, get_current_player_id());
         }
         // Refresh screen
         window.clear();
@@ -184,21 +174,9 @@ int Game::get_current_player_id() {
     }
 }
 
-int Game::get_current_player_id_idx() {
-    if (players[0].get_is_turn()) {
-        return players[0].get_player_id() - 1;
-    }
-    else if (players[1].get_is_turn()) {
-        return players[1].get_player_id() - 1;
-    }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
-}
 
 int Game::check_controllers() {
     if (players[0].get_controller().get_js().isConnected(0) && players[0].get_controller().get_js().isConnected(1)) {
-
         return 0;
     }
     else {
