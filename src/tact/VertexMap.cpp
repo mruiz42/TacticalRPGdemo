@@ -54,9 +54,9 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
             sf::Vertex* quad = &m_vertices[(x + y * w) * 4];
             // define the top, bottom, left, and right of the tiles on the screen
             int left = x * tileSize.x;
-            int right = left + tileSize.x;
+//            int right = left + tileSize.x;
             int top = y * tileSize.y;
-            int bottom = top + tileSize.y;
+//            int bottom = top + tileSize.y;
             quad[0].position = sf::Vector2f(x * tileSize.x, y * tileSize.y);
             quad[1].position = sf::Vector2f((x + 1) * tileSize.x, y * tileSize.y);
             quad[2].position = sf::Vector2f((x + 1) * tileSize.x, (y + 1) * tileSize.y);
@@ -76,12 +76,17 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
         return true;
     }
 
-    void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        // apply the transform
-        states.transform *= getTransform();
-        // apply the tileset texture
-        states.texture = &m_tileset;
-        // draw the vertex array
-        target.draw(m_vertices, states);
+void VertexMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    // apply the transform
+    states.transform *= getTransform();
+    // apply the tileset texture
+    states.texture = &m_tileset;
+    // draw the vertex array
+    target.draw(m_vertices, states);
 //        target.draw(m_cursor, states);
     }
+
+int VertexMap::get_type_at(int x, int y) const {
+    return this->map[y][x];
+}
+

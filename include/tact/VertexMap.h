@@ -23,10 +23,9 @@ private:
 
 public:
     VertexMap();
-    bool loadMap(const std::string& tileset_img_path, const std::string& cur_img_path, sf::Vector2u tileSize,
-                 const unsigned int w, const unsigned int h);
+    bool loadMap(const std::string&, const std::string&, sf::Vector2u, const unsigned int, const unsigned int);
 
-
+    int get_type_at(int, int) const;
 };
 
 

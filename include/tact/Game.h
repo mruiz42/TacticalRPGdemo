@@ -49,7 +49,11 @@ public:
     Game();
     int play_game(sf::RenderWindow&);
     int toggle_music();
-
+    int swap_turns();
+    HumanPlayer& get_current_player();
+    int get_current_player_id();
+    int get_current_player_id_idx();
+    int check_controllers();
 };
 
 

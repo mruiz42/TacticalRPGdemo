@@ -4,12 +4,12 @@
 
 #include "../../include/tact/Controller.h"
 
-void Controller::poll(sf::Event& event, Cursor& cur ) const {
+void Controller::poll(sf::Event& event, Cursor& cur, int js_id) const {
     if(event.type == sf::Event::JoystickMoved)  // Controller input events
     {
         // Get direction of D pad press
-        int p_x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
-        int p_y = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
+        int p_x = sf::Joystick::getAxisPosition(js_id, sf::Joystick::PovX);
+        int p_y = sf::Joystick::getAxisPosition(js_id, sf::Joystick::PovY);
         // Down
         if (p_y > 0) {
             if (cur.get_sprite().getPosition().y < 672)

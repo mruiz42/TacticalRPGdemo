@@ -17,7 +17,7 @@ private:
 public:
     sf::Joystick& get_js() { return this->js; }
     void set_js(sf::Joystick& js);
-    void poll(sf::Event&, Cursor& ) const;
+    void poll(sf::Event&, Cursor&, int) const;
 
     Controller() {}
 };

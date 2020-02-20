@@ -7,8 +7,11 @@
 
 Game::Game() : cur(root_prefix + cur_path, 0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path) {
-
-
+    players[0].set_player_id(1);
+    players[1].set_player_id(2);
+    check_controllers();
+    std::cout << "- Start Game -\n";
+    players[0].set_is_turn(true);
 }
 int Game::play_game(sf::RenderWindow& window) {
 
@@ -54,16 +57,15 @@ int Game::play_game(sf::RenderWindow& window) {
     while (window.isOpen())
     {
         while (window.pollEvent(event)) {
-            sidebar.setTurn("- HumanPlayer 1 turn -");
+            sidebar.setTurn("- Player 1 turn -");
             void updateStatbar(Character *);
 
             if (c_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] != nullptr) {
                 sidebar.updateStatbar(c_map.get_character_at(cur.x_pos / 32, cur.y_pos / 32));
-//                std::cout<< cur.x_pos/32 << " " << cur.y_pos/32 << "\n";
             }
-//            else if (v_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] < 69){
-//
-//            }
+            else if (v_map.get_type_at(cur.x_pos/32, cur.y_pos/32) >= 69){
+//                std::cout << "impassible " << std::endl;
+            }
             else {
                 sidebar.clear();
             }
@@ -121,6 +123,7 @@ int Game::play_game(sf::RenderWindow& window) {
                     break;
             }
 
+            get_current_player().get_controller().poll(event, cur, get_current_player_id_idx());
         }
         // Refresh screen
         window.clear();
@@ -138,4 +141,68 @@ int Game::play_game(sf::RenderWindow& window) {
 int Game::toggle_music() {
 
     return 0;
+}
+
+int Game::swap_turns(){
+    std::cout << "- End turn - \n";
+    if (players[0].get_is_turn()){
+        std::cout << "- Player " + std::to_string(players[1].get_player_id()) << "'s Turn begin -\n";
+        players[0].set_is_turn(false);
+        players[1].set_is_turn(true);
+    }
+    else if (players[1].get_is_turn()) {
+        std::cout << "Player " + std::to_string(players[0].get_player_id()) << "'s Turn begin -\n";
+        players[1].set_is_turn(false);
+        players[0].set_is_turn(true);
+    }
+    else {
+        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+    }
+}
+
+HumanPlayer& Game::get_current_player() {
+    if (players[0].get_is_turn()) {
+        return players[0];
+    }
+    else if (players[1].get_is_turn()) {
+        return players[1];
+    }
+    else {
+        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+    }
+}
+
+int Game::get_current_player_id() {
+    if (players[0].get_is_turn()) {
+        return players[0].get_player_id();
+    }
+    else if (players[1].get_is_turn()) {
+        return players[1].get_player_id();
+    }
+    else {
+        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+    }
+}
+
+int Game::get_current_player_id_idx() {
+    if (players[0].get_is_turn()) {
+        return players[0].get_player_id() - 1;
+    }
+    else if (players[1].get_is_turn()) {
+        return players[1].get_player_id() - 1;
+    }
+    else {
+        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+    }
+}
+
+int Game::check_controllers() {
+    if (players[0].get_controller().get_js().isConnected(0) && players[0].get_controller().get_js().isConnected(1)) {
+
+        return 0;
+    }
+    else {
+        std::cout << "Only one controller detected! " << std::endl;
+        return 420;
+    }
 }
