@@ -2,14 +2,14 @@
 // Created by michael on 1/21/20.
 //
 
-#ifndef CIS29GROUP2GAME_PLAYER_H
-#define CIS29GROUP2GAME_PLAYER_H
+#ifndef CIS29GROUP2GAME_HUMANPLAYER_H
+#define CIS29GROUP2GAME_HUMANPLAYER_H
 
 #include <string>
 #include "Fortress.h"
 #include "Controller.h"
 
-class Player {
+class HumanPlayer {
 private:
     unsigned int player_id;
     unsigned int number_units;
@@ -25,4 +25,4 @@ public:
 };
 
 
-#endif //CIS29GROUP2GAME_PLAYER_H
+#endif //CIS29GROUP2GAME_HUMANPLAYER_H
