@@ -1,11 +1,9 @@
 //
-// Created by michael on 1/21/20.
+// Created by michael on 2/20/20.
 //
 
 #ifndef CIS29GROUP2GAME_HUMANPLAYER_H
 #define CIS29GROUP2GAME_HUMANPLAYER_H
-
-#include <string>
 #include "Fortress.h"
 #include "Character.h"
 #include "Controller.h"
@@ -16,10 +14,9 @@ private:
     Character** characters; // is this right? If i want a 'dynamic array' of new Characters?
     unsigned int player_id;
     unsigned int number_units;
-    Controller controller;
     bool is_turn;
 public:
-    HumanPlayer() = default;
+    HumanPlayer() {}
 
     Fortress get_fort() { return this->fort; }
     unsigned int get_player_id() { return this->player_id; }

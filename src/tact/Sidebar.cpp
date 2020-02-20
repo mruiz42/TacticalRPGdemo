@@ -57,7 +57,6 @@ void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(sidebar, states);
 }
 void Sidebar::updateStatbar(Character* character){
-        std::cout << "Hello " << std::endl;
         stats[0].setString("LV." + std::to_string(character->get_level()));
         stats[1].setString("EXP." + std::to_string(character->get_experience()));
         stats[2].setString("HP." + std::to_string(character->get_hit_points()));

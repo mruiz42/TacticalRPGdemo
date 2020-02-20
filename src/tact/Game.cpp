@@ -59,13 +59,14 @@ int Game::play_game(sf::RenderWindow& window) {
 
             if (c_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] != nullptr) {
                 sidebar.updateStatbar(c_map.get_character_at(cur.x_pos / 32, cur.y_pos / 32));
-                std::cout<< cur.x_pos/32 << " " << cur.y_pos/32 << "\n";
+//                std::cout<< cur.x_pos/32 << " " << cur.y_pos/32 << "\n";
             }
 //            else if (v_map.getSpritemap()[cur.y_pos/32][cur.x_pos/32] < 69){
 //
 //            }
-            else { sidebar.clear();
-            std::cout << cur.x_pos/32 << " " << cur.y_pos/32 << "\n"; }
+            else {
+                sidebar.clear();
+            }
             // Poll for events
             switch(event.type)
             {
@@ -113,7 +114,7 @@ int Game::play_game(sf::RenderWindow& window) {
                     }
 
                 case sf::Event::MouseButtonPressed:  // Mouse events
-                    if(event.key.code == sf::Mouse::Left){
+                    if(event.MouseButtonPressed == sf::Mouse::Left){
 //						sidebar.hp_raise(HP, HP_MAX, HP_RAISE, window.getSize().x, window.getSize().y, root_path + fontFileName, window);
                         std::cout << "Mouse left button pressed" << std:: endl;
                     }
@@ -130,10 +131,11 @@ int Game::play_game(sf::RenderWindow& window) {
         sidebar.drawStat(window);
         window.display();
     }
-
-
+    std::cout << "Game Over!" << std::endl;
+    return 0;
 }
 
 int Game::toggle_music() {
 
+    return 0;
 }

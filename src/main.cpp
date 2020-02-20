@@ -1,5 +1,4 @@
 #include "../include/tact/Game.h"
-
 //const int HP_MAX = 200;
 //const int HP_MIN = 0;
 //const int HP_RAISE = 5;
