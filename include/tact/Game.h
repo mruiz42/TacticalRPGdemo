@@ -24,7 +24,9 @@
 #include "Character.h"
 #include "Cursor.h"
 #include "CharacterMap.h"
+#include "Selection.h"
 //#include "Controller.h"
+
 #include "HumanPlayer.h"
 #include <iostream>
 
@@ -50,6 +52,7 @@ private:
     Sidebar sidebar;
     HumanPlayer player1;
     HumanPlayer player2;
+    Selection selection;
     unsigned int iterator;
     bool unit_selected;
 public:

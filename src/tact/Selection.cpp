@@ -3,3 +3,8 @@
 //
 
 #include "../../include/tact/Selection.h"
+
+void Selection::clear() {
+    this->selection = nullptr;
+    this->target = nullptr;
+}
