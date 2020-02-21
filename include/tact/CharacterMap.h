@@ -20,6 +20,8 @@ public:
     std::vector<std::vector<Character*> >& get_map();
     Character* get_character_at(int, int);
     Character* get_character_at(Coordinate coordinate);
+    Character& get_character_address_at(Coordinate coordinate);
+
     void set_character_at(Coordinate coordinate, Character*);
 };
 

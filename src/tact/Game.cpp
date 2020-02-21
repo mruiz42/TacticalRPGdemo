@@ -70,7 +70,7 @@ int Game::play_game(sf::RenderWindow& window) {
                         move_cursor_poll();
                     }
                     else {
-                        move_character_poll(c_map.get_character_at(cur));
+                        move_character_poll();
                     }
             }
 
@@ -96,18 +96,21 @@ int Game::toggle_music() {
 
     return 0;
 }
-
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
     if (player1.get_is_turn()){
         std::cout << "- Player " + std::to_string(player2.get_player_id()) << "'s Turn begin -\n";
         player1.set_is_turn(false);
         player2.set_is_turn(true);
+        selection.clear();
+        return player2.get_player_id();
     }
     else if (player2.get_is_turn()) {
         std::cout << "Player " + std::to_string(player1.get_player_id()) << "'s Turn begin -\n";
         player2.set_is_turn(false);
         player1.set_is_turn(true);
+        selection.clear();
+        return player1.get_player_id();
     }
     else {
         std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
@@ -188,7 +191,6 @@ void Game::update_map() {
     }
 }
 
-
 void Game::adjust_volume_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::Dash: // Volume Down
@@ -234,7 +236,10 @@ void Game::move_cursor_poll() {
         case sf::Keyboard::Key::Enter:
             std::cout << cur << std::endl;
             if (belongs_to_current_player(c_map.get_character_at(cur))) {
-                unit_selected = true;
+                if (!unit_selected) {
+                    selection.set_selection(*c_map.get_character_at(cur));
+                    unit_selected = true;
+                }
                 std::cout << "can move it : P" << std::endl;
 
             }
@@ -252,28 +257,35 @@ void Game::move_cursor_poll() {
     }
 }
 
-void Game::move_character_poll(Character* c_ptr){
+void Game::move_character_poll(){
     std::cout << "moving ";
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
-            if (cur.get_sprite().getPosition().x < 992)
+            if (cur.get_sprite().getPosition().x < 992){
                 cur.moveSprite(TEXTURE_SIZE, 0);
-                c_ptr->get_map_sprite().move(TEXTURE_SIZE, 0);
+                selection.get_selection().get_map_sprite().move(TEXTURE_SIZE, 0);
+            }
             break;
 
         case sf::Keyboard::Key::A:  // Left
-            if (cur.get_sprite().getPosition().x > 0)
+            if (cur.get_sprite().getPosition().x > 0) {
                 cur.moveSprite(-TEXTURE_SIZE, 0);
+                selection.get_selection().get_map_sprite().move(-TEXTURE_SIZE, 0);
+            }
             break;
 
         case sf::Keyboard::Key::W: // UP
-            if (cur.get_sprite().getPosition().y > 0)
+            if (cur.get_sprite().getPosition().y > 0) {
                 cur.moveSprite(0, -TEXTURE_SIZE);
+                selection.get_selection().get_map_sprite().move(0, -TEXTURE_SIZE);
+            }
             break;
 
         case sf::Keyboard::Key::S: // DOWN
-            if (cur.get_sprite().getPosition().y < 672)
+            if (cur.get_sprite().getPosition().y < 672) {
                 cur.moveSprite(0, TEXTURE_SIZE);
+                selection.get_selection().get_map_sprite().move(0, TEXTURE_SIZE);
+            }
             break;
 
         case sf::Keyboard::Key::Enter:

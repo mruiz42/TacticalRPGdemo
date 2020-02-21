@@ -8,15 +8,15 @@
 
 class Selection {
 private:
-    Character& selection;
-    Character& target;
+    Character* selection;
+    Character* target;
 public:
-    Selection();
-    Character& get_selection();
-    Character& get_target();
+    Selection() : selection(nullptr), target(nullptr) {}
+    Character& get_selection() { return *this->selection; }
+    Character& get_target() { return *this->target; }
 
-    void set_selection(Character& selection);
-    void set_target(Character& target);
+    void set_selection(Character selection) { this->selection = &selection; }
+    void set_target(Character target) {this->target = &target; }
 
     void clear();
 };
