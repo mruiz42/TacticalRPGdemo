@@ -47,7 +47,6 @@ Game::Game() : cur(0, 0),
 int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
     while (window.isOpen()) {
-        update_map();
 
         while (window.pollEvent(event)) {
             sidebar.setTurn("- Player 1 turn -");
@@ -80,6 +79,7 @@ int Game::play_game(sf::RenderWindow& window) {
             // Refresh screen
             window.clear();
     }
+            update_map();
             window.draw(v_map);
             window.draw(c_map);
             window.draw(cur.get_sprite());
@@ -102,14 +102,14 @@ int Game::swap_turns(){
         std::cout << "- Player " + std::to_string(player2.get_player_id()) << "'s Turn begin -\n";
         player1.set_is_turn(false);
         player2.set_is_turn(true);
-        selection.clear();
+        selector.clear();
         return player2.get_player_id();
     }
     else if (player2.get_is_turn()) {
         std::cout << "Player " + std::to_string(player1.get_player_id()) << "'s Turn begin -\n";
         player2.set_is_turn(false);
         player1.set_is_turn(true);
-        selection.clear();
+        selector.clear();
         return player1.get_player_id();
     }
     else {
@@ -233,11 +233,11 @@ void Game::move_cursor_poll() {
                 cur.moveSprite(0, TEXTURE_SIZE);
             break;
 
-        case sf::Keyboard::Key::Enter:
+        case sf::Keyboard::Key::Enter:          // Pick up
             std::cout << cur << std::endl;
             if (belongs_to_current_player(c_map.get_character_at(cur))) {
                 if (!unit_selected) {
-                    selection.set_selection(*c_map.get_character_at(cur));
+                    selector.set_selection(c_map.get_character_at(cur));
                     unit_selected = true;
                 }
                 std::cout << "can move it : P" << std::endl;
@@ -263,43 +263,44 @@ void Game::move_character_poll(){
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992){
                 cur.moveSprite(TEXTURE_SIZE, 0);
-                selection.get_selection().get_map_sprite().move(TEXTURE_SIZE, 0);
+                selector.get_selection().get_map_sprite().move(TEXTURE_SIZE, 0);
             }
             break;
 
         case sf::Keyboard::Key::A:  // Left
             if (cur.get_sprite().getPosition().x > 0) {
                 cur.moveSprite(-TEXTURE_SIZE, 0);
-                selection.get_selection().get_map_sprite().move(-TEXTURE_SIZE, 0);
+                selector.get_selection().get_map_sprite().move(-TEXTURE_SIZE, 0);
             }
             break;
 
         case sf::Keyboard::Key::W: // UP
             if (cur.get_sprite().getPosition().y > 0) {
                 cur.moveSprite(0, -TEXTURE_SIZE);
-                selection.get_selection().get_map_sprite().move(0, -TEXTURE_SIZE);
+                selector.get_selection().get_map_sprite().move(0, -TEXTURE_SIZE);
             }
             break;
 
         case sf::Keyboard::Key::S: // DOWN
             if (cur.get_sprite().getPosition().y < 672) {
                 cur.moveSprite(0, TEXTURE_SIZE);
-                selection.get_selection().get_map_sprite().move(0, TEXTURE_SIZE);
+                selector.get_selection().get_map_sprite().move(0, TEXTURE_SIZE);
             }
             break;
 
-        case sf::Keyboard::Key::Enter:
-            std::cout << cur << std::endl;
-            if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
-                std::cout << "can move it : P" << std::endl;
-
-            }
+        case sf::Keyboard::Key::Enter:                  // Set down
+            std::cout << "placed at :" << cur << std::endl;
+            c_map.set_character_at(cur, &selector.get_selection());
+            selector.get_selection().set_coordinate(cur);
+            selector.clear_selection();
+            unit_selected = false;
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
 
             break;
 
-        case sf::Keyboard::Key::BackSpace:
+        case sf::Keyboard::Key::BackSpace:              // Cancel
             unit_selected = false;
+            selector.clear();
             break;
     }
 }
