@@ -44,6 +44,7 @@ Game::Game() : cur(0, 0),
 }
 
 int Game::play_game(sf::RenderWindow& window) {
+    window.setFramerateLimit(30);
     while (window.isOpen())
     {
         update_map();
@@ -243,3 +244,4 @@ void Game::update_map() {
         c_map.set_character_at(player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }
+

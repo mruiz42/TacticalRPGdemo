@@ -63,6 +63,7 @@ public:
     int check_controllers();
     bool belongs_to_current_player(Character*);
     void update_map();
+    void set_framerate();
 };
 
 
