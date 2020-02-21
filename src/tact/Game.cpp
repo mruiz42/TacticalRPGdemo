@@ -255,23 +255,23 @@ void Game::move_cursor_poll() {
 void Game::move_character_poll(Character* c_ptr){
     std::cout << "moving ";
     switch (event.key.code) {
-        case sf::Keyboard::D:   // Right
+        case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992)
                 cur.moveSprite(TEXTURE_SIZE, 0);
                 c_ptr->get_map_sprite().move(TEXTURE_SIZE, 0);
             break;
 
-        case sf::Keyboard::A:  // Left
+        case sf::Keyboard::Key::A:  // Left
             if (cur.get_sprite().getPosition().x > 0)
                 cur.moveSprite(-TEXTURE_SIZE, 0);
             break;
 
-        case sf::Keyboard::W: // UP
+        case sf::Keyboard::Key::W: // UP
             if (cur.get_sprite().getPosition().y > 0)
                 cur.moveSprite(0, -TEXTURE_SIZE);
             break;
 
-        case sf::Keyboard::S: // DOWN
+        case sf::Keyboard::Key::S: // DOWN
             if (cur.get_sprite().getPosition().y < 672)
                 cur.moveSprite(0, TEXTURE_SIZE);
             break;
@@ -286,12 +286,8 @@ void Game::move_character_poll(Character* c_ptr){
 
             break;
 
-        case sf::Keyboard::Key::Q:
-            if (iterator == get_current_player().get_squadron().size())
-                iterator = 0;
-            Character *ptr = get_current_player().get_squadron()[iterator];
-            cur.jump_to(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
-            iterator++;
+        case sf::Keyboard::Key::BackSpace:
+            unit_selected = false;
             break;
     }
 }
