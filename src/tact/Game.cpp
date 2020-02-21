@@ -215,10 +215,9 @@ bool Game::belongs_to_current_player(Character* character) {
     for (auto i = 0; i < this->get_current_player().get_squadron().size(); i++) {
         if (character == this->get_current_player().get_squadron()[i]) {
             return true;
-        } else {
-            return false;
         }
     }
+    return false;
 }
 
 int Game::check_controllers() {
