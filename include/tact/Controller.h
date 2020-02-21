@@ -8,6 +8,7 @@
 #include <SFML/Window/Joystick.hpp>
 #include "Cursor.h"
 #include <iostream>
+
 #define TEXTURE_SIZE 32
 
 class Controller {

@@ -22,24 +22,25 @@ Cursor::Cursor(int x, int y) : Coordinate (x, y) {
 
 void Cursor::moveSprite(float x, float y) {
     this->sprite.move(sf::Vector2f(x,y));
-    this->x = (this->sprite.getPosition().x);
-    this->y = (this->sprite.getPosition().y);
+    this->x = (this->sprite.getPosition().x/TEXTURE_SIZE);
+    this->y = (this->sprite.getPosition().y/TEXTURE_SIZE);
 }
 
 Coordinate Cursor::get_tile_coordinate(){
     Coordinate temp;
-    temp.set_x(this->x / 32);
-    temp.set_y(this->y / 32);
+    temp.set_x(this->x / TEXTURE_SIZE);
+    temp.set_y(this->y / TEXTURE_SIZE);
     return temp;
 }
 
-void Cursor::jump_to(float x, float y) {
-    y *= 32;
-    x *= 32;
-    this->sprite.setPosition(x, y);
+void Cursor::jump_to(int x, int y) {
+    this->set_coordinate(x, y);
+    float yf = y * TEXTURE_SIZE;
+    float xf = x * TEXTURE_SIZE;
+    this->sprite.setPosition(xf, yf);
 }
 
 std::ostream& operator<< (std::ostream& out, const Cursor& cursor){
-    out << "(" + std::to_string(cursor.x/32) + "," + std::to_string(cursor.y/32) + ")" << std::endl;
+    out << "(" + std::to_string(cursor.get_x()) + "," + std::to_string(cursor.get_y()) + ")" << std::endl;
     return out;
 }

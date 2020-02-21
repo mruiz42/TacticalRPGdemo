@@ -6,10 +6,12 @@
 #define CIS29GROUP2GAME_COORDINATE_H
 #include <iostream>
 
+#define TEXTURE_SIZE 32
+
 class Coordinate {
 protected:
-    int y;
     int x;
+    int y;
 public:
     Coordinate() = default;
     Coordinate(const Coordinate&);

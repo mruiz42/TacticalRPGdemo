@@ -32,10 +32,6 @@ void Coordinate::set_coordinate(Coordinate coordinate) {
     this->y = coordinate.y;
 }
 
-Coordinate& Coordinate::get_coordinate() {
-    return *this;
-}
-
 
 int Coordinate::get_x() const {
     return this->x;
@@ -48,6 +44,6 @@ int Coordinate::get_y() const {
 
 
 std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate){
-    out << "(" + std::to_string(coordinate.x) + "," + std::to_string(coordinate.y) + ")" << std::endl;
+    out << "(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")" << std::endl;
     return out;
 }

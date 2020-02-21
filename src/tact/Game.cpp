@@ -44,7 +44,7 @@ Game::Game() : cur(0, 0),
 }
 
 int Game::play_game(sf::RenderWindow& window) {
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(60);
     while (window.isOpen()) {
         update_map();
 
@@ -243,8 +243,7 @@ void Game::move_sprite_poll() {
             if (iterator == get_current_player().get_squadron().size())
                 iterator = 0;
             Character *ptr = get_current_player().get_squadron()[iterator];
-            cur.set_coordinate(ptr->get_coordinate());
-            cur.jump_to(cur.get_x(), cur.get_y());
+            cur.jump_to(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
             iterator++;
             break;
     }
