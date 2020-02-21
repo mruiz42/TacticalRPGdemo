@@ -94,6 +94,7 @@ int Game::play_game(sf::RenderWindow& window) {
                             sound.setVolume(sound.getVolume() - 10);
                             sound.play();
                             break;
+
                         case sf::Keyboard::Key::Equal:  // Volume Up
                             music.setVolume(music.getVolume() + 10);
                             sound.setVolume(sound.getVolume() + 10);
@@ -103,6 +104,7 @@ int Game::play_game(sf::RenderWindow& window) {
                                 sound.setVolume(100);
                             }
                             break;
+
                         case sf::Keyboard::Key::Q:
                             if (iterator == get_current_player().get_squadron().size())
                                 iterator = 0;
@@ -110,10 +112,10 @@ int Game::play_game(sf::RenderWindow& window) {
                             cur.set_coordinate(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
                             cur.jump_to(cur.get_coordinate().get_x(), cur.get_coordinate().get_y());
                             iterator++;
-
-
-
                             break;
+
+//                        case sf::Keyboard::Key::Enter:
+
                     }
 
                 case sf::Event::MouseButtonPressed:  // Mouse events
