@@ -61,7 +61,7 @@ Character::Character(std::string filename){
 }
 
 void Character::set_coordinate(int x, int y) {
-    this->xy.x = x;
-    this->xy.y = y;
+    this->xy.set_x(x);
+    this->xy.set_y(y);
 }
 

@@ -7,19 +7,22 @@
 
 
 class Coordinate {
-public:
-    Coordinate() = default;
-    Coordinate (int x, int y) : x(x), y(y) {}
+protected:
     int x;
     int y;
+public:
+    Coordinate() = default;
+    Coordinate(const Coordinate&);
+    Coordinate(int x, int y) : x(x), y(y) {}
     void set_coordinate(int,int);
+    void set_coordinate(Coordinate);
     void set_x(int x);
     void set_y(int y);
 
     Coordinate& get_coordinate();
     Coordinate& get_tile_coordinate();
-    int get_x();
-    int get_y();
+    int get_x() const;
+    int get_y() const;
 };
 
 

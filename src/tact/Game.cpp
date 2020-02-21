@@ -50,10 +50,10 @@ int Game::play_game(sf::RenderWindow& window) {
 
         while (window.pollEvent(event)) {
             sidebar.setTurn("- Player 1 turn -");
-            if (c_map.get_map()[cur.get_y() / 32][cur.get_x() / 32] != nullptr) {
-                sidebar.updateStatbar(c_map.get_character_at(cur.get_x() / 32, cur.get_y() / 32));
+            if (c_map.get_map()[cur.get_tile_y()][cur.get_tile_x()] != nullptr) {
+                sidebar.updateStatbar(c_map.get_character_at(cur.get_tile_x(), cur.get_tile_y()));
             }
-            else if (v_map.get_type_at(cur.get_x()/32, cur.get_y()/32) >= 69){
+            else if (v_map.get_type_at(cur.get_tile_x(), cur.get_tile_y()) >= 69){
 //                std::cout << "impassible " << std::endl;
             }
             else {
@@ -105,7 +105,7 @@ int Game::play_game(sf::RenderWindow& window) {
                             }
                             break;
                         case sf::Keyboard::Key::Enter:
-                            if (belongs_to_current_player(c_map.get_character_at(cur.get_x()/32, cur.get_y()/32))) {
+                            if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_x(), cur.get_tile_y()))) {
                                 std::cout << "can move it : P" << std::endl;
                             }
 //                                if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
@@ -115,8 +115,8 @@ int Game::play_game(sf::RenderWindow& window) {
                             if (iterator == get_current_player().get_squadron().size())
                                 iterator = 0;
                             Character* ptr = get_current_player().get_squadron()[iterator];
-                            cur.set_coordinate(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
-                            cur.jump_to(cur.get_coordinate().get_x(), cur.get_coordinate().get_y());
+                            cur.set_coordinate(ptr->get_coordinate());
+                            cur.jump_to(cur.get_x(), cur.get_y());
                             iterator++;
                             break;
                     }

@@ -48,8 +48,8 @@ void CharacterMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
             }
         }
     }
-
 }
+
 Character* CharacterMap::get_character_at(int x, int y){
     return this->map[y][x];
 }
