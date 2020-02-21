@@ -64,6 +64,12 @@ public:
     bool belongs_to_current_player(Character*);
     void update_map();
     void set_framerate();
+
+    void move_sprite_poll();
+
+    void adjust_volume_poll();
+
+    void move_character_poll();
 };
 
 

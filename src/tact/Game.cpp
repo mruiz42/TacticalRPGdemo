@@ -45,110 +45,47 @@ Game::Game() : cur(0, 0),
 
 int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(30);
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         update_map();
 
         while (window.pollEvent(event)) {
             sidebar.setTurn("- Player 1 turn -");
             if (c_map.get_map()[cur.get_tile_y()][cur.get_tile_x()] != nullptr) {
                 sidebar.updateStatbar(c_map.get_character_at(cur.get_tile_x(), cur.get_tile_y()));
-            }
-            else if (v_map.get_type_at(cur.get_tile_x(), cur.get_tile_y()) >= 69){
+            } else if (v_map.get_type_at(cur.get_tile_x(), cur.get_tile_y()) >= 69) {
 //                std::cout << "impassible " << std::endl;
-            }
-            else {
+            } else {
                 sidebar.clear();
             }
             // Poll for events
-            switch(event.type)
-            {
-                case sf::Event::Closed:
+            switch (event.type) {
+                case sf::Event::Closed: {
                     window.close();
                     break;
-
-                case sf::Event::KeyPressed:     // Keyboard input events
-                    switch(event.key.code)
-                    {
-                        case sf::Keyboard::D:   // Right
-                            if (cur.get_sprite().getPosition().x < 992)
-                                cur.moveSprite(TEXTURE_SIZE, 0);
-                            break;
-
-                        case sf::Keyboard::A:  // Left
-                            if (cur.get_sprite().getPosition().x > 0)
-                                cur.moveSprite(-TEXTURE_SIZE, 0);
-                            break;
-
-                        case sf::Keyboard::W: // UP
-                            if (cur.get_sprite().getPosition().y > 0)
-                                cur.moveSprite(0, -TEXTURE_SIZE);
-                            break;
-
-                        case sf::Keyboard::S: // DOWN
-                            if (cur.get_sprite().getPosition().y < 672)
-                                cur.moveSprite(0, TEXTURE_SIZE);
-                            break;
-
-                        case sf::Keyboard::Key::Dash: // Volume Down
-                            music.setVolume(music.getVolume() - 10);
-                            sound.setVolume(sound.getVolume() - 10);
-                            sound.play();
-                            break;
-
-                        case sf::Keyboard::Key::Equal:  // Volume Up
-                            music.setVolume(music.getVolume() + 10);
-                            sound.setVolume(sound.getVolume() + 10);
-                            sound.play();
-                            if (music.getVolume() >= 100){
-                                music.setVolume(100);
-                                sound.setVolume(100);
-                            }
-                            break;
-
-                        case sf::Keyboard::Key::Enter:
-                            std::cout << cur << std::endl;
-                            if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
-                                std::cout << "can move it : P" << std::endl;
-                            }
-//                                if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
-
-                            break;
-
-                        case sf::Keyboard::Key::Q:
-                            if (iterator == get_current_player().get_squadron().size())
-                                iterator = 0;
-                            Character* ptr = get_current_player().get_squadron()[iterator];
-                            cur.set_coordinate(ptr->get_coordinate());
-                            cur.jump_to(cur.get_x(), cur.get_y());
-                            iterator++;
-                            break;
-                    }
-
-                case sf::Event::MouseButtonPressed:  // Mouse events
-                    if(event.MouseButtonPressed == sf::Mouse::Left){
-//						sidebar.hp_raise(HP, HP_MAX, HP_RAISE, window.getSize().x, window.getSize().y, root_path + fontFileName, window);
-                        std::cout << "Mouse left button pressed" << std:: endl;
-                    }
-                    break;
+                }
+                case sf::Event::KeyPressed: {     // Keyboard input events
+                    adjust_volume_poll();
+                    move_sprite_poll();
             }
 
-            get_current_player().get_controller().poll(event, cur, get_current_player_id());
-        }
-        // Refresh screen
-        window.clear();
+//            case sf::Event::JoystickButtonPressed || sf::Event::JoystickMoveEvent:
+//                    get_current_player().get_controller().poll(event, cur, get_current_player_id());
+//            }
+            // Refresh screen
+            window.clear();
 //        for (int y = 0; y < 22; ++y){
 //            for (int x = 0; x < 32; ++x){
 //                std::cout << c_map.getSpritemap()[y][x] << "\t";
 //             }
 //            std::cout << std::endl;
-//    }
-        window.draw(v_map);
-        window.draw(c_map);
-        window.draw(cur.get_sprite());
-        window.draw(sidebar);
-        sidebar.drawStat(window);
-        window.display();
+    }
+            window.draw(v_map);
+            window.draw(c_map);
+            window.draw(cur.get_sprite());
+            window.draw(sidebar);
+            sidebar.drawStat(window);
+            window.display();
+        }
     }
     std::cout << "Game Over!" << std::endl;
     return 0;
@@ -250,3 +187,69 @@ void Game::update_map() {
     }
 }
 
+
+void Game::adjust_volume_poll() {
+    switch (event.key.code) {
+        case sf::Keyboard::Key::Dash: // Volume Down
+            music.setVolume(music.getVolume() - 10);
+            sound.setVolume(sound.getVolume() - 10);
+            sound.play();
+            break;
+
+        case sf::Keyboard::Key::Equal:  // Volume Up
+            music.setVolume(music.getVolume() + 10);
+            sound.setVolume(sound.getVolume() + 10);
+            sound.play();
+            if (music.getVolume() >= 100) {
+                music.setVolume(100);
+                sound.setVolume(100);
+            }
+            break;
+    }
+    }
+
+void Game::move_sprite_poll() {
+    switch (event.key.code) {
+        case sf::Keyboard::D:   // Right
+            if (cur.get_sprite().getPosition().x < 992)
+                cur.moveSprite(TEXTURE_SIZE, 0);
+            break;
+
+        case sf::Keyboard::A:  // Left
+            if (cur.get_sprite().getPosition().x > 0)
+                cur.moveSprite(-TEXTURE_SIZE, 0);
+            break;
+
+        case sf::Keyboard::W: // UP
+            if (cur.get_sprite().getPosition().y > 0)
+                cur.moveSprite(0, -TEXTURE_SIZE);
+            break;
+
+        case sf::Keyboard::S: // DOWN
+            if (cur.get_sprite().getPosition().y < 672)
+                cur.moveSprite(0, TEXTURE_SIZE);
+            break;
+
+        case sf::Keyboard::Key::Enter:
+            std::cout << cur << std::endl;
+            if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
+                std::cout << "can move it : P" << std::endl;
+            }
+            // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
+
+            break;
+
+        case sf::Keyboard::Key::Q:
+            if (iterator == get_current_player().get_squadron().size())
+                iterator = 0;
+            Character *ptr = get_current_player().get_squadron()[iterator];
+            cur.set_coordinate(ptr->get_coordinate());
+            cur.jump_to(cur.get_x(), cur.get_y());
+            iterator++;
+            break;
+    }
+}
+
+void Game::move_character_poll(){
+
+}
