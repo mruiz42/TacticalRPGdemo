@@ -90,3 +90,7 @@ int VertexMap::get_type_at(int x, int y) const {
     return this->map[y][x];
 }
 
+int VertexMap::get_type_at(Coordinate xy) const {
+    return this->map[xy.get_y()][xy.get_x()];
+}
+

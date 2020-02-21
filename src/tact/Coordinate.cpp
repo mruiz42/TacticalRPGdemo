@@ -23,8 +23,14 @@ void Coordinate::set_coordinate(int x, int y) {
     this->y = y;
 }
 
-Coordinate* Coordinate::get_coordinate() {
-    return this;
+Coordinate& Coordinate::get_coordinate() {
+    return *this;
+}
+
+Coordinate& Coordinate::get_tile_coordinate(){
+    this->x/=32;
+    this->y/=32;
+    return *this;
 }
 int Coordinate::get_x() {
     return this->x;

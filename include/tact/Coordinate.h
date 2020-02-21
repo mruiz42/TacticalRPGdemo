@@ -16,7 +16,8 @@ public:
     void set_x(int x);
     void set_y(int y);
 
-    Coordinate* get_coordinate();
+    Coordinate& get_coordinate();
+    Coordinate& get_tile_coordinate();
     int get_x();
     int get_y();
 };

@@ -24,6 +24,7 @@ public:
     int get_x() { return this->xy.x; }
     int get_y() { return this->xy.y; }
     Coordinate& get_coordinate() { return this-> xy; }
+    Coordinate& get_tile_coordinate() { return this->xy.get_tile_coordinate(); }
     sf::Sprite get_sprite() { return this->sprite; }
     void set_x(int x) { this->xy.x = x; }
     void set_y(int y) { this->xy.y = y; }

@@ -104,7 +104,13 @@ int Game::play_game(sf::RenderWindow& window) {
                                 sound.setVolume(100);
                             }
                             break;
+                        case sf::Keyboard::Key::Enter:
+                            if (belongs_to_current_player(c_map.get_character_at(cur.get_x()/32, cur.get_y()/32))) {
+                                std::cout << "can move it : P" << std::endl;
+                            }
+//                                if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
 
+                            break;
                         case sf::Keyboard::Key::Q:
                             if (iterator == get_current_player().get_squadron().size())
                                 iterator = 0;
@@ -113,9 +119,6 @@ int Game::play_game(sf::RenderWindow& window) {
                             cur.jump_to(cur.get_coordinate().get_x(), cur.get_coordinate().get_y());
                             iterator++;
                             break;
-
-//                        case sf::Keyboard::Key::Enter:
-
                     }
 
                 case sf::Event::MouseButtonPressed:  // Mouse events
@@ -181,6 +184,18 @@ HumanPlayer& Game::get_current_player() {
     }
 }
 
+HumanPlayer& Game::get_enemy_player() {
+    if (player1.get_is_turn()) {
+        return player2;
+    }
+    else if (player2.get_is_turn()) {
+        return player1;
+    }
+    else {
+        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+    }
+}
+
 int Game::get_current_player_id() {
     if (player1.get_is_turn()) {
         return player1.get_player_id();
@@ -193,6 +208,15 @@ int Game::get_current_player_id() {
     }
 }
 
+bool Game::belongs_to_current_player(Character* character) {
+    for (auto i = 0; i < this->get_current_player().get_squadron().size(); i++) {
+        if (character == this->get_current_player().get_squadron()[i]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 
 int Game::check_controllers() {
     if (player1.get_controller().get_js().isConnected(0) && player1.get_controller().get_js().isConnected(1)) {

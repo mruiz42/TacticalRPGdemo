@@ -58,8 +58,10 @@ public:
     int toggle_music();
     int swap_turns();
     HumanPlayer& get_current_player();
+    HumanPlayer& get_enemy_player();
     int get_current_player_id();
     int check_controllers();
+    bool belongs_to_current_player(Character*);
     void update_map();
 };
 
