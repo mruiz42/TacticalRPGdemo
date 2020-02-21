@@ -20,7 +20,6 @@ public:
     Cursor();
     Cursor(int x, int y);
     virtual void moveSprite(float x, float y);
-
     int get_tile_x() { return this->xy.get_x()/32; }
     int get_tile_y() { return this->xy.get_y()/32; }
 //    Coordinate& get_coordinate() { return this-> xy; }
