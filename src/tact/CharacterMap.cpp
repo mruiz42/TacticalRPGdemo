@@ -56,7 +56,6 @@ Character* CharacterMap::get_character_at(int x, int y){
 
 Character& CharacterMap::get_character_address_at(Coordinate coordinate){
     return *this->map[coordinate.get_y()][coordinate.get_x()];
-
 }
 
 Character* CharacterMap::get_character_at(Coordinate coordinate) {

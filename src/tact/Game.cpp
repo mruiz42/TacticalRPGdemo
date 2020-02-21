@@ -291,7 +291,8 @@ void Game::move_character_poll(){
         case sf::Keyboard::Key::Enter:                  // Set down
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
-            selector.get_selection().set_coordinate(cur);
+
+            selector.get_selection().set_coordinate(10, 20);
             selector.clear_selection();
             unit_selected = false;
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
