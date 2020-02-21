@@ -11,6 +11,7 @@ Game::Game() : cur(0, 0),
     player2(1, Coordinate(29, 3))
     {
     iterator = 0;
+    unit_selected = false;
     check_controllers();
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
@@ -65,7 +66,9 @@ int Game::play_game(sf::RenderWindow& window) {
                 }
                 case sf::Event::KeyPressed: {     // Keyboard input events
                     adjust_volume_poll();
-                    move_sprite_poll();
+
+                    move_cursor_poll();
+
             }
 
 //            case sf::Event::JoystickButtonPressed || sf::Event::JoystickMoveEvent:
@@ -208,7 +211,7 @@ void Game::adjust_volume_poll() {
     }
     }
 
-void Game::move_sprite_poll() {
+void Game::move_cursor_poll() {
     switch (event.key.code) {
         case sf::Keyboard::D:   // Right
             if (cur.get_sprite().getPosition().x < 992)
@@ -233,7 +236,9 @@ void Game::move_sprite_poll() {
         case sf::Keyboard::Key::Enter:
             std::cout << cur << std::endl;
             if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
+                unit_selected = true;
                 std::cout << "can move it : P" << std::endl;
+
             }
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
 

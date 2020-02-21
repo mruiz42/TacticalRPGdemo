@@ -51,6 +51,7 @@ private:
     HumanPlayer player1;
     HumanPlayer player2;
     unsigned int iterator;
+    bool unit_selected;
 public:
     Game();
     int play_game(sf::RenderWindow&);
@@ -65,7 +66,7 @@ public:
     void update_map();
     void set_framerate();
 
-    void move_sprite_poll();
+    void move_cursor_poll();
 
     void adjust_volume_poll();
 
