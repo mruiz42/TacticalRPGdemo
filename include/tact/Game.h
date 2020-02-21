@@ -50,10 +50,11 @@ private:
     Sidebar sidebar;
     HumanPlayer player1;
     HumanPlayer player2;
-
+    unsigned int iterator;
 public:
     Game();
     int play_game(sf::RenderWindow&);
+    int set_iterator();
     int toggle_music();
     int swap_turns();
     HumanPlayer& get_current_player();
