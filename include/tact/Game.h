@@ -70,7 +70,7 @@ public:
 
     void adjust_volume_poll();
 
-    void move_character_poll();
+    void move_character_poll(Character* c_ptr);
 };
 
 

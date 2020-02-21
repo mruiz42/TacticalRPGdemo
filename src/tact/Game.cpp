@@ -66,9 +66,12 @@ int Game::play_game(sf::RenderWindow& window) {
                 }
                 case sf::Event::KeyPressed: {     // Keyboard input events
                     adjust_volume_poll();
-
-                    move_cursor_poll();
-
+                    if (!unit_selected) {
+                        move_cursor_poll();
+                    }
+                    else {
+                        move_character_poll(c_map.get_character_at(cur));
+                    }
             }
 
 //            case sf::Event::JoystickButtonPressed || sf::Event::JoystickMoveEvent:
@@ -76,11 +79,6 @@ int Game::play_game(sf::RenderWindow& window) {
 //            }
             // Refresh screen
             window.clear();
-//        for (int y = 0; y < 22; ++y){
-//            for (int x = 0; x < 32; ++x){
-//                std::cout << c_map.getSpritemap()[y][x] << "\t";
-//             }
-//            std::cout << std::endl;
     }
             window.draw(v_map);
             window.draw(c_map);
@@ -213,9 +211,54 @@ void Game::adjust_volume_poll() {
 
 void Game::move_cursor_poll() {
     switch (event.key.code) {
+        case sf::Keyboard::Key::D:   // Right
+            if (cur.get_sprite().getPosition().x < 992)
+                cur.moveSprite(TEXTURE_SIZE, 0);
+            break;
+
+        case sf::Keyboard::Key::A:  // Left
+            if (cur.get_sprite().getPosition().x > 0)
+                cur.moveSprite(-TEXTURE_SIZE, 0);
+            break;
+
+        case sf::Keyboard::Key::W: // UP
+            if (cur.get_sprite().getPosition().y > 0)
+                cur.moveSprite(0, -TEXTURE_SIZE);
+            break;
+
+        case sf::Keyboard::Key::S: // DOWN
+            if (cur.get_sprite().getPosition().y < 672)
+                cur.moveSprite(0, TEXTURE_SIZE);
+            break;
+
+        case sf::Keyboard::Key::Enter:
+            std::cout << cur << std::endl;
+            if (belongs_to_current_player(c_map.get_character_at(cur))) {
+                unit_selected = true;
+                std::cout << "can move it : P" << std::endl;
+
+            }
+            // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
+
+            break;
+
+        case sf::Keyboard::Key::Q:
+            if (iterator == get_current_player().get_squadron().size())
+                iterator = 0;
+            Character *ptr = get_current_player().get_squadron()[iterator];
+            cur.jump_to(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
+            iterator++;
+            break;
+    }
+}
+
+void Game::move_character_poll(Character* c_ptr){
+    std::cout << "moving ";
+    switch (event.key.code) {
         case sf::Keyboard::D:   // Right
             if (cur.get_sprite().getPosition().x < 992)
                 cur.moveSprite(TEXTURE_SIZE, 0);
+                c_ptr->get_map_sprite().move(TEXTURE_SIZE, 0);
             break;
 
         case sf::Keyboard::A:  // Left
@@ -236,7 +279,6 @@ void Game::move_cursor_poll() {
         case sf::Keyboard::Key::Enter:
             std::cout << cur << std::endl;
             if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
-                unit_selected = true;
                 std::cout << "can move it : P" << std::endl;
 
             }
@@ -252,8 +294,4 @@ void Game::move_cursor_poll() {
             iterator++;
             break;
     }
-}
-
-void Game::move_character_poll(){
-
 }
