@@ -104,6 +104,7 @@ int Game::play_game(sf::RenderWindow& window) {
                                 sound.setVolume(100);
                             }
                             break;
+
                         case sf::Keyboard::Key::Enter:
                             std::cout << cur << std::endl;
                             if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
@@ -112,6 +113,7 @@ int Game::play_game(sf::RenderWindow& window) {
 //                                if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
 
                             break;
+
                         case sf::Keyboard::Key::Q:
                             if (iterator == get_current_player().get_squadron().size())
                                 iterator = 0;

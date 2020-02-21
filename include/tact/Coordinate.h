@@ -8,8 +8,8 @@
 
 class Coordinate {
 protected:
-    int x;
     int y;
+    int x;
 public:
     Coordinate() = default;
     Coordinate(const Coordinate&);
@@ -18,9 +18,7 @@ public:
     void set_coordinate(Coordinate);
     void set_x(int x);
     void set_y(int y);
-
     Coordinate& get_coordinate();
-    Coordinate& get_tile_coordinate();
     int get_x() const;
     int get_y() const;
     friend std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate);
