@@ -42,3 +42,8 @@ int Coordinate::get_x() const {
 int Coordinate::get_y() const {
     return this->y;
 }
+
+std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate){
+    out << "(" + std::to_string(coordinate.x) + "," + std::to_string(coordinate.y) + ")" << std::endl;
+    return out;
+}

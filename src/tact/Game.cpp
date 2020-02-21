@@ -105,7 +105,8 @@ int Game::play_game(sf::RenderWindow& window) {
                             }
                             break;
                         case sf::Keyboard::Key::Enter:
-                            if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_x(), cur.get_tile_y()))) {
+                            std::cout << cur << std::endl;
+                            if (belongs_to_current_player(c_map.get_character_at(cur.get_tile_coordinate()))) {
                                 std::cout << "can move it : P" << std::endl;
                             }
 //                                if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
