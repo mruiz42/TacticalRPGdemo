@@ -223,11 +223,16 @@ bool Game::belongs_to_current_player(Character* character) {
 
 int Game::check_controllers() {
     if (player1.get_controller().get_js().isConnected(0) && player1.get_controller().get_js().isConnected(1)) {
-        return 0;
+        std::cout << "Two controller detected! \n" << std::endl;
+        return 2;
+    }
+    else if (player1.get_controller().get_js().isConnected(0) || player1.get_controller().get_js().isConnected(1)) {
+        std::cout << "One controller detected! \n" << std::endl;
+        return 1;
     }
     else {
-        std::cout << "Only one controller detected! " << std::endl;
-        return 1001;
+        std::cout << "No controllers detected! \n" << std::endl;
+        return 0;
     }
 }
 
