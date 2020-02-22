@@ -20,7 +20,7 @@ Player::~Player() {
 Character* Player::get_next_character(int iterator) {
     for (auto i = iterator; i < squadron.size(); i++) {
         Character* c_ptr = squadron[i];
-        if (c_ptr->is_exhausted()){
+        if (c_ptr->is_moved()){
             continue;
         }
         else {
@@ -31,14 +31,14 @@ Character* Player::get_next_character(int iterator) {
 
 void Player::reset_squaderon_exhaustion() {
     for (auto i = 0; i < squadron.size(); i++) {
-        this->squadron[i]->set_exhausted(false);
+        this->squadron[i]->set_moved(false);
     }
 }
 
 bool Player::is_turn_end() {
     bool is_end = true;
     for (auto i = 0; i < squadron.size(); i++) {
-        if (!this->squadron[i]->is_exhausted()){
+        if (!this->squadron[i]->is_moved()){
             is_end = false;
         }
     }

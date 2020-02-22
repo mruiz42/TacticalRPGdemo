@@ -8,7 +8,8 @@
 Character::Character() : xy(0,0) {
     name = "";
     level = 0;
-    exhausted = false;
+    moved = false;
+    battled = false;
     experience = 0;
     hit_points = 0;
     mana_points = 0;
@@ -22,7 +23,8 @@ Character::Character() : xy(0,0) {
 Character::Character(Coordinate xy) : xy(xy) {
     name = "";
     level = 0;
-    exhausted = false;
+    moved = false;
+    battled = false;
     experience = 0;
     hit_points = 0;
     mana_points = 0;
@@ -36,7 +38,8 @@ Character::Character(Coordinate xy) : xy(xy) {
 Character::Character(int x, int y) : xy(x, y) {
     name = "";
     level = 0;
-    exhausted = false;
+    moved = false;
+    battled = false;
     experience = 0;
     hit_points = 0;
     mana_points = 0;
@@ -52,7 +55,8 @@ Character::Character(std::string filename){
     sidebar_sprite.setTexture(texture);
     map_sprite.setTexture(texture);
     name = "";
-    exhausted = false;
+    moved = false;
+    battled = false;
     level = 0;
     experience = 0;
     hit_points = 0;

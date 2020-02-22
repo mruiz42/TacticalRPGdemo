@@ -17,7 +17,8 @@ protected:
     sf::Sprite map_sprite;
     std::string name;
     Coordinate xy;
-    bool exhausted;
+    bool moved;
+    bool battled;
     unsigned int level;
     unsigned int experience;
     unsigned int hit_points;
@@ -37,7 +38,9 @@ public:
     sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
     sf::Sprite& get_map_sprite() { return this->map_sprite; }
     std::string& get_name() { return this->name; }
-    bool is_exhausted() { return this->exhausted; }
+    bool is_moved() { return this->moved; }
+    bool has_battled() {return this->battled; }
+
     Coordinate get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
@@ -55,7 +58,7 @@ public:
     void set_name(std::string& name) { this->name = name; }
     void set_coordinate(int, int);
     void set_coordinate(Coordinate coordinate) { this->xy = coordinate; }
-    void set_exhausted(bool exhausted) { this->exhausted = exhausted; }
+    void set_moved(bool moved) { this->moved = moved; }
     void set_level(unsigned int level) { this->level = level;}
     void set_experience(unsigned int experience) { this->experience = experience; }
     void set_hit_points(unsigned int hit_points) { this->hit_points = hit_points; }

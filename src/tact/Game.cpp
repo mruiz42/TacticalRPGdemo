@@ -246,7 +246,7 @@ void Game::move_cursor_poll() {
         case sf::Keyboard::Key::Return: {         // Pick up
             std::cout << cur << std::endl;
             Character *c_ptr = c_map.get_character_at(cur);
-            if (belongs_to_current_player(c_ptr) && !c_ptr->is_exhausted()) {
+            if (belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
                 if (!unit_selected) {
                     selector.set_selection(c_map.get_character_at(cur));
                     unit_selected = true;
@@ -317,7 +317,7 @@ void Game::move_character_poll(){
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
             selector.get_selection().set_coordinate(cur);
-            selector.get_selection().set_exhausted(true);
+            selector.get_selection().set_moved(true);
             selector.clear_selection();
             unit_selected = false;
             break;
