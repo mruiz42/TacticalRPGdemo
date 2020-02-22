@@ -86,9 +86,7 @@ void Sidebar::update_statbar(Character* character, Coordinate coordinate, int tu
         text[11].setString("TURN." + std::to_string(turn));
         text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
 }
-//void Sidebar::setTurn(std::string turn){
-//    this->turn.setString(turn);
-//}
+
 void Sidebar::createStat(float const width, float const height, std::string filename) {
 	if(!font.loadFromFile(filename)) {
 		std::cout << "Could not open: " + filename << std::endl;

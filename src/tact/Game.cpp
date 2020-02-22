@@ -60,9 +60,11 @@ int Game::play_game(sf::RenderWindow& window) {
                 this->swap_turns();
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
+
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
             }
+
             else {
                 sidebar.clear();
                 sidebar.update_sidebar(cur, turn_count, get_current_player_id());
@@ -73,60 +75,10 @@ int Game::play_game(sf::RenderWindow& window) {
                     window.close();
                     break;
                 }
-                case sf::Event::KeyPressed: {     // Keyboard input events
-                    adjust_volume_poll();
-                    if (!unit_selected) {
-                        move_cursor_poll();
-                    }
-                    else if (menu_selected) {
-                        menu_poll();
-                        int selection = menu_poll() ;
-                        if (selection != -1) {
-                            switch(selection) {
-                                case 0: // Move
-                                    move_selected = true;
-                                    menu_selected = false;
-                                    break;
-                                case 1: // Wait
-                                    wait_selected = true;
-                                    menu_selected = false;
-                                    break;
-                                case 2: // Attack
-                                    attack_selected = true;
-                                    menu_selected = false;
-                                    break;
-                                case 3: // Defend
-                                    defend_selected = true;
-                                    menu_selected = false;
-                                    break;
-                            }
-                        }
-                    }
 
-                    else if (move_selected){
-                        move_character_poll();
-                    }
-                    else if (defend_selected) {
-
-                    }
-                    else if (attack_selected) {
-
-                    }
-                    else if (wait_selected) {}
-                    else {
-
-//                        move_character_poll();
-
-
-                    }
             }
-
-//            case sf::Event::JoystickButtonPressed || sf::Event::JoystickMoveEvent:
-//                    get_current_player().get_controller().poll(event, cur, get_current_player_id());
-//            }
-            // Refresh screen
+            poll_logic();
             window.clear();
-    }
             update_map();
             window.draw(v_map);
             window.draw(c_map);
@@ -290,14 +242,12 @@ void Game::move_cursor_poll() {
 
         case sf::Keyboard::Key::Return: {         // Pick up
             std::cout << cur << std::endl;
-            if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
+            Character *c_ptr = c_map.get_character_at(cur);
+            if (c_ptr != nullptr && belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
                 unit_selected = true;
                 menu_selected = true;
-                Character *c_ptr = c_map.get_character_at(cur);
+                selector.set_selection(c_map.get_character_at(cur));
 
-                if (belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
-                    selector.set_selection(c_map.get_character_at(cur));
-                }
             }
             break;
         }
@@ -361,7 +311,7 @@ void Game::move_character_poll(){
 
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
-            //c_map.null_character_at(selector.get_selection().get_coordinate());
+            c_map.null_character_at(selector.get_selection().get_coordinate());
             selector.get_selection().set_coordinate(cur);
             selector.get_selection().set_moved(true);
             selector.clear_selection();
@@ -406,5 +356,58 @@ int Game::menu_poll() {
             unit_selected = false;
             return -1;
         }
+    }
+}
+
+void Game::poll_logic() {
+    adjust_volume_poll();
+    if (!unit_selected) {
+        if (event.type == sf::Event::KeyPressed) {
+            move_cursor_poll();
+        }
+        else if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed) {
+            get_current_player().get_controller().move_cursor_poll(event, cur, get_current_player_id());
+        }
+    }
+    else if (menu_selected) {
+        menu_poll();
+//        get_current_player().get_controller().menu_poll(event, sidebar, get_current_player_id(), menu_selected, unit_selected);
+        int selection = menu_poll() ;
+        if (selection != -1) {
+            switch(selection) {
+                case 0: // Move
+                    move_selected = true;
+                    menu_selected = false;
+                    break;
+                case 1: // Wait
+                    wait_selected = true;
+                    menu_selected = false;
+                    break;
+                case 2: // Attack
+                    attack_selected = true;
+                    menu_selected = false;
+                    break;
+                case 3: // Defend
+                    defend_selected = true;
+                    menu_selected = false;
+                    break;
+            }
+        }
+    }
+
+    else if (move_selected){
+        move_character_poll();
+    }
+
+    else if (defend_selected) {
+
+    }
+
+    else if (attack_selected) {
+
+    }
+
+    else if (wait_selected) {
+
     }
 }

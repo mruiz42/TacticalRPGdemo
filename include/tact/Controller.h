@@ -8,6 +8,7 @@
 #include <SFML/Window/Joystick.hpp>
 #include "Cursor.h"
 #include <iostream>
+#include "Sidebar.h"
 
 #define TEXTURE_SIZE 32
 
@@ -18,9 +19,11 @@ private:
 public:
     sf::Joystick& get_js() { return this->js; }
     void set_js(sf::Joystick& js);
-    void poll(sf::Event&, Cursor&, int) const;
+    void move_cursor_poll(sf::Event &event, Cursor &cur, int id) const;
 
     Controller() {}
+
+    int menu_poll(sf::Event &event, Sidebar &sidebar, int id, bool menu_selected, bool unit_selected);
 };
 
 

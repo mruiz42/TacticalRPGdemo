@@ -78,6 +78,8 @@ public:
     void adjust_volume_poll();
     void move_character_poll();
     int menu_poll();
+
+    void poll_logic();
 };
 
 
