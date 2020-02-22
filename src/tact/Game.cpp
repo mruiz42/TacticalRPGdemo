@@ -15,7 +15,7 @@ Game::Game() : cur(0, 0),
     check_controllers();
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
-
+    cur.jump_to(get_current_player().get_squadron()[0]->get_coordinate());
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
     }
@@ -101,7 +101,7 @@ int Game::toggle_music() {
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
     if (player1.get_is_turn()){
-        std::cout << "- Player " + std::to_string(player2.get_player_id()) << "'s Turn begin -\n";
+        std::cout << "- Player " + std::to_string(player2.get_player_id() + 1) << "'s Turn begin -\n";
         player1.set_is_turn(false);
         player2.set_is_turn(true);
         player2.reset_squaderon_exhaustion();
@@ -110,7 +110,7 @@ int Game::swap_turns(){
         return player2.get_player_id();
     }
     else if (player2.get_is_turn()) {
-        std::cout << "Player " + std::to_string(player1.get_player_id()) << "'s Turn begin -\n";
+        std::cout << "Player " + std::to_string(player1.get_player_id() + 1) << "'s Turn begin -\n";
         player2.set_is_turn(false);
         player1.set_is_turn(true);
         player1.reset_squaderon_exhaustion();
@@ -254,8 +254,10 @@ void Game::move_cursor_poll() {
         case sf::Keyboard::Key::Q:
             if (iterator == get_current_player().get_squadron().size())
                 iterator = 0;
-            Character *ptr = get_current_player().get_squadron()[iterator];
-            cur.jump_to(ptr->get_coordinate().get_x(), ptr->get_coordinate().get_y());
+//            Character *c_ptr = get_current_player().get_squadron()[iterator];
+
+            Character* c_ptr = get_current_player().get_next_character(iterator);
+            cur.jump_to(c_ptr->get_coordinate());
             iterator++;
             break;
     }

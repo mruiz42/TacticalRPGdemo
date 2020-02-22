@@ -17,6 +17,18 @@ Player::~Player() {
 
 }
 
+Character* Player::get_next_character(int iterator) {
+    for (auto i = iterator; i < squadron.size(); i++) {
+        Character* c_ptr = squadron[i];
+        if (c_ptr->is_exhausted()){
+            continue;
+        }
+        else {
+            return c_ptr;
+        }
+    }
+}
+
 void Player::reset_squaderon_exhaustion() {
     for (auto i = 0; i < squadron.size(); i++) {
         this->squadron[i]->set_exhausted(false);

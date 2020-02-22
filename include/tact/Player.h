@@ -35,6 +35,7 @@ public:
 
     void reset_squaderon_exhaustion();
     bool is_turn_end();
+    Character* get_next_character(int);
 };
 
 
