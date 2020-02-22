@@ -51,7 +51,7 @@ int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
-            if(get_current_player().is_turn_end()){
+            if(this->get_current_player().is_turn_end()){
                 this->swap_turns();
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
@@ -89,6 +89,7 @@ int Game::play_game(sf::RenderWindow& window) {
             window.draw(c_map);
             window.draw(cur.get_sprite());
             window.draw(sidebar);
+            window.draw(sidebar.menu);
             sidebar.drawStat(window);
             window.display();
         }

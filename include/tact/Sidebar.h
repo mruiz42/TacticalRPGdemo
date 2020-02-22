@@ -12,6 +12,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Character.h"
+#include "Menu.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -27,6 +28,7 @@ private:
 	std::vector<sf::Text> text;
 	//sf::Text HPtext;
 public:
+    Menu menu;
     Sidebar(std::string, std::string);
     sf::Texture getBackground() const { return this->background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -13,7 +13,7 @@
     sf::Text satk;
     sf::Text sdef;
 	sf::Text hp;*/
-Sidebar::Sidebar(std::string texture_filename, std::string font_filename){
+Sidebar::Sidebar(std::string texture_filename, std::string font_filename) : menu(font_filename) {
     if(!this->background.loadFromFile(texture_filename, sf::IntRect(0, 0, 256, 704)))
         std::cout << "Could not open: " + texture_filename << std::endl;
     if(!font.loadFromFile(font_filename))
@@ -126,6 +126,7 @@ void Sidebar::clear() {
         text[i].setString("");
     }
 }
+
 void Sidebar::drawStat(sf::RenderTarget &window) {
 	for(int i =0; i < text.size(); i++)
 		window.draw(text[i]);
