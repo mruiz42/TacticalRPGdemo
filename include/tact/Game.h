@@ -25,7 +25,7 @@
 #include "Cursor.h"
 #include "CharacterMap.h"
 #include "Selector.h"
-#include "HumanPlayer.h"
+#include "Player.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -49,8 +49,8 @@ private:
     sf::SoundBuffer buffer;
     sf::Event event;
     Sidebar sidebar;
-    HumanPlayer player1;
-    HumanPlayer player2;
+    Player player1;
+    Player player2;
     Selector selector;
     unsigned int iterator;
     bool unit_selected;
@@ -67,19 +67,23 @@ public:
     int set_iterator();
     int toggle_music();
     int swap_turns();
-    HumanPlayer& get_current_player();
-    HumanPlayer& get_enemy_player();
+    Player& get_current_player();
+    Player& get_enemy_player();
     int get_current_player_id();
     int check_controllers();
     bool belongs_to_current_player(Character*);
     void update_map();
     void set_framerate();
-    void move_cursor_poll();
-    void adjust_volume_poll();
-    void move_character_poll();
-    int menu_poll();
+    void move_cursor_key_poll();
+    void adjust_volume_key_poll();
+    void move_character_key_poll();
+    int menu_key_poll();
 
     void poll_logic();
+
+    int menu_joy_pull();
+
+    int move_cursor_joy_pull();
 };
 
 

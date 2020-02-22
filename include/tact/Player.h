@@ -7,11 +7,10 @@
 #include "Fortress.h"
 #include "Character.h"
 #include "Coordinate.h"
-#include "Controller.h"
 #include "Ninja.h"
 
 class Player {
-protected:
+private:
     Fortress fort;
     std::vector<Character *> squadron;
     unsigned int player_id;

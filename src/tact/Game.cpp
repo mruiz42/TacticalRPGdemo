@@ -124,7 +124,7 @@ int Game::swap_turns(){
     }
 }
 
-HumanPlayer& Game::get_current_player() {
+Player& Game::get_current_player() {
     if (player1.get_is_turn()) {
         return player1;
     }
@@ -136,7 +136,7 @@ HumanPlayer& Game::get_current_player() {
     }
 }
 
-HumanPlayer& Game::get_enemy_player() {
+Player& Game::get_enemy_player() {
     if (player1.get_is_turn()) {
         return player2;
     }
@@ -170,11 +170,11 @@ bool Game::belongs_to_current_player(Character* character) {
 }
 
 int Game::check_controllers() {
-    if (player1.get_controller().get_js().isConnected(0) && player1.get_controller().get_js().isConnected(1)) {
+    if (sf::Joystick::isConnected(0) && sf::Joystick::isConnected(1)) {
         std::cout << "Two controller detected! \n" << std::endl;
         return 2;
     }
-    else if (player1.get_controller().get_js().isConnected(0) || player1.get_controller().get_js().isConnected(1)) {
+    else if (sf::Joystick::isConnected(0) || sf::Joystick::isConnected(1)) {
         std::cout << "One controller detected! \n" << std::endl;
         return 1;
     }
@@ -198,7 +198,7 @@ void Game::update_map() {
     }
 }
 /*****sound/mucis code needs update ****/
-void Game::adjust_volume_poll() {
+void Game::adjust_volume_key_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::Dash: // Volume Down
             music.setVolume(music.getVolume() - 10);
@@ -218,7 +218,7 @@ void Game::adjust_volume_poll() {
     }
 }
 
-void Game::move_cursor_poll() {
+void Game::move_cursor_key_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992)
@@ -254,8 +254,6 @@ void Game::move_cursor_poll() {
         case sf::Keyboard::Key::Q:
             if (iterator == get_current_player().get_squadron().size())
                 iterator = 0;
-//            Character *c_ptr = get_current_player().get_squadron()[iterator];
-
             Character* c_ptr = get_current_player().get_next_character(iterator);
             cur.jump_to(c_ptr->get_coordinate());
             iterator++;
@@ -263,7 +261,7 @@ void Game::move_cursor_poll() {
     }
 }
 
-void Game::move_character_poll(){
+void Game::move_character_key_poll(){
     std::cout << "pickedup ";
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
@@ -326,7 +324,7 @@ void Game::move_character_poll(){
     }
 }
 
-int Game::menu_poll() {
+int Game::menu_key_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             this->sidebar.get_menu().move_right();
@@ -359,22 +357,119 @@ int Game::menu_poll() {
     }
 }
 
+int Game::move_cursor_joy_pull() {
+    if(event.type == sf::Event::JoystickMoved) {  // Controller input events
+        // Get direction of D pad press
+        int p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
+        int p_y = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovY);
+        std::cout << p_x << " " << p_y << std::endl;
+        // Down
+        if (p_y > 0) {
+            if (cur.get_sprite().getPosition().y < 672)
+                cur.moveSprite(0, TEXTURE_SIZE);
+        }
+            // Up
+        else if (p_y < 0) {
+            if (cur.get_sprite().getPosition().y > 0)
+                cur.moveSprite(0, -TEXTURE_SIZE);
+        }
+            // Left
+        else if (p_x < 0) {
+            if (cur.get_sprite().getPosition().x > 0)
+                cur.moveSprite(-TEXTURE_SIZE, 0);
+        }
+            // Right
+        else if (p_x > 0) {
+            if (cur.get_sprite().getPosition().x < 992)
+                cur.moveSprite(TEXTURE_SIZE, 0);
+        }
+    }
+        else if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
+            std::cout << cur << std::endl;
+            Character *c_ptr = c_map.get_character_at(cur);
+            if (c_ptr != nullptr && belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
+                unit_selected = true;
+                menu_selected = true;
+                selector.set_selection(c_map.get_character_at(cur));
+            }
+    }
+        else if (sf::Joystick::isButtonPressed(get_current_player_id(), 4)) {
+            if (iterator == get_current_player().get_squadron().size())
+                iterator = 0;
+            Character* c_ptr = get_current_player().get_next_character(iterator);
+            cur.jump_to(c_ptr->get_coordinate());
+            iterator++;
+        }
+}
+
+int Game::menu_joy_pull() {
+    if(event.type == sf::Event::JoystickMoved) { // Controller input events
+        // Get direction of D pad press
+        int p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
+        int p_y = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovY);
+
+        // Down
+        if (p_y > 0) {
+            sidebar.get_menu().move_down();
+            return -1;
+        }
+
+            // Up
+        else if (p_y < 0) {
+            sidebar.get_menu().move_up();
+            return -1;
+        }
+
+            // Left
+        else if (p_x < 0) {
+            sidebar.get_menu().move_left();
+            return -1;
+        }
+
+            // Right
+        else if (p_x > 0) {
+            sidebar.get_menu().move_right();
+            return -1;
+        }
+
+
+    }
+    else if(event.type == sf::Event::JoystickButtonPressed) {
+        if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
+            sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
+            return sidebar.get_menu().get_selection();
+        }
+        else if (sf::Joystick::isButtonPressed(get_current_player_id(), 1)) {
+            sidebar.get_menu().set_selection_text_color(sf::Color::Red);
+            sidebar.get_menu().set_all_text_color(sf::Color::White);
+            menu_selected = false;
+            unit_selected = false;
+            return -1;
+        }
+    }
+
+}
+
 void Game::poll_logic() {
-    adjust_volume_poll();
+    adjust_volume_key_poll();
     if (!unit_selected) {
         if (event.type == sf::Event::KeyPressed) {
-            move_cursor_poll();
+            move_cursor_key_poll();
         }
         else if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed) {
-            get_current_player().get_controller().move_cursor_poll(event, cur, get_current_player_id());
+            move_cursor_joy_pull();
         }
     }
     else if (menu_selected) {
-        menu_poll();
-//        get_current_player().get_controller().menu_poll(event, sidebar, get_current_player_id(), menu_selected, unit_selected);
-        int selection = menu_poll() ;
+        int selection = -1;
+        if (event.type == sf::Event::KeyPressed) {
+            selection = menu_key_poll();
+        }
+        else if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+            selection = menu_joy_pull();
+        }
         if (selection != -1) {
-            switch(selection) {
+            switch(selection && selection) {
                 case 0: // Move
                     move_selected = true;
                     menu_selected = false;
@@ -396,7 +491,7 @@ void Game::poll_logic() {
     }
 
     else if (move_selected){
-        move_character_poll();
+        move_character_key_poll();
     }
 
     else if (defend_selected) {
