@@ -27,6 +27,7 @@
 #include "Selector.h"
 #include "HumanPlayer.h"
 #include <iostream>
+#include <cstdlib>
 
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/textures/map_tiles32.png";

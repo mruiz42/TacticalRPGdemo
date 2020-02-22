@@ -5,6 +5,7 @@
 #include "../../include/tact/Game.h"
 
 
+
 Game::Game() : cur(0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
     player1(0, Coordinate(2, 17)),
@@ -199,7 +200,7 @@ void Game::update_map() {
         c_map.set_character_at(player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }
-
+/*****sound/mucis code needs update ****/
 void Game::adjust_volume_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::Dash: // Volume Down
@@ -218,7 +219,7 @@ void Game::adjust_volume_poll() {
             }
             break;
     }
-    }
+}
 
 void Game::move_cursor_poll() {
     switch (event.key.code) {
@@ -242,7 +243,7 @@ void Game::move_cursor_poll() {
                 cur.moveSprite(0, TEXTURE_SIZE);
             break;
 
-        case sf::Keyboard::Key::Enter: {         // Pick up
+        case sf::Keyboard::Key::Return: {         // Pick up
             std::cout << cur << std::endl;
             Character *c_ptr = c_map.get_character_at(cur);
             if (belongs_to_current_player(c_ptr) && !c_ptr->is_exhausted()) {
@@ -268,6 +269,7 @@ void Game::move_cursor_poll() {
 
 void Game::move_character_poll(){
     std::cout << "pickedup ";
+	bool move_incomplete = true;
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992){
@@ -297,13 +299,27 @@ void Game::move_character_poll(){
             }
             break;
 
-        case sf::Keyboard::Key::Enter:                  // Set down
-            std::cout << "placed at :" << cur << std::endl;
-            c_map.set_character_at(cur, &selector.get_selection());
-            selector.get_selection().set_coordinate(cur);
-            selector.get_selection().set_exhausted(true);
-            selector.clear_selection();
-            unit_selected = false;
+        case sf::Keyboard::Key::Return:                  // Set down
+			if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
+				sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+				break;
+			}
+			if (v_map.get_type_at(cur) >= 69) {
+				std::cout << "impassible ";
+				break;
+			}
+			if (std::abs(selector.get_selection().get_coordinate().get_y() - cur.get_y()) + std::abs(selector.get_selection().get_coordinate().get_x() - cur.get_x()) > selector.get_selection().get_speed()/5) {
+				std::cout << "character can't move that far. ";
+				break;
+			}
+			selector.get_selection().get_coordinate().get_x();
+			std::cout << "placed at :" << cur << std::endl;
+			c_map.set_character_at(cur, &selector.get_selection());
+			selector.get_selection().set_coordinate(cur);
+			selector.get_selection().set_exhausted(true);
+			selector.clear_selection();
+			unit_selected = false;
+			
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
 
             break;
