@@ -308,7 +308,9 @@ void Game::move_character_poll(){
 				std::cout << "impassible ";
 				break;
 			}
-			if (std::abs(selector.get_selection().get_coordinate().get_y() - cur.get_y()) + std::abs(selector.get_selection().get_coordinate().get_x() - cur.get_x()) > selector.get_selection().get_speed()/5) {
+			Coordinate xy = selector.get_selection().get_coordinate();
+			if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x())
+			        > selector.get_selection().get_speed()/5) {
 				std::cout << "character can't move that far. ";
 				break;
 			}
