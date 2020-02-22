@@ -31,7 +31,7 @@ Menu::Menu(std::string font_filename) {
     selectedItemIndex = 0;
 }
 
-Menu::~Menu() {}
+Menu::~Menu() { }
 
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     for(int i = 0;i<text.size();i++) {

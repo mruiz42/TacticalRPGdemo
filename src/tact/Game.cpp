@@ -270,7 +270,6 @@ void Game::move_cursor_poll() {
 
 void Game::move_character_poll(){
     std::cout << "pickedup ";
-	bool move_incomplete = true;
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992){
@@ -314,18 +313,45 @@ void Game::move_character_poll(){
                 std::cout << "character can't move that far. ";
                 break;
             }
-            selector.get_selection().get_coordinate().get_x();
+
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
+            //c_map.null_character_at(selector.get_selection().get_coordinate());
             selector.get_selection().set_coordinate(cur);
             selector.get_selection().set_moved(true);
             selector.clear_selection();
             unit_selected = false;
+            std::cout << "===============" << std::endl;
             break;
         }
         case sf::Keyboard::Key::BackSpace:              // Cancel
             unit_selected = false;
             selector.clear();
             break;
+    }
+}
+
+void Game::menu_poll() {
+    switch (event.key.code) {
+        case sf::Keyboard::Key::D:   // Right
+
+            break;
+
+        case sf::Keyboard::Key::A:  // Left
+
+            break;
+
+        case sf::Keyboard::Key::W: // UP
+
+            break;
+
+        case sf::Keyboard::Key::S: // DOWN
+
+            break;
+
+        case sf::Keyboard::Key::Return: {         // Pick up
+
+            break;
+        }
     }
 }

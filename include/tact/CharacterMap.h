@@ -21,6 +21,7 @@ public:
     Character* get_character_at(int, int);
     Character* get_character_at(Coordinate coordinate);
     Character& get_character_address_at(Coordinate coordinate);
+    void null_character_at(Coordinate coordinate);
 
     void set_character_at(Coordinate coordinate, Character*);
 };

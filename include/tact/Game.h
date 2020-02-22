@@ -71,6 +71,7 @@ public:
     void move_cursor_poll();
     void adjust_volume_poll();
     void move_character_poll();
+    void menu_poll();
 };
 
 

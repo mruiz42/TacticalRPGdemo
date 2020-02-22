@@ -65,3 +65,8 @@ Character* CharacterMap::get_character_at(Coordinate coordinate) {
 void CharacterMap::set_character_at(Coordinate coordinate, Character* character) {
     this->map[coordinate.get_y()][coordinate.get_x()] = character;
 }
+
+void CharacterMap::null_character_at(Coordinate coordinate) {
+    std::cout << map[coordinate.get_y()][coordinate.get_x()];
+    this->map[coordinate.get_y()][coordinate.get_x()] = nullptr;
+}
