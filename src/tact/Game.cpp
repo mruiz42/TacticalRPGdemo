@@ -57,9 +57,9 @@ int Game::play_game(sf::RenderWindow& window) {
             }
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
-            } else if (v_map.get_type_at(cur) >= 69) {
-                std::cout << "impassible ";
-            } else {
+            }
+            else {
+                sidebar.clear();
                 sidebar.update_sidebar(cur, turn_count, get_current_player_id());
             }
             // Poll for events
