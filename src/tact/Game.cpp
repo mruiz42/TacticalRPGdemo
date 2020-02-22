@@ -71,8 +71,7 @@ int Game::play_game(sf::RenderWindow& window) {
                 case sf::Event::KeyPressed: {     // Keyboard input events
                     adjust_volume_poll();
                     if (!unit_selected) {
-                        menu_poll();
-//                        move_cursor_poll();
+                        move_cursor_poll();
                     }
                     else {
                         move_character_poll();
@@ -334,12 +333,6 @@ void Game::move_character_poll(){
 }
 
 void Game::menu_poll() {
-    /*
-     * 0 mov
-     * 1 wt
-     * 2 atk
-     * 3 def
-     */
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             this->sidebar.get_menu().move_right();
@@ -359,6 +352,22 @@ void Game::menu_poll() {
 
         case sf::Keyboard::Key::Return: {         // Pick up
             this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
+            switch(this->sidebar.get_menu().get_selection()) {
+                case 0: // Move
+
+                    break;
+                case 1: // Wait
+
+                    break;
+                case 2: // Attack
+
+                    break;
+                case 3: // Defend
+
+                    break;
+            }
+
+
             break;
         }
         case sf::Keyboard::Key::BackSpace: {
