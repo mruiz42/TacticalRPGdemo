@@ -334,10 +334,15 @@ void Game::move_character_poll(){
 }
 
 void Game::menu_poll() {
+    /*
+     * 0 mov
+     * 1 wt
+     * 2 atk
+     * 3 def
+     */
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             this->sidebar.get_menu().move_right();
-
             break;
 
         case sf::Keyboard::Key::A:  // Left
@@ -354,6 +359,10 @@ void Game::menu_poll() {
 
         case sf::Keyboard::Key::Return: {         // Pick up
             this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
+            break;
+        }
+        case sf::Keyboard::Key::BackSpace: {
+            this->sidebar.get_menu().set_selection_text_color(sf::Color::Red);
             break;
         }
     }
