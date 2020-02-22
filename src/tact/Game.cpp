@@ -77,7 +77,12 @@ int Game::play_game(sf::RenderWindow& window) {
                 }
 
             }
-            poll_logic();
+            if (sf::Event::KeyPressed) {
+                poll_key_logic();
+            }
+            else if (sf::Event::JoystickMoved || sf::Event::JoystickButtonReleased) {
+                joy_poll_logic();
+            }
             window.clear();
             update_map();
             window.draw(v_map);
@@ -357,7 +362,7 @@ int Game::menu_key_poll() {
     }
 }
 
-int Game::move_cursor_joy_pull() {
+int Game::move_cursor_joy_poll() {
     if(event.type == sf::Event::JoystickMoved) {  // Controller input events
         // Get direction of D pad press
         int p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
@@ -402,7 +407,7 @@ int Game::move_cursor_joy_pull() {
         }
 }
 
-int Game::menu_joy_pull() {
+int Game::menu_joy_poll() {
     if(event.type == sf::Event::JoystickMoved) { // Controller input events
         // Get direction of D pad press
         int p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
@@ -414,27 +419,25 @@ int Game::menu_joy_pull() {
             return -1;
         }
 
-            // Up
+        // Up
         else if (p_y < 0) {
             sidebar.get_menu().move_up();
             return -1;
         }
 
-            // Left
+        // Left
         else if (p_x < 0) {
             sidebar.get_menu().move_left();
             return -1;
         }
 
-            // Right
+        // Right
         else if (p_x > 0) {
             sidebar.get_menu().move_right();
             return -1;
         }
-
-
     }
-    else if(event.type == sf::Event::JoystickButtonPressed) {
+    else if(event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
         if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
             sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
             return sidebar.get_menu().get_selection();
@@ -450,23 +453,72 @@ int Game::menu_joy_pull() {
 
 }
 
-void Game::poll_logic() {
+void Game::poll_key_logic() {
     adjust_volume_key_poll();
+    // Move cursor routine
     if (!unit_selected) {
         if (event.type == sf::Event::KeyPressed) {
             move_cursor_key_poll();
         }
-        else if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed) {
-            move_cursor_joy_pull();
-        }
     }
+    // Menu selection routine
     else if (menu_selected) {
         int selection = -1;
         if (event.type == sf::Event::KeyPressed) {
             selection = menu_key_poll();
         }
-        else if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
-            selection = menu_joy_pull();
+        if (selection != -1) {
+            switch(selection && selection) {
+                case 0: // Move
+                    move_selected = true;
+                    menu_selected = false;
+                    break;
+                case 1: // Wait
+                    wait_selected = true;
+                    menu_selected = false;
+                    break;
+                case 2: // Attack
+                    attack_selected = true;
+                    menu_selected = false;
+                    break;
+                case 3: // Defend
+                    defend_selected = true;
+                    menu_selected = false;
+                    break;
+            }
+        }
+    }
+
+    else if (move_selected){
+        move_character_key_poll();
+    }
+
+    else if (defend_selected) {
+
+    }
+
+    else if (attack_selected) {
+
+    }
+
+    else if (wait_selected) {
+
+    }
+}
+
+void Game::joy_poll_logic() {
+    adjust_volume_key_poll();
+    // Move cursor routine
+    if (!unit_selected) {
+        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+            move_cursor_joy_poll();
+        }
+    }
+        // Menu selection routine
+    else if (menu_selected) {
+        int selection = -1;
+        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+            selection = menu_joy_poll();
         }
         if (selection != -1) {
             switch(selection && selection) {

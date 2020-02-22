@@ -79,11 +79,13 @@ public:
     void move_character_key_poll();
     int menu_key_poll();
 
-    void poll_logic();
+    void poll_key_logic();
 
-    int menu_joy_pull();
+    int menu_joy_poll();
 
-    int move_cursor_joy_pull();
+    int move_cursor_joy_poll();
+
+    void joy_poll_logic();
 };
 
 
