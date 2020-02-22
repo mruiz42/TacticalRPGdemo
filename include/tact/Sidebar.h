@@ -27,8 +27,8 @@ private:
 	sf::Text turn;
 	std::vector<sf::Text> text;
 	//sf::Text HPtext;
-public:
     Menu menu;
+public:
     Sidebar(std::string, std::string);
     sf::Texture getBackground() const { return this->background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -39,6 +39,6 @@ public:
     void setTurn(std::string);
     void clear();
 	void hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window);
-
+    Menu& get_menu() { return this->menu; }
 };
 #endif //CIS29GROUP2GAME_SIDEBAR_H

@@ -71,7 +71,8 @@ int Game::play_game(sf::RenderWindow& window) {
                 case sf::Event::KeyPressed: {     // Keyboard input events
                     adjust_volume_poll();
                     if (!unit_selected) {
-                        move_cursor_poll();
+                        menu_poll();
+//                        move_cursor_poll();
                     }
                     else {
                         move_character_poll();
@@ -89,7 +90,7 @@ int Game::play_game(sf::RenderWindow& window) {
             window.draw(c_map);
             window.draw(cur.get_sprite());
             window.draw(sidebar);
-            window.draw(sidebar.menu);
+            window.draw(sidebar.get_menu());
             sidebar.drawStat(window);
             window.display();
         }
@@ -102,6 +103,7 @@ int Game::toggle_music() {
 
     return 0;
 }
+
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
     turn_count++;
@@ -342,11 +344,11 @@ void Game::menu_poll() {
             break;
 
         case sf::Keyboard::Key::W: // UP
-
+            this->sidebar.get_menu().moveUp();
             break;
 
         case sf::Keyboard::Key::S: // DOWN
-
+            this->sidebar.get_menu().moveDown();
             break;
 
         case sf::Keyboard::Key::Return: {         // Pick up
