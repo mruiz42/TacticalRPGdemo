@@ -336,23 +336,24 @@ void Game::move_character_poll(){
 void Game::menu_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
+            this->sidebar.get_menu().move_right();
 
             break;
 
         case sf::Keyboard::Key::A:  // Left
-
+            this->sidebar.get_menu().move_left();
             break;
 
         case sf::Keyboard::Key::W: // UP
-            this->sidebar.get_menu().moveUp();
+            this->sidebar.get_menu().move_up();
             break;
 
         case sf::Keyboard::Key::S: // DOWN
-            this->sidebar.get_menu().moveDown();
+            this->sidebar.get_menu().move_down();
             break;
 
         case sf::Keyboard::Key::Return: {         // Pick up
-
+            this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
             break;
         }
     }

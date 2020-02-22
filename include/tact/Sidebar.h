@@ -38,7 +38,7 @@ public:
     void drawStat(sf::RenderTarget &window);
     void setTurn(std::string);
     void clear();
-	void hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window);
+
     Menu& get_menu() { return this->menu; }
 };
 #endif //CIS29GROUP2GAME_SIDEBAR_H

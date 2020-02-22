@@ -7,7 +7,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <iostream>
+#include <SFML/System/Time.hpp>
+
 class Menu : public sf::Drawable {
+private:
+    int selection;
+    sf::Font font;
+    std::vector<sf::Text> text;
 public:
     float width;
     float height;
@@ -15,12 +21,14 @@ public:
     Menu(std::string);
     ~Menu();
     void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-    void moveUp();
-    void moveDown();
-    int getSelectedIdx(){return selectedItemIndex;}
-private:
-    int selectedItemIndex;
-    sf::Font font;
-    std::vector<sf::Text> text;
+    void move_up();
+    void move_down();
+    int get_selection(){return selection;}
+    void move_left();
+    void move_right();
+    void set_one_text_color(sf::Color, int);
+    void set_selection_text_color(sf::Color);
+    void set_all_text_color(sf::Color color);
+
 };
 #endif //CIS29GROUP2GAME_MENU_H
