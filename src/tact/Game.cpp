@@ -14,6 +14,11 @@ Game::Game() : cur(0, 0),
     iterator = 0;
     turn_count = 1;
     unit_selected = false;
+    menu_selected = false;
+    move_selected = false;
+    attack_selected = false;
+    defend_selected = false;
+    wait_selected = false;
     check_controllers();
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
@@ -73,8 +78,29 @@ int Game::play_game(sf::RenderWindow& window) {
                     if (!unit_selected) {
                         move_cursor_poll();
                     }
+                    else if (menu_selected) {
+                        menu_poll();
+
+                        if (menu_selected) {
+                            menu_poll();
+
+
+
+
+                        }
+
+
+
+
+
+
+
+                    }
                     else {
-                        move_character_poll();
+
+//                        move_character_poll();
+
+
                     }
             }
 
@@ -247,11 +273,12 @@ void Game::move_cursor_poll() {
 
         case sf::Keyboard::Key::Return: {         // Pick up
             std::cout << cur << std::endl;
+            unit_selected = true;
+            menu_selected = true;
             Character *c_ptr = c_map.get_character_at(cur);
             if (belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
                 if (!unit_selected) {
                     selector.set_selection(c_map.get_character_at(cur));
-                    unit_selected = true;
                 }
             }
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
@@ -332,7 +359,7 @@ void Game::move_character_poll(){
     }
 }
 
-void Game::menu_poll() {
+int Game::menu_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             this->sidebar.get_menu().move_right();
@@ -352,22 +379,6 @@ void Game::menu_poll() {
 
         case sf::Keyboard::Key::Return: {         // Pick up
             this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
-            switch(this->sidebar.get_menu().get_selection()) {
-                case 0: // Move
-
-                    break;
-                case 1: // Wait
-
-                    break;
-                case 2: // Attack
-
-                    break;
-                case 3: // Defend
-
-                    break;
-            }
-
-
             break;
         }
         case sf::Keyboard::Key::BackSpace: {

@@ -54,6 +54,12 @@ private:
     Selector selector;
     unsigned int iterator;
     bool unit_selected;
+    bool menu_selected;
+    bool move_selected;
+    bool attack_selected;
+    bool defend_selected;
+    bool wait_selected;
+
     int turn_count;
 public:
     Game();
@@ -71,7 +77,7 @@ public:
     void move_cursor_poll();
     void adjust_volume_poll();
     void move_character_poll();
-    void menu_poll();
+    int menu_poll();
 };
 
 
