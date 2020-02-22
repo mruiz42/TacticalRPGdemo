@@ -77,12 +77,13 @@ int Game::play_game(sf::RenderWindow& window) {
                 }
 
             }
-            if (sf::Event::KeyPressed) {
-                poll_key_logic();
-            }
-            else if (sf::Event::JoystickMoved || sf::Event::JoystickButtonReleased) {
+            if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonReleased) {
                 joy_poll_logic();
             }
+            else if (event.type == sf::Event::KeyPressed) {
+                poll_key_logic();
+            }
+
             window.clear();
             update_map();
             window.draw(v_map);
