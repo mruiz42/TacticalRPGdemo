@@ -15,6 +15,7 @@ Game::Game() : cur(0, 0),
     check_controllers();
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
+    sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) + " turn");
     cur.jump_to(get_current_player().get_squadron()[0]->get_coordinate());
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
@@ -49,13 +50,13 @@ int Game::play_game(sf::RenderWindow& window) {
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
             if(get_current_player().is_turn_end()){
-                sidebar.setTurn("- Player" + std::to_string(get_current_player_id()) +"  turn -");
                 this->swap_turns();
+                sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
-            if (c_map.get_map()[cur.get_tile_y()][cur.get_tile_x()] != nullptr) {
-                sidebar.updateStatbar(c_map.get_character_at(cur.get_tile_x(), cur.get_tile_y()));
-            } else if (v_map.get_type_at(cur.get_tile_x(), cur.get_tile_y()) >= 69) {
-//                std::cout << "impassible " << std::endl;
+            if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
+                sidebar.update_statbar(c_map.get_character_at(cur));
+            } else if (v_map.get_type_at(cur) >= 69) {
+                std::cout << "impassible ";
             } else {
                 sidebar.clear();
             }

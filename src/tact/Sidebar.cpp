@@ -18,34 +18,35 @@ Sidebar::Sidebar(std::string texture_filename, std::string font_filename){
         std::cout << "Could not open: " + texture_filename << std::endl;
     if(!font.loadFromFile(font_filename))
         std::cout << "Could not open: " + font_filename << std::endl;
-
     sidebar.setTexture(background);
     sidebar.setPosition(1024,0);
-    stats.resize(9);
-    for(int i = 0; i < stats.size(); i++) {
-		stats[i].setFont(font);
-		stats[i].setFillColor(sf::Color::White);
-		stats[i].setCharacterSize(12);
+    text.resize(10);
+    for(int i = 0; i < text.size(); i++) {
+		text[i].setFont(font);
+		text[i].setFillColor(sf::Color::White);
+		text[i].setCharacterSize(12);
 		if(i == 0) {
-            int pw = 1024 + 256 / 2 - stats[i].getLocalBounds().width / 2;
-            stats[i].setPosition(sf::Vector2f(pw, 10));
+		    text[i].setString("Player_ turn");
+            int pw = 1024 + 168 / 2 - text[i].getLocalBounds().width / 2;
+            text[i].setPosition(sf::Vector2f(pw, 10));
         }
-		else if ( i != 0 && i < 5) {
+		else if ( i != 0 && i < 6) {
             int pw = 1160;
-            stats[i].setPosition(sf::Vector2f(pw, i * 32));
+            text[i].setPosition(sf::Vector2f(pw, i * 32));
         }
-		else if( i >= 5 && i < 8 ){
+		else if( i >= 6 && i < 9 ){
 		    int pw = 1046;
-            stats[i].setPosition(sf::Vector2f(pw, i * 32));
+            text[i].setPosition(sf::Vector2f(pw, i * 32));
         }
 		else {
             int pw = 1160;
-            stats[i].setPosition(sf::Vector2f(pw, (i-3) * 32));
+            text[i].setPosition(sf::Vector2f(pw, (i - 3) * 32));
 
         }
     }
-
-
+}
+void Sidebar::setTurn(std::string turn){
+    this->text[0].setString(turn);
 }
 
 void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -56,20 +57,20 @@ void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // draw the vertex array
     target.draw(sidebar, states);
 }
-void Sidebar::updateStatbar(Character* character){
-        stats[0].setString("LV." + std::to_string(character->get_level()));
-        stats[1].setString("EXP." + std::to_string(character->get_experience()));
-        stats[2].setString("HP." + std::to_string(character->get_hit_points()));
-        stats[3].setString("MP." + std::to_string(character->get_mana_points()));
-        stats[4].setString("ATK." + std::to_string(character->get_attack()));
-        stats[5].setString("DEF." + std::to_string(character->get_defense()));
-        stats[6].setString("SPD." + std::to_string(character->get_speed()));
-        stats[7].setString("S.ATK." + std::to_string(character->get_special_attack()));
-        stats[8].setString("S.DEF." + std::to_string(character->get_special_defense()));
+void Sidebar::update_statbar(Character* character){
+        text[1].setString("LV." + std::to_string(character->get_level()));
+        text[2].setString("EXP." + std::to_string(character->get_experience()));
+        text[3].setString("HP." + std::to_string(character->get_hit_points()));
+        text[4].setString("MP." + std::to_string(character->get_mana_points()));
+        text[5].setString("ATK." + std::to_string(character->get_attack()));
+        text[6].setString("DEF." + std::to_string(character->get_defense()));
+        text[7].setString("SPD." + std::to_string(character->get_speed()));
+        text[8].setString("S.ATK." + std::to_string(character->get_special_attack()));
+        text[9].setString("S.DEF." + std::to_string(character->get_special_defense()));
 }
-void Sidebar::setTurn(std::string turn){
-    this->turn.setString(turn);
-}
+//void Sidebar::setTurn(std::string turn){
+//    this->turn.setString(turn);
+//}
 void Sidebar::createStat(float const width, float const height, std::string filename) {
 	if(!font.loadFromFile(filename)) {
 		std::cout << "Could not open: " + filename << std::endl;
@@ -103,13 +104,13 @@ void Sidebar::createStat(float const width, float const height, std::string file
 //	}
 }
 void Sidebar::clear() {
-    for (auto i = 0; i < stats.size(); i++){
-        stats[i].setString("");
+    for (auto i = 0; i < text.size(); i++){
+        text[i].setString("");
     }
 }
 void Sidebar::drawStat(sf::RenderTarget &window) {
-	for(int i =0; i < stats.size(); i++)
-		window.draw(stats[i]);
+	for(int i =0; i < text.size(); i++)
+		window.draw(text[i]);
 }
 
 //void Sidebar::hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window) {

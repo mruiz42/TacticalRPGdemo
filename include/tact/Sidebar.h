@@ -24,14 +24,14 @@ private:
     sf::Sprite sidebar;
 	sf::Font font;
 	sf::Text turn;
-	std::vector<sf::Text> stats;
+	std::vector<sf::Text> text;
 	//sf::Text HPtext;
 public:
     Sidebar(std::string, std::string);
     sf::Texture getBackground() const { return this->background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void createStat(float const width, float const height, std::string filename);
-	void updateStatbar(Character *);
+	void update_statbar(Character *character);
 	void drawStat(sf::RenderTarget &window);
     void setTurn(std::string);
     void clear();
