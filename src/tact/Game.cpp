@@ -299,33 +299,29 @@ void Game::move_character_poll(){
             }
             break;
 
-        case sf::Keyboard::Key::Return:                  // Set down
-			if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
-				sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
-				break;
-			}
-			if (v_map.get_type_at(cur) >= 69) {
-				std::cout << "impassible ";
-				break;
-			}
-			Coordinate xy = selector.get_selection().get_coordinate();
-			if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x())
-			        > selector.get_selection().get_speed()/5) {
-				std::cout << "character can't move that far. ";
-				break;
-			}
-			selector.get_selection().get_coordinate().get_x();
-			std::cout << "placed at :" << cur << std::endl;
-			c_map.set_character_at(cur, &selector.get_selection());
-			selector.get_selection().set_coordinate(cur);
-			selector.get_selection().set_exhausted(true);
-			selector.clear_selection();
-			unit_selected = false;
-			
-            // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
-
+        case sf::Keyboard::Key::Return: {                  // Set down
+            Coordinate xy = selector.get_selection().get_coordinate();
+            if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
+                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+                break;
+            }
+            else if (v_map.get_type_at(cur) >= 69) {
+                std::cout << "impassible ";
+                break;
+            }
+            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
+                std::cout << "character can't move that far. ";
+                break;
+            }
+            selector.get_selection().get_coordinate().get_x();
+            std::cout << "placed at :" << cur << std::endl;
+            c_map.set_character_at(cur, &selector.get_selection());
+            selector.get_selection().set_coordinate(cur);
+            selector.get_selection().set_exhausted(true);
+            selector.clear_selection();
+            unit_selected = false;
             break;
-
+        }
         case sf::Keyboard::Key::BackSpace:              // Cancel
             unit_selected = false;
             selector.clear();
