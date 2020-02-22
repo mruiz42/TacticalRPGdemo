@@ -16,3 +16,19 @@ Player::Player(int id, Coordinate xy) : player_id(id), fort(xy) {
 Player::~Player() {
 
 }
+
+void Player::reset_squaderon_exhaustion() {
+    for (auto i = 0; i < squadron.size(); i++) {
+        this->squadron[i]->set_exhausted(false);
+    }
+}
+
+bool Player::is_turn_end() {
+    bool is_end = true;
+    for (auto i = 0; i < squadron.size(); i++) {
+        if (!this->squadron[i]->is_exhausted()){
+            is_end = false;
+        }
+    }
+    return is_end;
+}

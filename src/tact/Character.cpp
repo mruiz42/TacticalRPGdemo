@@ -65,7 +65,8 @@ void Character::set_coordinate(int x, int y) {
     this->xy.set_y(y);
 }
 
-void Character::set_coordinate(Coordinate coordinate) {
-    this->xy = coordinate;
-}
+//void Character::set_coordinate(Coordinate coordinate) {
+//    this->xy.set_x(coordinate.get_x());
+//    this->xy.set_y(coordinate.get_y());
+//}
 

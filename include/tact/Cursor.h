@@ -23,7 +23,7 @@ public:
     sf::Sprite get_sprite() { return this->sprite; }
     virtual void moveSprite(float x, float y);
     void jump_to(int, int);
-
+    void jump_to(Coordinate);
     friend std::ostream& operator<< (std::ostream& out, const Cursor& cursor);
 };
 

@@ -40,6 +40,13 @@ void Cursor::jump_to(int x, int y) {
     this->sprite.setPosition(xf, yf);
 }
 
+void Cursor::jump_to(Coordinate coordinate) {
+    this->set_coordinate(coordinate);
+    float yf = this->get_y() * TEXTURE_SIZE;
+    float xf = this->get_x() * TEXTURE_SIZE;
+    this->sprite.setPosition(xf,yf);
+}
+
 std::ostream& operator<< (std::ostream& out, const Cursor& cursor){
     out << "(" + std::to_string(cursor.get_x()) + "," + std::to_string(cursor.get_y()) + ")" << std::endl;
     return out;

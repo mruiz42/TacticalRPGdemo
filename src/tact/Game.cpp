@@ -47,9 +47,11 @@ Game::Game() : cur(0, 0),
 int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
     while (window.isOpen()) {
-
         while (window.pollEvent(event)) {
-            sidebar.setTurn("- Player 1 turn -");
+            if(get_current_player().is_turn_end()){
+                sidebar.setTurn("- Player" + std::to_string(get_current_player_id()) +"  turn -");
+                this->swap_turns();
+            }
             if (c_map.get_map()[cur.get_tile_y()][cur.get_tile_x()] != nullptr) {
                 sidebar.updateStatbar(c_map.get_character_at(cur.get_tile_x(), cur.get_tile_y()));
             } else if (v_map.get_type_at(cur.get_tile_x(), cur.get_tile_y()) >= 69) {
@@ -102,6 +104,8 @@ int Game::swap_turns(){
         std::cout << "- Player " + std::to_string(player2.get_player_id()) << "'s Turn begin -\n";
         player1.set_is_turn(false);
         player2.set_is_turn(true);
+        player2.reset_squaderon_exhaustion();
+        cur.jump_to(player2.get_squadron()[0]->get_coordinate());
         selector.clear();
         return player2.get_player_id();
     }
@@ -109,6 +113,8 @@ int Game::swap_turns(){
         std::cout << "Player " + std::to_string(player1.get_player_id()) << "'s Turn begin -\n";
         player2.set_is_turn(false);
         player1.set_is_turn(true);
+        player1.reset_squaderon_exhaustion();
+        cur.jump_to(player1.get_squadron()[0]->get_coordinate());
         selector.clear();
         return player1.get_player_id();
     }
@@ -233,20 +239,18 @@ void Game::move_cursor_poll() {
                 cur.moveSprite(0, TEXTURE_SIZE);
             break;
 
-        case sf::Keyboard::Key::Enter:          // Pick up
+        case sf::Keyboard::Key::Enter: {         // Pick up
             std::cout << cur << std::endl;
-            if (belongs_to_current_player(c_map.get_character_at(cur))) {
+            Character *c_ptr = c_map.get_character_at(cur);
+            if (belongs_to_current_player(c_ptr) && !c_ptr->is_exhausted()) {
                 if (!unit_selected) {
                     selector.set_selection(c_map.get_character_at(cur));
                     unit_selected = true;
                 }
-                std::cout << "can move it : P" << std::endl;
-
             }
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )
-
             break;
-
+        }
         case sf::Keyboard::Key::Q:
             if (iterator == get_current_player().get_squadron().size())
                 iterator = 0;
@@ -258,7 +262,7 @@ void Game::move_cursor_poll() {
 }
 
 void Game::move_character_poll(){
-    std::cout << "moving ";
+    std::cout << "pickedup ";
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992){
@@ -291,8 +295,8 @@ void Game::move_character_poll(){
         case sf::Keyboard::Key::Enter:                  // Set down
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
-
-            selector.get_selection().set_coordinate(10, 20);
+            selector.get_selection().set_coordinate(cur);
+            selector.get_selection().set_exhausted(true);
             selector.clear_selection();
             unit_selected = false;
             // if (v_map.get_type_at(cur.get_coordinate()) < 69 && c_map.get_character_at(cur.get_coordinate()) )

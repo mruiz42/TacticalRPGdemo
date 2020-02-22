@@ -13,7 +13,7 @@
 class Player {
 protected:
     Fortress fort;
-    std::vector<Character *> squadron; // is this right? If i want a 'dynamic array' of new Characters?
+    std::vector<Character *> squadron;
     unsigned int player_id;
     unsigned int number_units;
     bool is_turn;
@@ -32,6 +32,9 @@ public:
     void set_player_id(unsigned int player_id) { this->player_id = player_id; }
     void set_number_units(unsigned int number_units) {this->number_units; }
     void set_is_turn(bool is_turn) { this->is_turn = is_turn; }
+
+    void reset_squaderon_exhaustion();
+    bool is_turn_end();
 };
 
 
