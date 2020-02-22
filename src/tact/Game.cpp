@@ -11,6 +11,7 @@ Game::Game() : cur(0, 0),
     player2(1, Coordinate(29, 3))
     {
     iterator = 0;
+    turn_count = 1;
     unit_selected = false;
     check_controllers();
     std::cout << "- Start Game -\n";
@@ -54,11 +55,11 @@ int Game::play_game(sf::RenderWindow& window) {
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
-                sidebar.update_statbar(c_map.get_character_at(cur));
+                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
             } else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
             } else {
-                sidebar.clear();
+                sidebar.update_sidebar(cur, turn_count, get_current_player_id());
             }
             // Poll for events
             switch (event.type) {
@@ -101,6 +102,7 @@ int Game::toggle_music() {
 }
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
+    turn_count++;
     if (player1.get_is_turn()){
         std::cout << "- Player " + std::to_string(player2.get_player_id() + 1) << "'s Turn begin -\n";
         player1.set_is_turn(false);

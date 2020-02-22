@@ -31,8 +31,9 @@ public:
     sf::Texture getBackground() const { return this->background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void createStat(float const width, float const height, std::string filename);
-	void update_statbar(Character *character);
-	void drawStat(sf::RenderTarget &window);
+	void update_statbar(Character*, Coordinate, int, int);
+    void update_sidebar(Coordinate, int, int);
+    void drawStat(sf::RenderTarget &window);
     void setTurn(std::string);
     void clear();
 	void hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window);

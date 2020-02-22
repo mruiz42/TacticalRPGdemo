@@ -20,14 +20,14 @@ Sidebar::Sidebar(std::string texture_filename, std::string font_filename){
         std::cout << "Could not open: " + font_filename << std::endl;
     sidebar.setTexture(background);
     sidebar.setPosition(1024,0);
-    text.resize(10);
+    text.resize(13);
     for(int i = 0; i < text.size(); i++) {
 		text[i].setFont(font);
 		text[i].setFillColor(sf::Color::White);
 		text[i].setCharacterSize(12);
 		if(i == 0) {
 		    text[i].setString("Player_ turn");
-            int pw = 1024 + 168 / 2 - text[i].getLocalBounds().width / 2;
+            int pw = 1024 + 174 / 2 - text[i].getLocalBounds().width / 2;
             text[i].setPosition(sf::Vector2f(pw, 10));
         }
 		else if ( i != 0 && i < 6) {
@@ -38,10 +38,19 @@ Sidebar::Sidebar(std::string texture_filename, std::string font_filename){
 		    int pw = 1046;
             text[i].setPosition(sf::Vector2f(pw, i * 32));
         }
-		else {
+		else if (i >=9 && i < 11){
             int pw = 1160;
             text[i].setPosition(sf::Vector2f(pw, (i - 3) * 32));
-
+        }
+        else if (i == 11) {
+            int pw = 1046;
+            int py = 674;
+            text[i].setPosition(sf::Vector2f(pw, py));
+        }
+        else {
+            int pw = 1160;
+            int py = 674;
+            text[i].setPosition(sf::Vector2f(pw, py));
         }
     }
 }
@@ -57,16 +66,25 @@ void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // draw the vertex array
     target.draw(sidebar, states);
 }
-void Sidebar::update_statbar(Character* character){
-        text[1].setString("LV." + std::to_string(character->get_level()));
-        text[2].setString("EXP." + std::to_string(character->get_experience()));
-        text[3].setString("HP." + std::to_string(character->get_hit_points()));
-        text[4].setString("MP." + std::to_string(character->get_mana_points()));
-        text[5].setString("ATK." + std::to_string(character->get_attack()));
-        text[6].setString("DEF." + std::to_string(character->get_defense()));
-        text[7].setString("SPD." + std::to_string(character->get_speed()));
-        text[8].setString("S.ATK." + std::to_string(character->get_special_attack()));
-        text[9].setString("S.DEF." + std::to_string(character->get_special_defense()));
+void Sidebar::update_sidebar(Coordinate coordinate, int turn, int player_id) {
+    text[0].setString("Player" + std::to_string(player_id + 1) +" turn");
+    text[11].setString("TURN." + std::to_string(turn));
+    text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
+}
+void Sidebar::update_statbar(Character* character, Coordinate coordinate, int turn, int player_id) {
+        text[0].setString("Player" + std::to_string(player_id + 1) +" turn");
+        text[1].setString(character->get_name());
+        text[2].setString("LV." + std::to_string(character->get_level()));
+        text[3].setString("EXP." + std::to_string(character->get_experience()));
+        text[4].setString("HP." + std::to_string(character->get_hit_points()));
+        text[5].setString("MP." + std::to_string(character->get_mana_points()));
+        text[6].setString("ATK." + std::to_string(character->get_attack()));
+        text[7].setString("DEF." + std::to_string(character->get_defense()));
+        text[8].setString("SPD." + std::to_string(character->get_speed()));
+        text[9].setString("S.ATK." + std::to_string(character->get_special_attack()));
+        text[10].setString("S.DEF." + std::to_string(character->get_special_defense()));
+        text[11].setString("TURN." + std::to_string(turn));
+        text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
 }
 //void Sidebar::setTurn(std::string turn){
 //    this->turn.setString(turn);
@@ -104,7 +122,7 @@ void Sidebar::createStat(float const width, float const height, std::string file
 //	}
 }
 void Sidebar::clear() {
-    for (auto i = 0; i < text.size(); i++){
+    for (auto i = 1; i < text.size() - 2; i++){
         text[i].setString("");
     }
 }

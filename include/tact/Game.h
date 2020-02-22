@@ -53,7 +53,7 @@ private:
     Selector selector;
     unsigned int iterator;
     bool unit_selected;
-
+    int turn_count;
 public:
     Game();
     int play_game(sf::RenderWindow&);
