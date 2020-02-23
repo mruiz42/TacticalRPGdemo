@@ -85,7 +85,7 @@ public:
 
     int move_cursor_joy_poll();
 
-    void joy_poll_logic();
+    void poll_joy_logic();
 };
 
 

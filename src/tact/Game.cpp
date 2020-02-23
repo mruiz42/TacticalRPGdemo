@@ -78,7 +78,7 @@ int Game::play_game(sf::RenderWindow& window) {
 
             }
             if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonReleased) {
-                joy_poll_logic();
+                poll_joy_logic();
             }
             else if (event.type == sf::Event::KeyPressed) {
                 poll_key_logic();
@@ -507,7 +507,7 @@ void Game::poll_key_logic() {
     }
 }
 
-void Game::joy_poll_logic() {
+void Game::poll_joy_logic() {
     adjust_volume_key_poll();
     // Move cursor routine
     if (!unit_selected) {
