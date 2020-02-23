@@ -80,9 +80,9 @@ int Game::play_game(sf::RenderWindow& window) {
             if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
                 poll_joy_logic();
             }
-//            else if (event.type == sf::Event::KeyPressed) {
-//                poll_key_logic();
-//            }
+            else if (event.type == sf::Event::KeyPressed) {
+                poll_key_logic();
+            }
 
             window.clear();
             update_map();
@@ -519,9 +519,6 @@ void Game::poll_joy_logic() {
     // Menu selection routine
     else if (menu_selected) {
         int selection = menu_joy_poll();
-
-        std::cout << " hi : " << selection << std::endl;
-
         if (selection == -1) {
             return;
         }
@@ -549,7 +546,7 @@ void Game::poll_joy_logic() {
     }
 
     else if (move_selected){
-//        move_character_key_poll();
+        move_character_joy_poll();
     }
 
     else if (defend_selected) {
@@ -563,4 +560,68 @@ void Game::poll_joy_logic() {
     else if (wait_selected) {
 
     }
+}
+
+void Game::move_character_joy_poll() {
+    std::cout << "pickedup ";
+
+    if (event.type == sf::Event::JoystickMoved) {  // Controller input events
+        // Get direction of D pad press
+        float p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
+        float p_y = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovY);
+        // Down
+        if (p_y > 0) {
+            if (cur.get_sprite().getPosition().y < 672) {
+                cur.moveSprite(0, TEXTURE_SIZE);
+                selector.get_selection().get_map_sprite().move(0, TEXTURE_SIZE);
+            }
+        }
+            // Up
+        else if (p_y < 0) {
+            if (cur.get_sprite().getPosition().y > 0) {
+                cur.moveSprite(0, -TEXTURE_SIZE);
+                selector.get_selection().get_map_sprite().move(0, -TEXTURE_SIZE);
+            }
+        }
+            // Left
+        else if (p_x < 0) {
+            if (cur.get_sprite().getPosition().x > 0) {
+                cur.moveSprite(-TEXTURE_SIZE, 0);
+                selector.get_selection().get_map_sprite().move(-TEXTURE_SIZE, 0);
+            }
+        }
+            // Right
+        else if (p_x > 0) {
+            if (cur.get_sprite().getPosition().x < 992){
+                cur.moveSprite(TEXTURE_SIZE, 0);
+                selector.get_selection().get_map_sprite().move(TEXTURE_SIZE, 0);
+            }
+        }
+    }
+    else if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased)
+        if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
+            Coordinate xy = selector.get_selection().get_coordinate();
+            if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
+                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+            }
+            else if (v_map.get_type_at(cur) >= 69) {
+                std::cout << "impassible ";
+            }
+            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
+                std::cout << "character can't move that far. ";
+            }
+            else {
+                std::cout << "placed at :" << cur << std::endl;
+                c_map.set_character_at(cur, &selector.get_selection());
+                c_map.null_character_at(selector.get_selection().get_coordinate());
+                selector.get_selection().set_coordinate(cur);
+                selector.get_selection().set_moved(true);
+                selector.clear_selection();
+                unit_selected = false;
+            }
+        }
+        else if (sf::Joystick::isButtonPressed(get_current_player_id(), 1)) {
+            unit_selected = false;
+            selector.clear();
+        }
 }
