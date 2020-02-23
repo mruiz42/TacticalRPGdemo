@@ -85,6 +85,18 @@ void Sidebar::update_statbar(Character* character, Coordinate coordinate, int tu
         text[10].setString("S.DEF." + std::to_string(character->get_special_defense()));
         text[11].setString("TURN." + std::to_string(turn));
         text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
+		if(player_id == 0)
+		{
+			charFace = character->get_charFace1();
+			charFace.setPosition(sf::Vector2f(1046, 35));
+			charFace.scale(sf::Vector2f(1.5, 1.5));
+		}
+		else
+		{
+			charFace = character->get_charFace2();
+			charFace.setPosition(sf::Vector2f(1046, 35));
+			charFace.scale(sf::Vector2f(1.5, 1.5));
+		}
 }
 //void Sidebar::setTurn(std::string turn){
 //    this->turn.setString(turn);
@@ -129,6 +141,7 @@ void Sidebar::clear() {
 void Sidebar::drawStat(sf::RenderTarget &window) {
 	for(int i =0; i < text.size(); i++)
 		window.draw(text[i]);
+	window.draw(charFace);
 }
 
 //void Sidebar::hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window) {

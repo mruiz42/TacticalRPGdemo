@@ -25,6 +25,7 @@ private:
 	sf::Font font;
 	sf::Text turn;
 	std::vector<sf::Text> text;
+	sf::Sprite charFace;
 	//sf::Text HPtext;
 public:
     Sidebar(std::string, std::string);

@@ -97,6 +97,7 @@ clean :
 	@rm -f $(TACTSRC)*/obj/*.o
 	@rm -f $(STTLIB)
 	@rm -f $(OUTBIN)
+	@rm -f $(TACTOBJ)/*
 
 all : clean $(OUTBIN)
 
