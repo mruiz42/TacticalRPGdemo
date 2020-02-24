@@ -88,6 +88,16 @@ public:
     void poll_joy_logic();
 
     void move_character_joy_poll();
+
+    void wait_character_poll();
+
+    void defend_character_poll();
+
+    void attack_character_poll();
+
+    bool has_enemy_adjacent();
+
+    bool belongs_to_enemy_player(Character *character);
 };
 
 

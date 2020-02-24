@@ -98,6 +98,112 @@ int Game::play_game(sf::RenderWindow& window) {
     std::cout << "Game Over!" << std::endl;
     return 0;
 }
+void Game::poll_key_logic() {
+    adjust_volume_key_poll();
+    // Move cursor routine
+    if (!unit_selected) {
+        if (event.type == sf::Event::KeyPressed) {
+            move_cursor_key_poll();
+        }
+    }
+        // Menu selection routine
+    else if (menu_selected) {
+        int selection = -1;
+        if (event.type == sf::Event::KeyPressed) {
+            selection = menu_key_poll();
+        }
+        if (selection != -1) {
+            switch(selection) {
+                case 0: // Move
+                    move_selected = true;
+                    menu_selected = false;
+                    break;
+                case 1: // Wait
+                    wait_selected = true;
+                    menu_selected = false;
+                    break;
+                case 2: // Attack
+                    attack_selected = true;
+                    menu_selected = false;
+                    break;
+                case 3: // Defend
+                    defend_selected = true;
+                    menu_selected = false;
+                    break;
+            }
+        }
+    }
+
+    else if (move_selected){
+        move_character_key_poll();
+    }
+
+    else if (defend_selected) {
+        defend_character_poll();
+    }
+
+    else if (attack_selected) {
+        attack_character_poll();
+    }
+
+    else if (wait_selected) {
+        wait_character_poll();
+    }
+}
+
+void Game::poll_joy_logic() {
+    adjust_volume_key_poll();
+    // Move cursor routine
+    if (!unit_selected) {
+        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+            move_cursor_joy_poll();
+        }
+    }
+        // Menu selection routine
+    else if (menu_selected) {
+        int selection = menu_joy_poll();
+        if (selection == -1) {
+            return;
+        }
+        else if (selection == 0) {
+            move_selected = true;
+            menu_selected = false;
+            return;
+        }
+        else if (selection == 1) { // Wait
+            wait_selected = true;
+            menu_selected = false;
+            return;
+        }
+        else if (selection == 2) { // Attack
+            attack_selected = true;
+            menu_selected = false;
+            return;
+        }
+        else if (selection == 3) { // Defend
+            defend_selected = true;
+            menu_selected = false;
+            return;
+
+        }
+    }
+
+    else if (move_selected){
+        move_character_joy_poll();
+    }
+
+    else if (defend_selected) {
+
+    }
+
+    else if (attack_selected) {
+
+    }
+
+    else if (wait_selected) {
+
+    }
+}
 
 int Game::toggle_music() {
 
@@ -154,6 +260,30 @@ Player& Game::get_enemy_player() {
     }
 }
 
+bool Game::has_enemy_adjacent(){
+    Coordinate xy = selector.get_selection().get_coordinate();
+    const Player* enemy_player = &get_enemy_player();
+    int x = xy.get_x();
+    int y = xy.get_y();
+    Character* up = c_map.get_character_at(x, y-1);
+    Character* down = c_map.get_character_at(x, y+1);
+    Character* left = c_map.get_character_at(x-1, y);
+    Character* right = c_map.get_character_at(x+1, y);
+    if (belongs_to_enemy_player(up) && up != nullptr) {
+        return true;
+    }
+    else if (belongs_to_enemy_player(down) && down != nullptr) {
+        return true;
+    }
+    else if (belongs_to_enemy_player(left) && left != nullptr) {
+        return true;
+    }
+    else if (belongs_to_enemy_player(right) && right != nullptr) {
+        return true;
+    }
+    return false;
+}
+
 int Game::get_current_player_id() {
     if (player1.get_is_turn()) {
         return player1.get_player_id();
@@ -169,6 +299,15 @@ int Game::get_current_player_id() {
 bool Game::belongs_to_current_player(Character* character) {
     for (auto i = 0; i < this->get_current_player().get_squadron().size(); i++) {
         if (character == this->get_current_player().get_squadron()[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Game::belongs_to_enemy_player(Character* character){
+    for (auto i = 0; i < this->get_enemy_player().get_squadron().size(); i++) {
+        if (character == this->get_enemy_player().get_squadron()[i]) {
             return true;
         }
     }
@@ -331,6 +470,15 @@ void Game::move_character_key_poll(){
 }
 
 int Game::menu_key_poll() {
+    bool can_attack = false;
+    if (has_enemy_adjacent()){
+        can_attack = true;
+        sidebar.get_menu().set_all_text_color(sf::Color::White);
+    }
+    else {
+        sidebar.get_menu().set_all_text_color(sf::Color::White);
+        sidebar.get_menu().set_one_text_color(sf::Color(128,128,128,255), 2);
+    }
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             this->sidebar.get_menu().move_right();
@@ -355,7 +503,6 @@ int Game::menu_key_poll() {
 
         case sf::Keyboard::Key::BackSpace: {
             this->sidebar.get_menu().set_selection_text_color(sf::Color::Red);
-            sidebar.get_menu().set_all_text_color(sf::Color::White);
             menu_selected = false;
             unit_selected = false;
             return -1;
@@ -455,113 +602,6 @@ int Game::menu_joy_poll() {
     return selection;
 }
 
-void Game::poll_key_logic() {
-    adjust_volume_key_poll();
-    // Move cursor routine
-    if (!unit_selected) {
-        if (event.type == sf::Event::KeyPressed) {
-            move_cursor_key_poll();
-        }
-    }
-    // Menu selection routine
-    else if (menu_selected) {
-        int selection = -1;
-        if (event.type == sf::Event::KeyPressed) {
-            selection = menu_key_poll();
-        }
-        if (selection != -1) {
-            switch(selection) {
-                case 0: // Move
-                    move_selected = true;
-                    menu_selected = false;
-                    break;
-                case 1: // Wait
-                    wait_selected = true;
-                    menu_selected = false;
-                    break;
-                case 2: // Attack
-                    attack_selected = true;
-                    menu_selected = false;
-                    break;
-                case 3: // Defend
-                    defend_selected = true;
-                    menu_selected = false;
-                    break;
-            }
-        }
-    }
-
-    else if (move_selected){
-        move_character_key_poll();
-    }
-
-    else if (defend_selected) {
-
-    }
-
-    else if (attack_selected) {
-
-    }
-
-    else if (wait_selected) {
-
-    }
-}
-
-void Game::poll_joy_logic() {
-    adjust_volume_key_poll();
-    // Move cursor routine
-    if (!unit_selected) {
-        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
-            move_cursor_joy_poll();
-        }
-    }
-    // Menu selection routine
-    else if (menu_selected) {
-        int selection = menu_joy_poll();
-        if (selection == -1) {
-            return;
-        }
-        else if (selection == 0) {
-            move_selected = true;
-            menu_selected = false;
-            return;
-        }
-        else if (selection == 1) { // Wait
-            wait_selected = true;
-            menu_selected = false;
-            return;
-        }
-        else if (selection == 2) { // Attack
-            attack_selected = true;
-            menu_selected = false;
-            return;
-        }
-        else if (selection == 3) { // Defend
-            defend_selected = true;
-            menu_selected = false;
-            return;
-
-        }
-    }
-
-    else if (move_selected){
-        move_character_joy_poll();
-    }
-
-    else if (defend_selected) {
-
-    }
-
-    else if (attack_selected) {
-
-    }
-
-    else if (wait_selected) {
-
-    }
-}
-
 void Game::move_character_joy_poll() {
     std::cout << "pickedup ";
 
@@ -607,9 +647,9 @@ void Game::move_character_joy_poll() {
             else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
             }
-            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
-                std::cout << "character can't move that far. ";
-            }
+//            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
+//                std::cout << "character can't move that far. ";
+//            }
             else {
                 std::cout << "placed at :" << cur << std::endl;
                 c_map.set_character_at(cur, &selector.get_selection());
@@ -624,4 +664,15 @@ void Game::move_character_joy_poll() {
             unit_selected = false;
             selector.clear();
         }
+}
+
+void Game::wait_character_poll() {
+
+}
+
+void Game::defend_character_poll() {
+
+}
+
+void Game::attack_character_poll() {
 }
