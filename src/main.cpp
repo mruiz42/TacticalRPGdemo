@@ -12,7 +12,5 @@ int main()
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
     Game game;
     game.play_game(window);
-
-
     return 0;
 }

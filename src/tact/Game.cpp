@@ -100,9 +100,6 @@ int Game::play_game(sf::RenderWindow& window) {
 }
 void Game::poll_key_logic() {
     adjust_volume_key_poll();
-
-    // Check if can_attack()
-
     // Move cursor routine
     if (!unit_selected) {
         if (event.type == sf::Event::KeyPressed) {
@@ -123,19 +120,23 @@ void Game::poll_key_logic() {
                     break;
                 case 1: // Wait
                     wait_selected = true;
+                    move_selected = false;
                     menu_selected = false;
                     break;
                 case 2: // Attack
                     attack_selected = true;
+                    move_selected = false;
                     menu_selected = false;
                     break;
                 case 3: // Defend
                     defend_selected = true;
+                    move_selected = false;
                     menu_selected = false;
                     break;
             }
         }
     }
+
 
     else if (move_selected){
         move_character_key_poll();
@@ -474,15 +475,17 @@ void Game::move_character_key_poll(){
 
             if (has_enemy_adjacent()) {
                 selector.get_selection().set_moved(true);
+                selector.get_selection().set_can_attack(true);
                 std::cout << "enemy adjacent!" << std::endl;
                 menu_selected = true;
                 move_selected = false;
-                unit_selected = false;
+                //unit_selected = false;
             }
             else {
                 selector.get_selection().set_moved(true);
-                selector.clear_selection();
-                unit_selected = false;
+//                selector.clear_selection();
+                menu_selected = true;
+                //unit_selected = false;
             }
             break;
         }
@@ -493,9 +496,8 @@ void Game::move_character_key_poll(){
     }
 }
 int Game::menu_key_poll() {
-    bool can_attack = false;
     if (has_enemy_adjacent()){
-        can_attack = true;
+        this->selector.get_selection().set_can_attack(true);
     }
     else {
         sidebar.get_menu().set_one_text_color(sf::Color(128,128,128,255), 2);
@@ -525,7 +527,7 @@ int Game::menu_key_poll() {
             if (menu_selection == 0 && selector.get_selection().is_moved()) {
                 return -1;
             }
-            else if (menu_selection == 2 && !can_attack) {
+            else if (menu_selection == 2 && !this->selector.get_selection().can_attack()) {
                 return -1;
             }
             this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
@@ -746,6 +748,8 @@ void Game::attack_character_key_poll() {
 }
 
 void Game::wait_character_poll() {
+    menu_selected = false;
+    move_selected = false;
     unit_selected = false;
     wait_selected = false;
     selector.get_selection().set_moved(true);
@@ -753,6 +757,8 @@ void Game::wait_character_poll() {
 }
 
 void Game::defend_character_poll() {
+    menu_selected = false;
+    move_selected = false;
     unit_selected = false;
     defend_selected = false;
     selector.get_selection().set_defending(true);

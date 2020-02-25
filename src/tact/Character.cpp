@@ -8,6 +8,7 @@
 Character::Character() : xy(0,0) {
     name = "";
     level = 0;
+    attack_on = false;
     moved = false;
     defending = false;
     experience = 0;
@@ -23,6 +24,7 @@ Character::Character() : xy(0,0) {
 Character::Character(Coordinate xy) : xy(xy) {
     name = "";
     level = 0;
+    attack_on = false;
     moved = false;
     defending = false;
     experience = 0;
@@ -38,6 +40,7 @@ Character::Character(Coordinate xy) : xy(xy) {
 Character::Character(int x, int y) : xy(x, y) {
     name = "";
     level = 0;
+    attack_on = false;
     moved = false;
     defending = false;
     experience = 0;
@@ -55,6 +58,7 @@ Character::Character(std::string filename){
     sidebar_sprite.setTexture(texture);
     map_sprite.setTexture(texture);
     name = "";
+    attack_on = false;
     moved = false;
     defending = false;
     level = 0;

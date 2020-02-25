@@ -21,6 +21,12 @@ public:
     void clear();
     void clear_selection();
     void clear_target();
+
+    bool is_empty();
+
+    bool is_target_empty();
+
+    bool is_selection_empty();
 };
 
 

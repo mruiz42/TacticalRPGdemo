@@ -17,6 +17,7 @@ protected:
     sf::Sprite map_sprite;
     std::string name;
     Coordinate xy;
+    bool attack_on;
     bool moved;
     bool defending;
     unsigned int level;
@@ -34,13 +35,15 @@ public:
     Character(int x, int y);
     Character(std::string);
     Character(const Character&) = default;
+
+
     sf::Texture& get_texture() { return this->texture; }
     sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
     sf::Sprite& get_map_sprite() { return this->map_sprite; }
     std::string& get_name() { return this->name; }
+    bool can_attack() { return attack_on; }
     bool is_moved() { return this->moved; }
     bool is_defending() { return this->defending; }
-
     Coordinate get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
@@ -58,6 +61,7 @@ public:
     void set_name(std::string& name) { this->name = name; }
     void set_coordinate(int, int);
     void set_coordinate(Coordinate coordinate) { this->xy = coordinate; }
+    void set_can_attack(bool attack_on) { this->attack_on = attack_on; }
     void set_moved(bool moved) { this->moved = moved; }
     void set_defending(bool defending) { this->defending = defending; }
     void set_level(unsigned int level) { this->level = level;}

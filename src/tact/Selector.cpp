@@ -16,3 +16,14 @@ void Selector::clear_selection() {
 void Selector::clear_target() {
     this->target = nullptr;
 }
+
+bool Selector::is_selection_empty() {
+    return this->selection == nullptr;
+}
+bool Selector::is_target_empty() {
+    return this->target == nullptr;
+}
+
+bool Selector::is_empty() {
+    return this->selection == nullptr && this->target == nullptr;
+}
