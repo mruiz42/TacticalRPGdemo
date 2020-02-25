@@ -70,6 +70,7 @@ public:
     Player& get_current_player();
     Player& get_enemy_player();
     int get_current_player_id();
+    int get_enemy_player_id();
     int check_controllers();
     bool belongs_to_current_player(Character*);
     void update_map();
@@ -93,7 +94,7 @@ public:
 
     void defend_character_poll();
 
-    void attack_character_poll();
+    void attack_character_key_poll();
 
     bool has_enemy_adjacent();
 

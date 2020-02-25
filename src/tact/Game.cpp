@@ -106,7 +106,7 @@ void Game::poll_key_logic() {
             move_cursor_key_poll();
         }
     }
-        // Menu selection routine
+    // Menu selection routine
     else if (menu_selected) {
         int selection = -1;
         if (event.type == sf::Event::KeyPressed) {
@@ -143,7 +143,7 @@ void Game::poll_key_logic() {
     }
 
     else if (attack_selected) {
-        attack_character_poll();
+        attack_character_key_poll();
     }
 
     else if (wait_selected) {
@@ -296,6 +296,19 @@ int Game::get_current_player_id() {
     }
 }
 
+int Game::get_enemy_player_id() {
+    if (player1.get_is_turn()) {
+        return player2.get_player_id();
+    }
+    else if (player2.get_is_turn()) {
+        return player1.get_player_id();
+    }
+    else {
+        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+    }
+}
+
+
 bool Game::belongs_to_current_player(Character* character) {
     for (auto i = 0; i < this->get_current_player().get_squadron().size(); i++) {
         if (character == this->get_current_player().get_squadron()[i]) {
@@ -447,19 +460,27 @@ void Game::move_character_key_poll(){
                 std::cout << "impassible ";
                 break;
             }
-            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
-                std::cout << "character can't move that far. ";
-                break;
-            }
+//            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
+//                std::cout << "character can't move that far. ";
+//                break;
+//            }
 
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
             c_map.null_character_at(selector.get_selection().get_coordinate());
             selector.get_selection().set_coordinate(cur);
-            selector.get_selection().set_moved(true);
-            selector.clear_selection();
-            unit_selected = false;
-            std::cout << "===============" << std::endl;
+
+            if (has_enemy_adjacent()) {
+                std::cout << "enemy adjacent!" << std::endl;
+                menu_selected = true;
+                move_selected = false;
+                unit_selected = false;
+            }
+            else {
+                selector.get_selection().set_moved(true);
+                selector.clear_selection();
+                unit_selected = false;
+            }
             break;
         }
         case sf::Keyboard::Key::BackSpace:              // Cancel
@@ -473,11 +494,12 @@ int Game::menu_key_poll() {
     bool can_attack = false;
     if (has_enemy_adjacent()){
         can_attack = true;
-        sidebar.get_menu().set_all_text_color(sf::Color::White);
     }
     else {
-        sidebar.get_menu().set_all_text_color(sf::Color::White);
         sidebar.get_menu().set_one_text_color(sf::Color(128,128,128,255), 2);
+    }
+    if (selector.get_selection().is_moved()){
+        sidebar.get_menu().set_one_text_color(sf::Color(128,128,128,255), 0);
     }
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
@@ -497,8 +519,15 @@ int Game::menu_key_poll() {
             return -1;
 
         case sf::Keyboard::Key::Return: {         // Pick up
+            int menu_selection = sidebar.get_menu().get_selection();
+            if (menu_selection == 0 && selector.get_selection().is_moved()) {
+                return -1;
+            }
+            else if (menu_selection == 2 && !can_attack) {
+                return -1;
+            }
             this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
-            return sidebar.get_menu().get_selection();
+            return menu_selection;
         }
 
         case sf::Keyboard::Key::BackSpace: {
@@ -665,6 +694,56 @@ void Game::move_character_joy_poll() {
             selector.clear();
         }
 }
+void Game::attack_character_key_poll() {
+    Coordinate sprite_coordinate = selector.get_selection().get_coordinate();
+    float up_bound = (sprite_coordinate.get_y() * 32 ) - 32;
+    float down_bound = (sprite_coordinate.get_y() * 32 ) + 32;
+    float left_bound = (sprite_coordinate.get_x() * 32 ) - 32;
+    float right_bound = (sprite_coordinate.get_x() * 32 ) + 32;
+
+    switch (event.key.code) {
+        case sf::Keyboard::Key::D:   // Right
+            if (cur.get_sprite().getPosition().x < 992 && cur.get_sprite().getPosition().x < right_bound)
+                cur.moveSprite(TEXTURE_SIZE, 0);
+            break;
+
+        case sf::Keyboard::Key::A:  // Left
+            if (cur.get_sprite().getPosition().x > 0 && cur.get_sprite().getPosition().x > left_bound)
+                cur.moveSprite(-TEXTURE_SIZE, 0);
+            break;
+
+        case sf::Keyboard::Key::W: // UP
+            if (cur.get_sprite().getPosition().y > 0 && cur.get_sprite().getPosition().y > up_bound)
+                cur.moveSprite(0, -TEXTURE_SIZE);
+            break;
+
+        case sf::Keyboard::Key::S: // DOWN
+            if (cur.get_sprite().getPosition().y < 672 && cur.get_sprite().getPosition().y < down_bound)
+                cur.moveSprite(0, TEXTURE_SIZE);
+            break;
+
+        case sf::Keyboard::Key::Return: {         // Attack
+            std::cout << "Attacking!" << std::endl;
+            Character *c_ptr = c_map.get_character_at(cur);
+            if (c_ptr != nullptr && !belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
+                unit_selected = false;
+                menu_selected = false;
+                selector.set_target(c_map.get_character_at(cur));
+                // Do attack call here
+                selector.get_selection().set_moved(true);
+                std::cout << "Player " << get_enemy_player_id() << "'s " << selector.get_target().get_name() << "took X damage!" << std::endl;
+                selector.clear();
+            }
+            break;
+        }
+        case sf::Keyboard::Key::BackSpace:              // Cancel
+            attack_selected = false;
+            menu_selected = true;
+            break;
+    }
+
+
+}
 
 void Game::wait_character_poll() {
 
@@ -674,5 +753,3 @@ void Game::defend_character_poll() {
 
 }
 
-void Game::attack_character_poll() {
-}
