@@ -93,7 +93,9 @@ int Game::play_game(sf::RenderWindow& window) {
             window.clear();
             update_map();
             window.draw(v_map);
+            
             window.draw(c_map);
+
             window.draw(cur.get_sprite());
             window.draw(sidebar);
             window.draw(sidebar.get_menu());
@@ -355,11 +357,11 @@ int Game::check_controllers() {
 }
 
 void Game::update_map() {
-    for (int y = 0; y < 22; ++y) {
-        for (int x = 0; x < 32; ++x) {
-            c_map.get_map()[y][x] = nullptr;
-        }
-    }
+//    for (int y = 0; y < 22; ++y) {
+//        for (int x = 0; x < 32; ++x) {
+//            c_map.get_map()[y][x] = nullptr;
+//        }
+//    }
     for (int i = 0; i < player1.get_squadron().size(); i++) {
         c_map.set_character_at(player1.get_squadron().at(i)->get_coordinate(), player1.get_squadron().at(i));
     }
