@@ -100,6 +100,9 @@ int Game::play_game(sf::RenderWindow& window) {
 }
 void Game::poll_key_logic() {
     adjust_volume_key_poll();
+
+    // Check if can_attack()
+
     // Move cursor routine
     if (!unit_selected) {
         if (event.type == sf::Event::KeyPressed) {
@@ -405,7 +408,6 @@ void Game::move_cursor_key_poll() {
                 unit_selected = true;
                 menu_selected = true;
                 selector.set_selection(c_map.get_character_at(cur));
-
             }
             break;
         }
@@ -471,6 +473,7 @@ void Game::move_character_key_poll(){
             selector.get_selection().set_coordinate(cur);
 
             if (has_enemy_adjacent()) {
+                selector.get_selection().set_moved(true);
                 std::cout << "enemy adjacent!" << std::endl;
                 menu_selected = true;
                 move_selected = false;
@@ -489,7 +492,6 @@ void Game::move_character_key_poll(){
             break;
     }
 }
-
 int Game::menu_key_poll() {
     bool can_attack = false;
     if (has_enemy_adjacent()){
@@ -538,7 +540,6 @@ int Game::menu_key_poll() {
         }
     }
 }
-
 int Game::move_cursor_joy_poll() {
     if(event.type == sf::Event::JoystickMoved) {  // Controller input events
         // Get direction of D pad press
@@ -582,7 +583,6 @@ int Game::move_cursor_joy_poll() {
         iterator++;
     }
 }
-
 int Game::menu_joy_poll() {
     int selection = -1;
     if(event.type == sf::Event::JoystickMoved) { // Controller input events
@@ -630,7 +630,6 @@ int Game::menu_joy_poll() {
     }
     return selection;
 }
-
 void Game::move_character_joy_poll() {
     std::cout << "pickedup ";
 
@@ -728,6 +727,7 @@ void Game::attack_character_key_poll() {
             if (c_ptr != nullptr && !belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
                 unit_selected = false;
                 menu_selected = false;
+                attack_selected = false;
                 selector.set_target(c_map.get_character_at(cur));
                 // Do attack call here
                 selector.get_selection().set_moved(true);
@@ -746,10 +746,17 @@ void Game::attack_character_key_poll() {
 }
 
 void Game::wait_character_poll() {
-
+    unit_selected = false;
+    wait_selected = false;
+    selector.get_selection().set_moved(true);
+    selector.clear();
 }
 
 void Game::defend_character_poll() {
-
+    unit_selected = false;
+    defend_selected = false;
+    selector.get_selection().set_defending(true);
+    selector.get_selection().set_moved(true);
+    selector.clear();
 }
 

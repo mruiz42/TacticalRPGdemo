@@ -9,7 +9,7 @@ Character::Character() : xy(0,0) {
     name = "";
     level = 0;
     moved = false;
-    battled = false;
+    defending = false;
     experience = 0;
     hit_points = 0;
     mana_points = 0;
@@ -24,7 +24,7 @@ Character::Character(Coordinate xy) : xy(xy) {
     name = "";
     level = 0;
     moved = false;
-    battled = false;
+    defending = false;
     experience = 0;
     hit_points = 0;
     mana_points = 0;
@@ -39,7 +39,7 @@ Character::Character(int x, int y) : xy(x, y) {
     name = "";
     level = 0;
     moved = false;
-    battled = false;
+    defending = false;
     experience = 0;
     hit_points = 0;
     mana_points = 0;
@@ -56,7 +56,7 @@ Character::Character(std::string filename){
     map_sprite.setTexture(texture);
     name = "";
     moved = false;
-    battled = false;
+    defending = false;
     level = 0;
     experience = 0;
     hit_points = 0;

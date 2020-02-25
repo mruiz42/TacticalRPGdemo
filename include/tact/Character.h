@@ -18,7 +18,7 @@ protected:
     std::string name;
     Coordinate xy;
     bool moved;
-    bool battled;
+    bool defending;
     unsigned int level;
     unsigned int experience;
     unsigned int hit_points;
@@ -39,7 +39,7 @@ public:
     sf::Sprite& get_map_sprite() { return this->map_sprite; }
     std::string& get_name() { return this->name; }
     bool is_moved() { return this->moved; }
-    bool has_battled() {return this->battled; }
+    bool is_defending() { return this->defending; }
 
     Coordinate get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
@@ -59,6 +59,7 @@ public:
     void set_coordinate(int, int);
     void set_coordinate(Coordinate coordinate) { this->xy = coordinate; }
     void set_moved(bool moved) { this->moved = moved; }
+    void set_defending(bool defending) { this->defending = defending; }
     void set_level(unsigned int level) { this->level = level;}
     void set_experience(unsigned int experience) { this->experience = experience; }
     void set_hit_points(unsigned int hit_points) { this->hit_points = hit_points; }
