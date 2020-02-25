@@ -35,8 +35,6 @@ public:
     Character(int x, int y);
     Character(std::string);
     Character(const Character&) = default;
-
-
     sf::Texture& get_texture() { return this->texture; }
     sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
     sf::Sprite& get_map_sprite() { return this->map_sprite; }

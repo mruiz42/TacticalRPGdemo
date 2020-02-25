@@ -58,6 +58,12 @@ int Game::play_game(sf::RenderWindow& window) {
         while (window.pollEvent(event)) {
             if(this->get_current_player().is_turn_end()){
                 this->swap_turns();
+                menu_selected = false;
+                move_selected = false;
+                attack_selected = false;
+                unit_selected = false;
+                defend_selected = false;
+                wait_selected = false;
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
 
@@ -119,6 +125,7 @@ void Game::poll_key_logic() {
                     menu_selected = false;
                     break;
                 case 1: // Wait
+                    selector.get_selection().set_can_attack(false);
                     wait_selected = true;
                     move_selected = false;
                     menu_selected = false;
@@ -129,6 +136,7 @@ void Game::poll_key_logic() {
                     menu_selected = false;
                     break;
                 case 3: // Defend
+                    selector.get_selection().set_can_attack(false);
                     defend_selected = true;
                     move_selected = false;
                     menu_selected = false;
@@ -733,6 +741,7 @@ void Game::attack_character_key_poll() {
                 selector.set_target(c_map.get_character_at(cur));
                 // Do attack call here
                 selector.get_selection().set_moved(true);
+                selector.get_selection().set_can_attack(false);
                 std::cout << "Player " << get_enemy_player_id() << "'s " << selector.get_target().get_name() << "took X damage!" << std::endl;
                 selector.clear();
             }

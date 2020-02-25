@@ -47,7 +47,7 @@ void Player::reset_squaderon_exhaustion() {
 bool Player::is_turn_end() {
     bool is_end = true;
     for (auto i = 0; i < squadron.size(); i++) {
-        if (!this->squadron[i]->is_moved()){
+        if (!this->squadron[i]->is_moved() || this->squadron[i]->can_attack()){
             is_end = false;
         }
     }
