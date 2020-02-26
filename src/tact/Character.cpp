@@ -20,6 +20,7 @@ Character::Character() : xy(0,0) {
     special_attack = 0;
     special_defense = 0;
 
+    //newly added vars
     movespeed = 100/32.0;
     is_walking = false;
     for(int i = 0;i<4;++i)
