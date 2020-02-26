@@ -23,7 +23,8 @@ class Sidebar : public sf::Drawable, public sf::Transformable {
 private:
     sf::Texture background;
     sf::Sprite sidebar;
-	sf::Font font;
+    sf::Sprite character_face;
+    sf::Font font;
 	sf::Text turn;
 	std::vector<sf::Text> text;
 	//sf::Text HPtext;

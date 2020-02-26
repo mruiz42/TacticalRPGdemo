@@ -3,16 +3,7 @@
 //
 
 #include "../../include/tact/Sidebar.h"
-/*	sf::Text turn;
-    sf::Text lv;
-    sf::Text exp;
-    sf::Text mp;
-    sf::Text atk;
-    sf::Text def;
-    sf::Text spd;
-    sf::Text satk;
-    sf::Text sdef;
-	sf::Text hp;*/
+
 Sidebar::Sidebar(std::string texture_filename, std::string font_filename) : menu(font_filename) {
     if(!this->background.loadFromFile(texture_filename, sf::IntRect(0, 0, 256, 704)))
         std::cout << "Could not open: " + texture_filename << std::endl;
@@ -85,6 +76,18 @@ void Sidebar::update_statbar(Character* character, Coordinate coordinate, int tu
         text[10].setString("S.DEF." + std::to_string(character->get_special_defense()));
         text[11].setString("TURN." + std::to_string(turn));
         text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
+		if(player_id == 0)
+		{
+            character_face = character->get_sidebar_sprite1();
+            character_face.setPosition(sf::Vector2f(1046, 35));
+            character_face.scale(sf::Vector2f(1.5, 1.5));
+		}
+		else
+		{
+            character_face = character->get_sidebar_sprite2();
+            character_face.setPosition(sf::Vector2f(1046, 35));
+            character_face.scale(sf::Vector2f(1.5, 1.5));
+		}
 }
 
 void Sidebar::createStat(float const width, float const height, std::string filename) {
@@ -126,8 +129,9 @@ void Sidebar::clear() {
 }
 
 void Sidebar::drawStat(sf::RenderTarget &window) {
-	for(int i =0; i < text.size(); i++)
+    for(int i =0; i < text.size(); i++)
 		window.draw(text[i]);
+    window.draw(character_face);
 }
 
 //void Sidebar::hp_raise(int &HP, int const HP_MAX, int const HP_RAISE, float const width, float const height, std::string filename, sf::RenderTarget &window) {

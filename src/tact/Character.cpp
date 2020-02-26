@@ -55,7 +55,8 @@ Character::Character(int x, int y) : xy(x, y) {
 
 Character::Character(std::string filename){
     texture.loadFromFile(filename);
-    sidebar_sprite.setTexture(texture);
+    sidebar_sprite1.setTexture(texture);
+    sidebar_sprite2.setTexture(texture);
     map_sprite.setTexture(texture);
     name = "";
     attack_on = false;

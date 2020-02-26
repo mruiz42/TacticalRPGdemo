@@ -13,7 +13,8 @@
 class Character {
 protected:
     sf::Texture texture;
-    sf::Sprite sidebar_sprite;
+    sf::Sprite sidebar_sprite1;
+	sf::Sprite sidebar_sprite2;
     sf::Sprite map_sprite;
     std::string name;
     Coordinate xy;
@@ -36,7 +37,8 @@ public:
     Character(std::string);
     Character(const Character&) = default;
     sf::Texture& get_texture() { return this->texture; }
-    sf::Sprite& get_sidebar_sprite() { return this->sidebar_sprite; }
+    sf::Sprite& get_sidebar_sprite1() { return this->sidebar_sprite1; }
+    sf::Sprite& get_sidebar_sprite2() { return this->sidebar_sprite2; }
     sf::Sprite& get_map_sprite() { return this->map_sprite; }
     std::string& get_name() { return this->name; }
     bool can_attack() { return attack_on; }
@@ -54,7 +56,8 @@ public:
     unsigned int get_special_defense() { return this->special_defense; }
 
     void set_texture(sf::Texture& texture) { this->texture = texture; }
-    void set_sidebar_sprite(sf::Sprite& sidebar_sprite) {this->sidebar_sprite = sidebar_sprite; }
+    void set_sidebar_sprite1(sf::Sprite& sidebar_sprite1) {this->sidebar_sprite1 = sidebar_sprite1; }
+    void set_sidebar_sprite2(sf::Sprite& sidebar_sprite2) {this->sidebar_sprite2 = sidebar_sprite2; }
     void set_map_sprite(sf::Sprite& map_sprite) { this->map_sprite = map_sprite; }
     void set_name(std::string& name) { this->name = name; }
     void set_coordinate(int, int);
