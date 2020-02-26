@@ -19,6 +19,13 @@ Character::Character() : xy(0,0) {
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+
+    movespeed = 100/32.0;
+    is_walking = false;
+    for(int i = 0;i<4;++i)
+    {
+        move[i] = false;
+    }
 }
 
 Character::Character(Coordinate xy) : xy(xy) {
@@ -35,6 +42,13 @@ Character::Character(Coordinate xy) : xy(xy) {
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+
+    movespeed = 100/32.0;
+    is_walking = false;
+    for(int i = 0;i<4;++i)
+    {
+        move[i] = false;
+    }
 }
 
 Character::Character(int x, int y) : xy(x, y) {
@@ -51,6 +65,13 @@ Character::Character(int x, int y) : xy(x, y) {
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+    
+    movespeed = 100/32.0;
+    is_walking = false;
+    for(int i = 0;i<4;++i)
+    {
+        move[i] = false;
+    }
 }
 
 Character::Character(std::string filename){
@@ -70,6 +91,13 @@ Character::Character(std::string filename){
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+
+    movespeed = 100/(32.0);
+    is_walking = false;
+    for(int i = 0;i<4;++i)
+    {
+        move[i] = false;
+    }
 }
 
 void Character::set_coordinate(int x, int y) {
@@ -77,8 +105,4 @@ void Character::set_coordinate(int x, int y) {
     this->xy.set_y(y);
 }
 
-//void Character::set_coordinate(Coordinate coordinate) {
-//    this->xy.set_x(coordinate.get_x());
-//    this->xy.set_y(coordinate.get_y());
-//}
 

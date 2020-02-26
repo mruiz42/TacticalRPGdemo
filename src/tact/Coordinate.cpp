@@ -41,6 +41,16 @@ int Coordinate::get_y() const {
     return this->y;
 }
 
+// // gets map coordiante so char can walk
+float Coordinate::get_map_x() const {
+     return (this->x)*32.0f;
+ }
+
+// //gets map coordinate so char can walk
+float Coordinate::get_map_y() const {
+     return (this->y)*32.0f;
+}
+
 
 
 std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate){

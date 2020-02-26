@@ -75,6 +75,18 @@ int Game::play_game(sf::RenderWindow& window) {
                 sidebar.clear();
                 sidebar.update_sidebar(cur, turn_count, get_current_player_id());
             }
+
+            /*
+            if (selector.get_selection().get_coordinate() != nullptr) {
+                Coordinate origin_xy = selector.get_selection().get_coordinate();
+                float origin_x = origin_xy.get_map_x();
+                float origin_y = origin_xy.get_map_y();
+            }
+            
+
+
+            }
+            */
             // Poll for events
             switch (event.type) {
                 case sf::Event::Closed: {

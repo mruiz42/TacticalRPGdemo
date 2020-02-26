@@ -23,6 +23,8 @@ public:
     Coordinate& get_coordinate();
     int get_x() const;
     int get_y() const;
+    float get_map_x() const;
+    float get_map_y() const;
     friend std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate);
 };
 
