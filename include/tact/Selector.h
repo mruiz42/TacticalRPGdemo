@@ -27,6 +27,8 @@ public:
     bool is_target_empty();
 
     bool is_selection_empty();
+
+    void perform_battle();
 };
 
 

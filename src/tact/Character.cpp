@@ -19,6 +19,7 @@ Character::Character() : xy(0,0) {
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+    luck = 0;
 }
 
 Character::Character(Coordinate xy) : xy(xy) {
@@ -35,6 +36,7 @@ Character::Character(Coordinate xy) : xy(xy) {
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+    luck = 0;
 }
 
 Character::Character(int x, int y) : xy(x, y) {
@@ -51,6 +53,7 @@ Character::Character(int x, int y) : xy(x, y) {
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+    luck = 0;
 }
 
 Character::Character(std::string filename){
@@ -71,6 +74,7 @@ Character::Character(std::string filename){
     speed = 0;
     special_attack = 0;
     special_defense = 0;
+    luck = 0;
 }
 
 void Character::set_coordinate(int x, int y) {

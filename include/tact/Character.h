@@ -30,6 +30,7 @@ protected:
     unsigned int speed;
     unsigned int special_attack;
     unsigned int special_defense;
+    float luck;
 public:
     Character();
     Character(Coordinate xy);
@@ -54,6 +55,7 @@ public:
     unsigned int get_speed() { return this->speed; }
     unsigned int get_special_attack() { return this->special_attack; }
     unsigned int get_special_defense() { return this->special_defense; }
+    float get_luck() { return this->luck; }
 
     void set_texture(sf::Texture& texture) { this->texture = texture; }
     void set_sidebar_sprite1(sf::Sprite& sidebar_sprite1) {this->sidebar_sprite1 = sidebar_sprite1; }
@@ -74,6 +76,7 @@ public:
     void set_speed(unsigned int speed) { this->speed = speed; }
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
+    void set_luck(float luck) { this->luck = luck; }
 };
 
 
