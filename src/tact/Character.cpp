@@ -106,4 +106,9 @@ void Character::set_coordinate(int x, int y) {
     this->xy.set_y(y);
 }
 
+void Character::startwalking(Coordinate finalxy)
+{
+
+}
+
 
