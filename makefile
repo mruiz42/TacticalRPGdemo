@@ -1,4 +1,4 @@
-CC      = g++
+CC      = g++ -g
 FCLAGS  = -std=c++14  -Wall   -Wextra -pedantic
 INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I $(INCLUDE) -c

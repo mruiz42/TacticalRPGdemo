@@ -3,7 +3,7 @@
 //
 
 #include "../../include/tact/Game.h"
-
+#include <iostream>
 
 
 Game::Game() : cur(0, 0),
@@ -55,13 +55,16 @@ int Game::play_game(sf::RenderWindow& window) {
                 this->swap_turns();
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
-            if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
-                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
-            } else if (v_map.get_type_at(cur) >= 69) {
-                std::cout << "impassible ";
-            } else {
-                sidebar.update_sidebar(cur, turn_count, get_current_player_id());
-            }
+			sidebar.clear();
+			if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr && (&selector.get_selection()) != nullptr) {
+				if (selector.get_selection().get_coordinate().get_y() == cur.get_y() && selector.get_selection().get_coordinate().get_x() == cur.get_x()) {
+					sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+				}
+			}  if (v_map.get_type_at(cur) >= 69) {
+				std::cout << "impassible ";
+			} else {
+				sidebar.update_sidebar(cur, turn_count, get_current_player_id());
+			}
             // Poll for events
             switch (event.type) {
                 case sf::Event::Closed: {
@@ -76,14 +79,13 @@ int Game::play_game(sf::RenderWindow& window) {
                     else {
                         move_character_poll();
                     }
-            }
-
+				}
 //            case sf::Event::JoystickButtonPressed || sf::Event::JoystickMoveEvent:
 //                    get_current_player().get_controller().poll(event, cur, get_current_player_id());
 //            }
-            // Refresh screen
-            window.clear();
-    }
+				// Refresh screen
+				window.clear();
+			}
             update_map();
             window.draw(v_map);
             window.draw(c_map);

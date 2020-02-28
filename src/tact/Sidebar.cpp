@@ -137,6 +137,8 @@ void Sidebar::clear() {
     for (auto i = 1; i < text.size() - 2; i++){
         text[i].setString("");
     }
+	sf::Sprite newCF;
+	charFace = newCF;
 }
 void Sidebar::drawStat(sf::RenderTarget &window) {
 	for(int i =0; i < text.size(); i++)
