@@ -18,6 +18,10 @@ Ninja::Ninja() : Character() {
         std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
     }
     sidebar_sprite.setTexture(texture);
+	charFace1.setTexture(texture);
+    charFace1.setTextureRect(sf::IntRect(8,400,64,87));
+	charFace2.setTexture(texture);
+    charFace2.setTextureRect(sf::IntRect(272,400,64,87));
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
     this->name = "Ninja";
@@ -37,6 +41,10 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
         std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
     }
     sidebar_sprite.setTexture(texture);
+	charFace1.setTexture(texture);
+    charFace1.setTextureRect(sf::IntRect(8,400,64,87));
+	charFace2.setTexture(texture);
+    charFace2.setTextureRect(sf::IntRect(272,400,64,87));
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
     this->name = "Ninja";

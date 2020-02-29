@@ -14,6 +14,8 @@ class Character {
 protected:
     sf::Texture texture;
     sf::Sprite sidebar_sprite;
+	sf::Sprite charFace1;
+	sf::Sprite charFace2;
     sf::Sprite map_sprite;
     std::string name;
     Coordinate xy;
@@ -52,6 +54,8 @@ public:
     unsigned int get_speed() { return this->speed; }
     unsigned int get_special_attack() { return this->special_attack; }
     unsigned int get_special_defense() { return this->special_defense; }
+	sf::Sprite get_charFace1() { return this->charFace1; }
+	sf::Sprite get_charFace2() { return this->charFace2; }
 
     void set_texture(sf::Texture& texture) { this->texture = texture; }
     void set_sidebar_sprite(sf::Sprite& sidebar_sprite) {this->sidebar_sprite = sidebar_sprite; }

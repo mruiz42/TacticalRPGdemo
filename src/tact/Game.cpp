@@ -82,9 +82,6 @@ int Game::play_game(sf::RenderWindow& window) {
                 float origin_x = origin_xy.get_map_x();
                 float origin_y = origin_xy.get_map_y();
             }
-            
-
-
             }
             */
             // Poll for events
@@ -756,6 +753,8 @@ void Game::attack_character_key_poll() {
                 // Do attack call here
                 selector.get_selection().set_moved(true);
                 selector.get_selection().set_can_attack(false);
+				
+				
                 std::cout << "Player " << get_enemy_player_id() << "'s " << selector.get_target().get_name() << "took X damage!" << std::endl;
                 selector.clear();
             }
