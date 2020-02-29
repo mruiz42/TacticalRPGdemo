@@ -28,6 +28,7 @@ private:
 	std::vector<sf::Text> text;
 	//sf::Text HPtext;
     Menu menu;
+	sf::Sprite charFace;
 public:
     Sidebar(std::string, std::string);
     sf::Texture getBackground() const { return this->background; }
