@@ -96,7 +96,7 @@ int Game::play_game(sf::RenderWindow& window) {
                 poll_joy_logic();
             }
             else if (event.type == sf::Event::KeyPressed) {
-                poll_key_logic();
+                poll_key_logic(window);
             }
 
             window.clear();
@@ -115,7 +115,7 @@ int Game::play_game(sf::RenderWindow& window) {
     std::cout << "Game Over!" << std::endl;
     return 0;
 }
-void Game::poll_key_logic() {
+void Game::poll_key_logic(sf::RenderWindow& window) {
     adjust_volume_key_poll();
     // Move cursor routine
     if (!unit_selected) {
@@ -158,7 +158,7 @@ void Game::poll_key_logic() {
 
 
     else if (move_selected){
-        move_character_key_poll();
+        move_character_key_poll(window);
     }
 
     else if (defend_selected) {
@@ -441,7 +441,7 @@ void Game::move_cursor_key_poll() {
     }
 }
 
-void Game::move_character_key_poll(){
+void Game::move_character_key_poll(sf::RenderWindow& window){
     std::cout << "pickedup ";
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
@@ -486,10 +486,17 @@ void Game::move_character_key_poll(){
 //                std::cout << "character can't move that far. ";
 //                break;
 //            }
-            selector.get_selection().startwalking(cur);
-//            while(selector.get_selection().is_walking()) {
-//                Coordinate temp_xy = selector.get_selection().walk();
-//
+            Coordinate delta = selector.get_selection().get_delta_pos(cur);
+            float x = delta.get_map_x()/100000;
+            float y = delta.get_map_y()/100000;
+            for (int i = 0; i < 100000; i++){
+                selector.get_selection().get_map_sprite().move(x, y);
+                window.draw(selector.get_selection());
+            }
+
+//            while(selector.get_selection().is_walking()) {   // while unit is walking flag is true
+//                selector.get_selection().walk();   // update position since last poll
+//                window.draw(selector.get_selection());          // draw on screen
 //            }
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());

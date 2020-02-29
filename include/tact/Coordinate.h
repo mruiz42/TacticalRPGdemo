@@ -25,6 +25,8 @@ public:
     int get_y() const;
     float get_map_x() const;
     float get_map_y() const;
+    Coordinate operator - (const Coordinate&);
+    bool operator == (const Coordinate&);
     friend std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate);
 };
 

@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "Coordinate.h"
 
-class Character {
+class Character : public sf::Drawable {
 protected:
     sf::Texture texture;
     sf::Sprite sidebar_sprite;
@@ -82,9 +82,13 @@ public:
     enum MOVE {UP,DOWN,LEFT,RIGHT};
     bool move[4];//deciding which way to move
     Coordinate nextspot;
-    void startwalking(Coordinate final_xy);//check to see if needed movement
-    Coordinate walk();
+    bool startwalking(Coordinate final_xy);//check to see if needed movement
+//    Coordinate walk();
+    Coordinate walk(Coordinate);
+
+    Coordinate get_delta_pos(Coordinate new_pos);
     bool is_walking() { return this->walking; }
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 
