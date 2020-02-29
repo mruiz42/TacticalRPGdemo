@@ -73,15 +73,13 @@ public:
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
 protected:
     //variables for movement(walking)
-    //newly added vars
     float movespeed;
-   // enum MOVE {UP,DOWN,LEFT,RIGHT};
+    enum MOVE {UP,DOWN,LEFT,RIGHT};
     bool move[4];//deciding which way to move
     bool is_walking;
     Coordinate nextspot;
     void startwalking(Coordinate final_xy);//check to see if needed movement
     void walking();
-    
 
 };
 
