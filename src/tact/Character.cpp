@@ -177,10 +177,21 @@ void Character::walking()
 
         if(move[LEFT]==true)
         {
-            curr_pos.set_y(curr_pos.get_y()-movespeed);
-            if(curr_pos.get_y() <= nextspot.get_y())
+            curr_pos.set_x(curr_pos.get_x()-movespeed);
+            if(curr_pos.get_x() <= nextspot.get_x())
             {
-                curr_pos.set_y(nextspot.get_y());
+                curr_pos.set_x(nextspot.get_x());
+                is_walking = false;
+                move[UP] = false;
+            }
+        }
+
+        if(move[RIGHT]==true)
+        {
+            curr_pos.set_x(curr_pos.get_x()+movespeed);
+            if(curr_pos.get_x() <= nextspot.get_x())
+            {
+                curr_pos.set_x(nextspot.get_x());
                 is_walking = false;
                 move[UP] = false;
             }
