@@ -22,6 +22,7 @@ protected:
     bool attack_on;
     bool moved;
     bool defending;
+    bool walking;
     unsigned int level;
     unsigned int experience;
     unsigned int hit_points;
@@ -75,16 +76,15 @@ public:
     void set_speed(unsigned int speed) { this->speed = speed; }
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
-protected:
+public:
     //variables for movement(walking)
     float movespeed;
     enum MOVE {UP,DOWN,LEFT,RIGHT};
     bool move[4];//deciding which way to move
-    bool is_walking;
     Coordinate nextspot;
     void startwalking(Coordinate final_xy);//check to see if needed movement
-    void walking();
-
+    Coordinate walk();
+    bool is_walking() { return this->walking; }
 };
 
 

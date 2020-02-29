@@ -486,7 +486,11 @@ void Game::move_character_key_poll(){
 //                std::cout << "character can't move that far. ";
 //                break;
 //            }
-
+            selector.get_selection().startwalking(cur);
+//            while(selector.get_selection().is_walking()) {
+//                Coordinate temp_xy = selector.get_selection().walk();
+//
+//            }
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
             c_map.null_character_at(selector.get_selection().get_coordinate());

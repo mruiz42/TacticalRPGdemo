@@ -22,7 +22,7 @@ Character::Character() : xy(0,0) {
 
     //newly added vars
     movespeed = 50/32.0;
-    is_walking = false;
+    walking = false;
     for(int i = 0;i<4;++i)
     {
         move[i] = false;
@@ -45,7 +45,7 @@ Character::Character(Coordinate xy) : xy(xy) {
     special_defense = 0;
 
     movespeed = 100/32.0;
-    is_walking = false;
+    walking = false;
     for(int i = 0;i<4;++i)
     {
         move[i] = false;
@@ -68,7 +68,7 @@ Character::Character(int x, int y) : xy(x, y) {
     special_defense = 0;
     
     movespeed = 64/32.0;//walking 2 pixels
-    is_walking = false;
+    walking = false;
     for(int i = 0;i<4;++i)
     {
         move[i] = false;
@@ -94,7 +94,7 @@ Character::Character(std::string filename){
     special_defense = 0;
 
     movespeed = 100/(32.0);
-    is_walking = false;
+    walking = false;
     for(int i = 0;i<4;++i)
     {
         move[i] = false;
@@ -113,7 +113,7 @@ void Character::startwalking(Coordinate final_xy)
     int temp_y =0;
     //gets the character's orgin
     Coordinate org_xy = this->get_coordinate();
-    if(is_walking = false)
+    if(!walking)
     {
         //move left
         if(org_xy.get_x() > final_xy.get_x())
@@ -122,7 +122,7 @@ void Character::startwalking(Coordinate final_xy)
             temp_x = org_xy.get_x() - 32;
             nextspot.set_x(temp_x);
             move[LEFT] = true;
-            is_walking = true;
+            walking = true;
         }
     
 
@@ -133,7 +133,7 @@ void Character::startwalking(Coordinate final_xy)
             temp_x = org_xy.get_x() + 32;
             nextspot.set_x(temp_x);
             move[RIGHT] = true;
-            is_walking = true;
+            walking = true;
         }
     
         //move down
@@ -143,56 +143,57 @@ void Character::startwalking(Coordinate final_xy)
             temp_y = org_xy.get_y() + 32;
             nextspot.set_y(temp_y);
             move[DOWN] = true;
-            is_walking = true;
+            walking = true;
         }
     }
 }
 
-void Character::walking()
+Coordinate Character::walk()
 {
     Coordinate curr_pos = this->get_coordinate();
-    if (is_walking == true)
+    while (walking)
     {
-        if(move[UP]==true)
+        std::cout << "walking ... " << std::endl;
+        if(move[UP])
         {
             curr_pos.set_y(curr_pos.get_y()-movespeed);
             if(curr_pos.get_y() <= nextspot.get_y())
             {
                 curr_pos.set_y(nextspot.get_y());
-                is_walking = false;
+                walking = false;
                 move[UP] = false;
             }
         }
 
-        if(move[DOWN]==true)
+        if(move[DOWN])
         {
             curr_pos.set_y(curr_pos.get_y()+movespeed);
             if(curr_pos.get_y() >= nextspot.get_y())
             {
                 curr_pos.set_y(nextspot.get_y());
-                is_walking = false;
+                walking = false;
                 move[UP] = false;
             }
         }
 
-        if(move[LEFT]==true)
+        if(move[LEFT])
         {
             curr_pos.set_x(curr_pos.get_x()-movespeed);
             if(curr_pos.get_x() <= nextspot.get_x())
             {
                 curr_pos.set_x(nextspot.get_x());
-                is_walking = false;
+                walking = false;
                 move[UP] = false;
             }
         }
 
-        if(move[RIGHT]==true)
+        if(move[RIGHT])
         {
             curr_pos.set_x(curr_pos.get_x()+movespeed);
             if(curr_pos.get_x() <= nextspot.get_x())
             {
                 curr_pos.set_x(nextspot.get_x());
-                is_walking = false;
+                walking = false;
                 move[UP] = false;
             }
         }
