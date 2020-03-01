@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "Coordinate.h"
 
-class Character {
+class Character : public sf::Drawable {
 protected:
     sf::Texture texture;
     sf::Sprite sidebar_sprite;
@@ -22,6 +22,7 @@ protected:
     bool attack_on;
     bool moved;
     bool defending;
+    bool walking;
     unsigned int level;
     unsigned int experience;
     unsigned int hit_points;
@@ -44,7 +45,9 @@ public:
     bool can_attack() { return attack_on; }
     bool is_moved() { return this->moved; }
     bool is_defending() { return this->defending; }
-    Coordinate get_coordinate() { return this->xy; }
+	bool is_walking() { return this->walking; }
+
+	Coordinate get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
     unsigned int get_hit_points() { return this->hit_points; }
@@ -66,6 +69,7 @@ public:
     void set_can_attack(bool attack_on) { this->attack_on = attack_on; }
     void set_moved(bool moved) { this->moved = moved; }
     void set_defending(bool defending) { this->defending = defending; }
+    void set_walking(bool walking) { this->walking = walking; }
     void set_level(unsigned int level) { this->level = level;}
     void set_experience(unsigned int experience) { this->experience = experience; }
     void set_hit_points(unsigned int hit_points) { this->hit_points = hit_points; }
@@ -75,16 +79,17 @@ public:
     void set_speed(unsigned int speed) { this->speed = speed; }
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
-protected:
+public:
     //variables for movement(walking)
     float movespeed;
     enum MOVE {UP,DOWN,LEFT,RIGHT};
     bool move[4];//deciding which way to move
-    bool is_walking;
     Coordinate nextspot;
-    void startwalking(Coordinate final_xy);//check to see if needed movement
-    void walking();
+    bool startwalking(Coordinate final_xy);//check to see if needed movement
+//    Coordinate walk();
+    Coordinate walk(Coordinate);
 
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 

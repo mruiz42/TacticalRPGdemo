@@ -77,10 +77,10 @@ public:
     void set_framerate();
     void move_cursor_key_poll();
     void adjust_volume_key_poll();
-    void move_character_key_poll();
+    void move_character_key_poll(sf::RenderWindow&);
     int menu_key_poll();
 
-    void poll_key_logic();
+    void poll_key_logic(sf::RenderWindow&);
 
     int menu_joy_poll();
 

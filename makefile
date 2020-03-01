@@ -22,16 +22,16 @@ SRCOBJ	= $(SOURCE)obj/
 # execution dependencies
 OUTBINDEPS	= $(TACTOBJ)Menu.o $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Game.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
 # library dependencies
-LIBDEP	=    $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
+# LIBDEP	=    $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
 
 .PHONY : clean all run
 
 # Rule to create the primary executable
-$(OUTBIN) : $(OUTBINDEPS) $(STTLIB) 
+$(OUTBIN) : $(SRCOBJ)main.o  $(STTLIB)
 	$(BUILD) $(OUTBINDEPS) $(LINKSFML) -L $(LIBDIR) -o $(OUTBIN)
 	@echo './bin/somethingTactics.out' is built!
 	
-$(STTLIB) : $(LIBDEP)
+$(STTLIB) : $(OUTBINDEPS)
 	ar r $(STTLIB) $(LIBDEP)
 
 $(SRCOBJ)main.o : $(SOURCE)main.cpp
@@ -91,7 +91,7 @@ $(TACTOBJ)Game.o : $(TACTSRC)Game.cpp
 clean :
 	@rm -f $(SRCOBJ)main.o
 	@rm -f $(LIBOBJ)*.o
-	@rm -f $(TACTSRC)*/obj/*.o
+	@rm -f $(TACTSRC)/obj/*.o
 	@rm -f $(STTLIB)
 	@rm -f $(OUTBIN)
 

@@ -9,9 +9,9 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Character.h"
 
-class CharacterMap : public sf::Drawable, public sf::Transformable{
+class CharacterMap : public sf::Drawable, public sf::Transformable {
 private:
-    sf::VertexArray m_vertices;
+//    sf::VertexArray m_vertices;
     std::vector<std::vector<Character*> > map;
 public:
     CharacterMap();
