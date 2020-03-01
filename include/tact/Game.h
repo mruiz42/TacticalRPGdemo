@@ -52,6 +52,7 @@ private:
     Player player1;
     Player player2;
     Selector selector;
+    unsigned int it;
     unsigned int iterator;
     bool unit_selected;
     bool menu_selected;

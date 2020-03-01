@@ -12,6 +12,7 @@ Game::Game() : cur(0, 0),
     player2(1, Coordinate(29, 3))
     {
     iterator = 0;
+    it = 0;
     turn_count = 1;
     unit_selected = false;
     menu_selected = false;
@@ -104,21 +105,22 @@ int Game::play_game(sf::RenderWindow& window) {
         window.clear();
         update_map();
         window.draw(v_map);
+
+
         for (int i = 0; i < get_current_player().get_squadron().size(); i++){
             Character* c_ptr = get_current_player().get_squadron()[i];
-            if (c_ptr->is_walking()){
+            if (c_ptr->is_walking()) {
                 Coordinate delta = selector.get_delta_pos(selector.get_selection_pos(), selector.get_target_pos());
                 float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
                 c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
                 c_ptr->get_map_sprite().setScale({-1,1});
                 c_ptr->get_map_sprite().move(x, y);
                 window.draw(c_ptr->get_map_sprite());
-                if (c_ptr->get_map_sprite().getPosition() == sf::Vector2f(selector.get_target_pos().get_x(), selector.get_target_pos().get_y())) {
-
+                it++;
+                std::cout << it << std::endl;
+                if (it == 60) {
                     c_ptr->set_walking(false);
                 }
-
-
             }
             else {
                 c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
@@ -139,6 +141,7 @@ int Game::play_game(sf::RenderWindow& window) {
     std::cout << "Game Over!" << std::endl;
     return 0;
 }
+
 void Game::poll_key_logic(sf::RenderWindow& window) {
     adjust_volume_key_poll();
     // Move cursor routine
