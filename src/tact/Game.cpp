@@ -3,9 +3,7 @@
 //
 
 #include "../../include/tact/Game.h"
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
+
 
 Game::Game() : cur(0, 0),
     sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
@@ -842,6 +840,8 @@ void Game::attack_character_rules(Player &attackedP, Character &attackerC, Chara
 			}
 		}
 		std::cout << "Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " is dead!" << std::endl;
+        // Delete character ptr and set to nullptr
+        // Delete character from vector
 	}
 }
 

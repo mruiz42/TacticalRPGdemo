@@ -19,6 +19,12 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+
 #include "Sidebar.h"
 #include "VertexMap.h"
 #include "Character.h"
@@ -26,8 +32,7 @@
 #include "CharacterMap.h"
 #include "Selector.h"
 #include "Player.h"
-#include <iostream>
-#include <cstdlib>
+
 
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/textures/map_tiles32.png";
