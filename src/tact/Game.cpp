@@ -58,7 +58,7 @@ int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
-            if(this->get_current_player().is_turn_end() && !unit_walking){
+        if(this->get_current_player().is_turn_end() && !unit_walking && !menu_selected){
                 this->swap_turns();
                 menu_selected = false;
                 move_selected = false;
@@ -544,10 +544,12 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             }
             c_ptr->set_walking(true);
             unit_walking = true;
+            menu_selected = true;
             break;
         }
         case sf::Keyboard::Key::BackSpace:              // Cancel
             unit_selected = false;
+            unit_walking = false;
             selector.clear();
             break;
     }
