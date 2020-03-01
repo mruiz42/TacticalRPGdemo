@@ -771,104 +771,12 @@ void Game::attack_character_key_poll() {
                 selector.get_selection().set_moved(true);
                 selector.get_selection().set_can_attack(false);
 				
-				// Get used stats
-				int targetDEF = selector.get_target().get_defense();
-				int targetHP = selector.get_target().get_hit_points();
-				int targetATK = selector.get_target().get_attack();
-				int targetSpeed = selector.get_target().get_speed();
+				// Selection attacks target
+				attack_character_rules(get_enemy_player(), selector.get_selection(),selector.get_target(), get_enemy_player_id());
 				
-				int selectionDEF = selector.get_selection().get_defense();
-				int selectionHP = selector.get_selection().get_hit_points();
-				int selectionATK = selector.get_selection().get_attack();
-				int selectionSpeed = selector.get_selection().get_speed();
-				
-				//First attack, selection > target
-				double Damage = (double)selectionATK * (double)selectionATK / (double)targetDEF;
-				if (selector.get_target().is_defending())
-					Damage /= 2;
-				// multiply damage by a random number between 0.9 and 1.1
-				srand (time(NULL));
-				double DamageRoll = 90.0 + (rand() % 20 + 1);
-				Damage *= DamageRoll / 100.0;
-				
-				// Chance for zero (evaded) or more attacks, based on speed
-				double attackChance = 0.9 * selectionSpeed/(double)targetSpeed;
-				srand (time(NULL) + 1);
-				double attackRoll = (rand() % 100 + 1)/100.0; // random 1 to 100
-				int numAttack = 0;
-				while (attackRoll < attackChance && targetHP > 0) {
-					numAttack += 1;
-					// multiply damage by a random number between 0.9 and 1.1
-					srand (time(NULL) + 2 + numAttack);
-					double DamageRoll = 90.0 + (rand() % 20 + 1);
-					int thisDamage = Damage * DamageRoll / 100.0;
-					targetHP -= round(thisDamage);
-					if (targetHP < 0) targetHP = 0;
-					
-					std::cout << "Attack " << numAttack << "! Player " << get_enemy_player_id() + 1 << "'s " << selector.get_target().get_name() << " took " << thisDamage << " points of damage!" << std::endl;
-					
-					//Update attack chance
-					attackChance /= 2;
-					srand (time(NULL) + 3 + numAttack);
-					attackRoll = (rand() % 100 + 1)/100.0;
-				}
-				if (numAttack == 0) {
-					std::cout << "Player " << get_enemy_player_id() + 1 << "'s " << selector.get_target().get_name() << " evaded the attack!" << std::endl;
-				}
-				selector.get_target().set_hit_points(targetHP);
-				if (targetHP == 0) {
-					c_map.null_character_at(selector.get_target().get_coordinate());
-					for (int thischar = 0; thischar < get_enemy_player().get_squadron().size(); thischar++) {
-						if (get_enemy_player().get_squadron()[thischar]->get_hit_points() == 0) {
-							get_enemy_player().get_squadron().erase(get_enemy_player().get_squadron().begin()+thischar);
-							break;
-						}
-					}
-					std::cout << "Player " << get_enemy_player_id() + 1 << "'s " << selector.get_target().get_name() << " is dead!" << std::endl;
-				}
 				// Target can revenge attack if not defending and is still alive.
-				if (!selector.get_target().is_defending() && targetHP > 0) {
-					double Damage = (double)selectionATK * (double)selectionATK / (double)selectionDEF;
-					// multiply damage by a random number between 0.9 and 1.1
-					srand (time(NULL) + 4);
-					double DamageRoll = 90.0 + (rand() % 20 + 1);
-					Damage *= DamageRoll / 100.0;
-					
-					// Chance for zero (evaded) or more attacks, based on speed
-					double attackChance = 0.9 * targetSpeed/(double)selectionSpeed;
-					srand (time(NULL) + 5);
-					double attackRoll = (rand() % 100 + 1)/100.0; // random 1 to 100
-					int numAttack = 0;
-					while (attackRoll < attackChance && selectionHP > 0) {
-						numAttack += 1;
-						// multiply damage by a random number between 0.9 and 1.1
-						srand (time(NULL) + 6 + numAttack);
-						double DamageRoll = 90.0 + (rand() % 20 + 1);
-						int thisDamage = Damage * DamageRoll / 100.0;
-						selectionHP -= round(thisDamage);
-						if (selectionHP < 0) selectionHP = 0;
-						
-						std::cout << "Revenging attack " << numAttack << "! Player " << get_current_player_id() + 1 << "'s " << selector.get_selection().get_name() << " took " << thisDamage << " points of damage!" << std::endl;
-						
-						//Update attack chance
-						attackChance /= 2;
-						srand (time(NULL) + 7 + numAttack);
-						attackRoll = (rand() % 100 + 1)/100.0;
-					}
-					if (numAttack == 0) {
-						std::cout << "Player " << get_current_player_id() + 1 << "'s " << selector.get_selection().get_name() << " evaded the revenging attack!" << std::endl;
-					}
-					selector.get_selection().set_hit_points(selectionHP);
-				}
-				if (selectionHP == 0) {
-					c_map.null_character_at(selector.get_selection().get_coordinate());
-					for (int thischar = 0; thischar < get_current_player().get_squadron().size(); thischar++) {
-						if (get_current_player().get_squadron()[thischar]->get_hit_points() == 0) {
-							get_current_player().get_squadron().erase(get_current_player().get_squadron().begin()+thischar);
-							break;
-						}
-					}					
-					std::cout << "Player " << get_current_player_id() + 1 << "'s " << selector.get_selection().get_name() << " is dead!" << std::endl;
+				if (!selector.get_target().is_defending() && selector.get_target().get_hit_points() > 0) {
+					attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_current_player_id());
 				}
 				
                 selector.clear();
@@ -882,6 +790,59 @@ void Game::attack_character_key_poll() {
     }
 
 
+}
+void Game::attack_character_rules(Player &attackedP, Character &attackerC, Character &attackedC, int attackedPID) {
+	// Get used stats
+	int targetDEF = attackedC.get_defense();
+	int targetHP = attackedC.get_hit_points();
+	int targetATK = attackedC.get_attack();
+	int targetSpeed = attackedC.get_speed();
+	
+	int selectionDEF = attackerC.get_defense();
+	int selectionHP = attackerC.get_hit_points();
+	int selectionATK = attackerC.get_attack();
+	int selectionSpeed = attackerC.get_speed();
+	
+	//First attack, selection > target
+	double Damage = (double)selectionATK * (double)selectionATK / (double)targetDEF;
+	if (attackedC.is_defending())
+		Damage /= 2;
+	
+	// Chance for zero (evaded) or more attacks, based on speed
+	double attackChance = 0.9 * selectionSpeed/(double)targetSpeed;
+	srand (time(NULL) + 1);
+	double attackRoll = (rand() % 100 + 1)/100.0; // random 1 to 100
+	int numAttack = 0;
+	while (attackRoll < attackChance && targetHP > 0) {
+		numAttack += 1;
+		// multiply damage by a random number between 0.9 and 1.1
+		srand (time(NULL) + 2 + numAttack);
+		double DamageRoll = 90.0 + (rand() % 20 + 1);
+		int thisDamage = Damage * DamageRoll / 100.0;
+		targetHP -= round(thisDamage);
+		if (targetHP < 0) targetHP = 0;
+		
+		std::cout << "Attack " << numAttack << "! Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " took " << thisDamage << " points of damage!" << std::endl;
+		
+		//Update attack chance
+		attackChance /= 2;
+		srand (time(NULL) + 3 + numAttack);
+		attackRoll = (rand() % 100 + 1)/100.0;
+	}
+	if (numAttack == 0) {
+		std::cout << "Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " evaded the attack!" << std::endl;
+	}
+	attackedC.set_hit_points(targetHP);
+	if (targetHP == 0) {
+		c_map.null_character_at(attackedC.get_coordinate());
+		for (int thischar = 0; thischar < attackedP.get_squadron().size(); thischar++) {
+			if (attackedP.get_squadron()[thischar]->get_hit_points() == 0) {
+				attackedP.get_squadron().erase(attackedP.get_squadron().begin()+thischar);
+				break;
+			}
+		}
+		std::cout << "Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " is dead!" << std::endl;
+	}
 }
 
 void Game::wait_character_poll() {

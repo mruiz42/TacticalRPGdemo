@@ -95,6 +95,7 @@ public:
     void defend_character_poll();
 
     void attack_character_key_poll();
+	void attack_character_rules(Player &attackedP, Character &attackerC, Character &attackedC, int attackedPID);
 
     bool has_enemy_adjacent();
 
