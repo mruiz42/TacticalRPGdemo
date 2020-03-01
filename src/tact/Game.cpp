@@ -793,34 +793,34 @@ void Game::attack_character_key_poll() {
 }
 void Game::attack_character_rules(Player &attackedP, Character &attackerC, Character &attackedC, int attackedPID) {
 	// Get used stats
-	int targetDEF = attackedC.get_defense();
-	int targetHP = attackedC.get_hit_points();
-	int targetATK = attackedC.get_attack();
-	int targetSpeed = attackedC.get_speed();
+	int attackedDEF = attackedC.get_defense();
+	int attackedHP = attackedC.get_hit_points();
+	int attackedATK = attackedC.get_attack();
+	int attackedSpeed = attackedC.get_speed();
 	
-	int selectionDEF = attackerC.get_defense();
-	int selectionHP = attackerC.get_hit_points();
-	int selectionATK = attackerC.get_attack();
-	int selectionSpeed = attackerC.get_speed();
+	int attackerDEF = attackerC.get_defense();
+	int attackerHP = attackerC.get_hit_points();
+	int attackerATK = attackerC.get_attack();
+	int attackerSpeed = attackerC.get_speed();
 	
-	//First attack, selection > target
-	double Damage = (double)selectionATK * (double)selectionATK / (double)targetDEF;
+	//First attack, attacker > attacked
+	double Damage = (double)attackerATK * (double)attackerATK / (double)attackedDEF;
 	if (attackedC.is_defending())
 		Damage /= 2;
 	
 	// Chance for zero (evaded) or more attacks, based on speed
-	double attackChance = 0.9 * selectionSpeed/(double)targetSpeed;
+	double attackChance = 0.9 * attackerSpeed/(double)attackedSpeed;
 	srand (time(NULL) + 1);
 	double attackRoll = (rand() % 100 + 1)/100.0; // random 1 to 100
 	int numAttack = 0;
-	while (attackRoll < attackChance && targetHP > 0) {
+	while (attackRoll < attackChance && attackedHP > 0) {
 		numAttack += 1;
 		// multiply damage by a random number between 0.9 and 1.1
 		srand (time(NULL) + 2 + numAttack);
 		double DamageRoll = 90.0 + (rand() % 20 + 1);
 		int thisDamage = Damage * DamageRoll / 100.0;
-		targetHP -= round(thisDamage);
-		if (targetHP < 0) targetHP = 0;
+		attackedHP -= round(thisDamage);
+		if (attackedHP < 0) attackedHP = 0;
 		
 		std::cout << "Attack " << numAttack << "! Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " took " << thisDamage << " points of damage!" << std::endl;
 		
@@ -832,8 +832,8 @@ void Game::attack_character_rules(Player &attackedP, Character &attackerC, Chara
 	if (numAttack == 0) {
 		std::cout << "Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " evaded the attack!" << std::endl;
 	}
-	attackedC.set_hit_points(targetHP);
-	if (targetHP == 0) {
+	attackedC.set_hit_points(attackedHP);
+	if (attackedHP == 0) {
 		c_map.null_character_at(attackedC.get_coordinate());
 		for (int thischar = 0; thischar < attackedP.get_squadron().size(); thischar++) {
 			if (attackedP.get_squadron()[thischar]->get_hit_points() == 0) {
