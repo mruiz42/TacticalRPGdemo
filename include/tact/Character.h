@@ -84,7 +84,6 @@ public:
     float movespeed;
     enum MOVE {UP,DOWN,LEFT,RIGHT};
     bool move[4];//deciding which way to move
-    Coordinate nextspot;
     bool startwalking(Coordinate final_xy);//check to see if needed movement
 //    Coordinate walk();
     Coordinate walk(Coordinate);

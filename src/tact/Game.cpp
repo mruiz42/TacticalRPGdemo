@@ -15,6 +15,7 @@ Game::Game() : cur(0, 0),
     it = 0;
     turn_count = 1;
     unit_selected = false;
+    unit_walking = false;
     menu_selected = false;
     move_selected = false;
     attack_selected = false;
@@ -57,12 +58,13 @@ int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
-            if(this->get_current_player().is_turn_end()){
+            if(this->get_current_player().is_turn_end() && !unit_walking){
                 this->swap_turns();
                 menu_selected = false;
                 move_selected = false;
                 attack_selected = false;
                 unit_selected = false;
+                unit_walking = false;
                 defend_selected = false;
                 wait_selected = false;
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
@@ -105,34 +107,9 @@ int Game::play_game(sf::RenderWindow& window) {
         window.clear();
         update_map();
         window.draw(v_map);
-
-
-        for (int i = 0; i < get_current_player().get_squadron().size(); i++){
-            Character* c_ptr = get_current_player().get_squadron()[i];
-            if (c_ptr->is_walking()) {
-                Coordinate delta = selector.get_delta_pos(selector.get_selection_pos(), selector.get_target_pos());
-                float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
-                c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
-                c_ptr->get_map_sprite().setScale({-1,1});
-                c_ptr->get_map_sprite().move(x, y);
-                window.draw(c_ptr->get_map_sprite());
-                it++;
-                if (it == 60) {
-                    c_ptr->set_walking(false);
-                    it = 0;
-                    c_ptr->set_coordinate(selector.get_target_pos());
-                }
-            }
-            else {
-                c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
-                c_ptr->get_map_sprite().setScale({-1,1});
-                float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
-                c_ptr->get_map_sprite().setPosition(x, y);
-                window.draw(c_ptr->get_map_sprite());
-            }
-        }
+        draw_units(window, player1);
+        draw_units(window, player2);
         //window.draw(c_map);
-
         window.draw(cur.get_sprite());
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
@@ -143,6 +120,34 @@ int Game::play_game(sf::RenderWindow& window) {
     return 0;
 }
 
+void Game::draw_units(sf::RenderWindow& window, Player player){
+    for (int i = 0; i < get_current_player().get_squadron().size(); i++){
+        Character* c_ptr = player.get_squadron()[i];
+        if (c_ptr->is_walking()) {
+            unit_walking = true;
+            Coordinate delta = selector.get_delta_pos(selector.get_selection_pos(), selector.get_target_pos());
+            float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
+            c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
+            c_ptr->get_map_sprite().setScale({-1,1});
+            c_ptr->get_map_sprite().move(x, y);
+            window.draw(c_ptr->get_map_sprite());
+            it++;
+            if (it == 60) {
+                c_ptr->set_walking(false);
+                unit_walking = false;
+                it = 0;
+                c_ptr->set_coordinate(selector.get_target_pos());
+            }
+        }
+        else {
+            c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
+            c_ptr->get_map_sprite().setScale({-1,1});
+            float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
+            c_ptr->get_map_sprite().setPosition(x, y);
+            window.draw(c_ptr->get_map_sprite());
+        }
+    }
+}
 void Game::poll_key_logic(sf::RenderWindow& window) {
     adjust_volume_key_poll();
     // Move cursor routine
@@ -517,12 +522,8 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 //                break;
 //            }
 
-
-//            while(selector.get_selection().is_walking()) {   // while unit is walking flag is true
-//                selector.get_selection().walk();   // update position since last poll
-//                window.draw(selector.get_selection());          // draw on screen
-//            }
             std::cout << "placed at :" << cur << std::endl;
+
             c_map.set_character_at(cur, &selector.get_selection());
             c_map.null_character_at(*c_ptr->get_coordinate());
 //            selector.get_selection().set_coordinate(cur);
@@ -542,6 +543,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
                 //unit_selected = false;
             }
             c_ptr->set_walking(true);
+            unit_walking = true;
             break;
         }
         case sf::Keyboard::Key::BackSpace:              // Cancel

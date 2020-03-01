@@ -9,7 +9,7 @@
 //}
 //
 
-Coordinate::Coordinate(const Coordinate& coordinate){ // Should this be a copy constructor?
+Coordinate::Coordinate(const Coordinate& coordinate) { // Should this be a copy constructor?
     this->x = coordinate.x;
     this->y = coordinate.y;
 }

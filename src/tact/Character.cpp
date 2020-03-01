@@ -216,7 +216,7 @@ Coordinate Character::walk(Coordinate chunk)
 
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    float x = nextspot.get_map_x();
-    float y = nextspot.get_map_y();
-    target.draw(this->map_sprite, states);
+//    float x = nextspot.get_map_x();
+//    float y = nextspot.get_map_y();
+//    target.draw(this->map_sprite, states);
 }

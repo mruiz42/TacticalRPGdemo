@@ -55,6 +55,7 @@ private:
     unsigned int it;
     unsigned int iterator;
     bool unit_selected;
+    bool unit_walking;
     bool menu_selected;
     bool move_selected;
     bool attack_selected;
@@ -100,6 +101,8 @@ public:
     bool has_enemy_adjacent();
 
     bool belongs_to_enemy_player(Character *character);
+
+    void draw_units(sf::RenderWindow &window, Player player);
 };
 
 
