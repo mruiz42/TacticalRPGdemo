@@ -9,23 +9,23 @@
 class Selector {
 private:
     Character* selection;
-    Coordinate selection_pos;
+    Coordinate* selection_pos;
     Character* target;
-    Coordinate target_pos;
+    Coordinate* target_pos;
 public:
     // Constructors
-    Selector() : selection(nullptr), target(nullptr) {}
+    Selector() : selection(nullptr), target(nullptr), selection_pos(nullptr), target_pos(nullptr) {}
     // Accessors
     Character& get_selection() { return *this->selection; }
-    Coordinate get_selection_pos() { return this->selection_pos; }
+    Coordinate& get_selection_pos() { return *this->selection_pos; }
     Character& get_target() { return *this->target; }
-    Coordinate get_target_pos() { return this->target_pos; }
+    Coordinate& get_target_pos() { return *this->target_pos; }
 
     // Mutators
     void set_selection(Character* selection) { this->selection = selection; }
-    void set_selection_pos(Coordinate selection_pos) { this->selection_pos = selection_pos; }
+    void set_selection_pos(Coordinate* selection_pos) { this->selection_pos = selection_pos; }
     void set_target(Character* target) { this->target = target; }
-    void set_target_pos(Coordinate target_pos) { this->target_pos = target_pos; }
+    void set_target_pos(Coordinate* target_pos) { this->target_pos = target_pos; }
     // Other methods
     Coordinate get_delta_pos(Coordinate origin, Coordinate final);
     Coordinate get_delta_pos();

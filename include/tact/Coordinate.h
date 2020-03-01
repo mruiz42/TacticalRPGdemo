@@ -20,7 +20,6 @@ public:
     void set_coordinate(Coordinate);
     void set_x(int x);
     void set_y(int y);
-    Coordinate& get_coordinate();
     int get_x() const;
     int get_y() const;
     float get_map_x() const;

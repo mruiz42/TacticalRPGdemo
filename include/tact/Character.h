@@ -47,7 +47,7 @@ public:
     bool is_defending() { return this->defending; }
 	bool is_walking() { return this->walking; }
 
-	Coordinate get_coordinate() { return this->xy; }
+	Coordinate* get_coordinate() { return &this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
     unsigned int get_hit_points() { return this->hit_points; }

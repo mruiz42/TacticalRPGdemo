@@ -11,6 +11,8 @@ Coordinate Selector::get_delta_pos(Coordinate origin, Coordinate final) {
 void Selector::clear() {
     this->selection = nullptr;
     this->target = nullptr;
+    this->selection_pos = nullptr;
+    this->target_pos = nullptr;
 }
 
 void Selector::clear_selection() {

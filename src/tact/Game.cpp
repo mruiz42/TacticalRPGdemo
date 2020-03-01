@@ -24,7 +24,7 @@ Game::Game() : cur(0, 0),
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
     sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) + " turn");
-    cur.jump_to(get_current_player().get_squadron()[0]->get_coordinate());
+    cur.jump_to(*get_current_player().get_squadron()[0]->get_coordinate());
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
     }
@@ -117,15 +117,16 @@ int Game::play_game(sf::RenderWindow& window) {
                 c_ptr->get_map_sprite().move(x, y);
                 window.draw(c_ptr->get_map_sprite());
                 it++;
-                std::cout << it << std::endl;
                 if (it == 60) {
                     c_ptr->set_walking(false);
+                    it = 0;
+                    c_ptr->set_coordinate(selector.get_target_pos());
                 }
             }
             else {
                 c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
                 c_ptr->get_map_sprite().setScale({-1,1});
-                float x = c_ptr->get_coordinate().get_map_x(), y = c_ptr->get_coordinate().get_map_y();
+                float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
                 c_ptr->get_map_sprite().setPosition(x, y);
                 window.draw(c_ptr->get_map_sprite());
             }
@@ -268,7 +269,7 @@ int Game::swap_turns(){
         player1.set_is_turn(false);
         player2.set_is_turn(true);
         player2.reset_squaderon_exhaustion();
-        cur.jump_to(player2.get_squadron()[0]->get_coordinate());
+        cur.jump_to(*player2.get_squadron()[0]->get_coordinate());
         selector.clear();
         return player2.get_player_id();
     }
@@ -277,7 +278,7 @@ int Game::swap_turns(){
         player2.set_is_turn(false);
         player1.set_is_turn(true);
         player1.reset_squaderon_exhaustion();
-        cur.jump_to(player1.get_squadron()[0]->get_coordinate());
+        cur.jump_to(*player1.get_squadron()[0]->get_coordinate());
         selector.clear();
         return player1.get_player_id();
     }
@@ -311,10 +312,10 @@ Player& Game::get_enemy_player() {
 }
 
 bool Game::has_enemy_adjacent(){
-    Coordinate xy = selector.get_selection().get_coordinate();
+    Coordinate* xy = selector.get_selection().get_coordinate();
     const Player* enemy_player = &get_enemy_player();
-    int x = xy.get_x();
-    int y = xy.get_y();
+    int x = xy->get_x();
+    int y = xy->get_y();
     Character* up = c_map.get_character_at(x, y-1);
     Character* down = c_map.get_character_at(x, y+1);
     Character* left = c_map.get_character_at(x-1, y);
@@ -399,10 +400,10 @@ void Game::update_map() {
 //        }
 //    }
     for (int i = 0; i < player1.get_squadron().size(); i++) {
-        c_map.set_character_at(player1.get_squadron().at(i)->get_coordinate(), player1.get_squadron().at(i));
+        c_map.set_character_at(*player1.get_squadron().at(i)->get_coordinate(), player1.get_squadron().at(i));
     }
     for (int i = 0; i < player2.get_squadron().size(); i++) {
-        c_map.set_character_at(player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
+        c_map.set_character_at(*player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }
 /*****sound/mucis code needs update ****/
@@ -462,7 +463,7 @@ void Game::move_cursor_key_poll() {
             if (iterator == get_current_player().get_squadron().size())
                 iterator = 0;
             Character* c_ptr = get_current_player().get_next_character(iterator);
-            cur.jump_to(c_ptr->get_coordinate());
+            cur.jump_to(*c_ptr->get_coordinate());
             iterator++;
             break;
     }
@@ -501,7 +502,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 
         case sf::Keyboard::Key::Return: {                  // Set down
             selector.set_selection_pos(selector.get_selection().get_coordinate());
-            selector.set_target_pos(cur);
+            selector.set_target_pos(&cur);
             Character* c_ptr = &selector.get_selection();
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
@@ -523,7 +524,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 //            }
             std::cout << "placed at :" << cur << std::endl;
             c_map.set_character_at(cur, &selector.get_selection());
-            c_map.null_character_at(selector.get_selection().get_coordinate());
+            c_map.null_character_at(*c_ptr->get_coordinate());
 //            selector.get_selection().set_coordinate(cur);
 
             if (has_enemy_adjacent()) {
@@ -636,7 +637,7 @@ int Game::move_cursor_joy_poll() {
         if (iterator == get_current_player().get_squadron().size())
             iterator = 0;
         Character* c_ptr = get_current_player().get_next_character(iterator);
-        cur.jump_to(c_ptr->get_coordinate());
+        cur.jump_to(*c_ptr->get_coordinate());
         iterator++;
     }
 }
@@ -725,7 +726,8 @@ void Game::move_character_joy_poll() {
     }
     else if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased)
         if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
-            Coordinate xy = selector.get_selection().get_coordinate();
+            Character* c_ptr = &selector.get_selection();
+            Coordinate xy = *c_ptr->get_coordinate();
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
             }
@@ -738,7 +740,7 @@ void Game::move_character_joy_poll() {
             else {
                 std::cout << "placed at :" << cur << std::endl;
                 c_map.set_character_at(cur, &selector.get_selection());
-                c_map.null_character_at(selector.get_selection().get_coordinate());
+                c_map.null_character_at(*selector.get_selection().get_coordinate());
                 selector.get_selection().set_coordinate(cur);
                 selector.get_selection().set_moved(true);
                 selector.clear_selection();
@@ -751,7 +753,8 @@ void Game::move_character_joy_poll() {
         }
 }
 void Game::attack_character_key_poll() {
-    Coordinate sprite_coordinate = selector.get_selection().get_coordinate();
+    Coordinate sprite_coordinate = *selector.get_selection().get_coordinate();
+
     float up_bound = (sprite_coordinate.get_y() * 32 ) - 32;
     float down_bound = (sprite_coordinate.get_y() * 32 ) + 32;
     float left_bound = (sprite_coordinate.get_x() * 32 ) - 32;
