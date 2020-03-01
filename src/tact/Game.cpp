@@ -810,13 +810,13 @@ void Game::attack_character_rules(Player &attackedP, Character &attackerC, Chara
 	
 	// Chance for zero (evaded) or more attacks, based on speed
 	double attackChance = 0.9 * attackerSpeed/(double)attackedSpeed;
-	srand (time(NULL) + 1);
+	srand (time(NULL) + 1 + attackedPID);
 	double attackRoll = (rand() % 100 + 1)/100.0; // random 1 to 100
 	int numAttack = 0;
 	while (attackRoll < attackChance && attackedHP > 0) {
 		numAttack += 1;
 		// multiply damage by a random number between 0.9 and 1.1
-		srand (time(NULL) + 2 + numAttack);
+		srand (time(NULL) + 2 + numAttack + attackedPID);
 		double DamageRoll = 90.0 + (rand() % 20 + 1);
 		int thisDamage = Damage * DamageRoll / 100.0;
 		attackedHP -= round(thisDamage);
@@ -826,7 +826,7 @@ void Game::attack_character_rules(Player &attackedP, Character &attackerC, Chara
 		
 		//Update attack chance
 		attackChance /= 2;
-		srand (time(NULL) + 3 + numAttack);
+		srand (time(NULL) + 3 + numAttack + attackedPID);
 		attackRoll = (rand() % 100 + 1)/100.0;
 	}
 	if (numAttack == 0) {
