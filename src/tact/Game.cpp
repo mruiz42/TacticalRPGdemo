@@ -108,12 +108,15 @@ int Game::play_game(sf::RenderWindow& window) {
             Character* c_ptr = get_current_player().get_squadron()[i];
             if (c_ptr->is_walking()){
                 Coordinate delta = selector.get_delta_pos(selector.get_selection_pos(), selector.get_target_pos());
-                float x = delta.get_map_x() / 1000, y = delta.get_map_y() / 1000;
-
+                float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
                 c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
                 c_ptr->get_map_sprite().setScale({-1,1});
-                c_ptr->get_map_sprite().setPosition(c_ptr->get_map_sprite().getPosition().x +1, c_ptr->get_map_sprite().getPosition().y + 1);
+                c_ptr->get_map_sprite().move(x, y);
                 window.draw(c_ptr->get_map_sprite());
+                if (c_ptr->get_map_sprite().getPosition() == sf::Vector2f(selector.get_target_pos().get_x(), selector.get_target_pos().get_y())) {
+
+                    c_ptr->set_walking(false);
+                }
 
 
             }
