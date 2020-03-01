@@ -102,8 +102,15 @@ int Game::play_game(sf::RenderWindow& window) {
             window.clear();
             update_map();
             window.draw(v_map);
-            
-            window.draw(c_map);
+            for (int i = 0; i < get_current_player().get_squadron().size(); i++){
+                Character* c_ptr = get_current_player().get_squadron()[i];
+                c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
+                c_ptr->get_map_sprite().setScale({-1,1});
+                float x = c_ptr->get_coordinate().get_map_x(), y = c_ptr->get_coordinate().get_map_y();
+                c_ptr->get_map_sprite().setPosition(x, y);
+                window.draw(c_ptr->get_map_sprite());
+            }
+            //window.draw(c_map);
 
             window.draw(cur.get_sprite());
             window.draw(sidebar);
