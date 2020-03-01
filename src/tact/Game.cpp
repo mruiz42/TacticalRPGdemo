@@ -105,6 +105,13 @@ int Game::play_game(sf::RenderWindow& window) {
             for (int i = 0; i < get_current_player().get_squadron().size(); i++){
                 Character* c_ptr = get_current_player().get_squadron()[i];
                 if (c_ptr->is_walking()){
+                    Coordinate delta = selector.get_delta_pos(selector.get_selection_pos(), selector.get_target_pos());
+                    float x = delta.get_map_x() / 1000, y = delta.get_map_y() / 1000;
+
+                    c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
+                    c_ptr->get_map_sprite().setScale({-1,1});
+                    c_ptr->get_map_sprite().move(x, y);
+
 
                 }
                 else {
@@ -485,7 +492,8 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             break;
 
         case sf::Keyboard::Key::Return: {                  // Set down
-            Coordinate xy = selector.get_selection().get_coordinate();
+            selector.set_selection_pos(selector.get_selection().get_coordinate());
+            selector.set_target_pos(cur);
             Character* c_ptr = &selector.get_selection();
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
@@ -499,8 +507,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 //                std::cout << "character can't move that far. ";
 //                break;
 //            }
-            selector.set_selection_pos(selector.get_selection().get_coordinate());
-            selector.set_target_pos(cur);
+
 
 //            while(selector.get_selection().is_walking()) {   // while unit is walking flag is true
 //                selector.get_selection().walk();   // update position since last poll

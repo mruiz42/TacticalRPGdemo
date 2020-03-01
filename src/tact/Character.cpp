@@ -108,19 +108,19 @@ void Character::set_coordinate(int x, int y) {
 
 bool Character::startwalking(Coordinate final_xy)
 {
-    Coordinate delta_pos = get_delta_pos(final_xy);
-    float x = delta_pos.get_map_x();
-    float y = delta_pos.get_map_y();
-    float x_chunk = x / 1000, y_chunk = y / 1000;
-    if (xy == final_xy) {
-        return false;
-    }
-    else {
-        std::cout<<"moving " ;
-        this->map_sprite.move(x_chunk, y_chunk);
-
-        return true;
-    }
+//    Coordinate delta_pos = get_delta_pos(final_xy);
+//    float x = delta_pos.get_map_x();
+//    float y = delta_pos.get_map_y();
+//    float x_chunk = x / 1000, y_chunk = y / 1000;
+//    if (xy == final_xy) {
+//        return false;
+//    }
+//    else {
+//        std::cout<<"moving " ;
+//        this->map_sprite.move(x_chunk, y_chunk);
+//
+//        return true;
+//    }
     //for the setter function to set the nextspot
 //    int temp_x =0;
 //    int temp_y =0;
