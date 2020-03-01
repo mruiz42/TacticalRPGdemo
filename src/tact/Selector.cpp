@@ -4,6 +4,10 @@
 
 #include "../../include/tact/Selector.h"
 
+Coordinate Selector::get_delta_pos(Coordinate origin, Coordinate final) {
+    return final - origin;
+}
+
 void Selector::clear() {
     this->selection = nullptr;
     this->target = nullptr;

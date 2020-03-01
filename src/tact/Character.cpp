@@ -215,12 +215,6 @@ Coordinate Character::walk(Coordinate chunk)
 }
 
 
-
-Coordinate Character::get_delta_pos(Coordinate new_pos) {
-    return new_pos - this->xy;
-}
-
-
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     float x = nextspot.get_map_x();
     float y = nextspot.get_map_y();

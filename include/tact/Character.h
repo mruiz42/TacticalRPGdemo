@@ -45,7 +45,9 @@ public:
     bool can_attack() { return attack_on; }
     bool is_moved() { return this->moved; }
     bool is_defending() { return this->defending; }
-    Coordinate get_coordinate() { return this->xy; }
+	bool is_walking() { return this->walking; }
+
+	Coordinate get_coordinate() { return this->xy; }
     unsigned int get_level() { return this->level; }
     unsigned int get_experience() { return this->experience;}
     unsigned int get_hit_points() { return this->hit_points; }
@@ -67,6 +69,7 @@ public:
     void set_can_attack(bool attack_on) { this->attack_on = attack_on; }
     void set_moved(bool moved) { this->moved = moved; }
     void set_defending(bool defending) { this->defending = defending; }
+    void set_walking(bool walking) { this->walking = walking; }
     void set_level(unsigned int level) { this->level = level;}
     void set_experience(unsigned int experience) { this->experience = experience; }
     void set_hit_points(unsigned int hit_points) { this->hit_points = hit_points; }
@@ -86,8 +89,6 @@ public:
 //    Coordinate walk();
     Coordinate walk(Coordinate);
 
-    Coordinate get_delta_pos(Coordinate new_pos);
-    bool is_walking() { return this->walking; }
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
