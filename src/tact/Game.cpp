@@ -756,6 +756,7 @@ void Game::move_character_joy_poll() {
             selector.clear();
         }
 }
+
 void Game::attack_character_key_poll() {
     Coordinate sprite_coordinate = *selector.get_selection().get_coordinate();
 
@@ -816,6 +817,7 @@ void Game::wait_character_poll() {
     menu_selected = false;
     move_selected = false;
     unit_selected = false;
+    unit_walking = false;
     wait_selected = false;
     selector.get_selection().set_moved(true);
     selector.clear();
@@ -825,6 +827,7 @@ void Game::defend_character_poll() {
     menu_selected = false;
     move_selected = false;
     unit_selected = false;
+    unit_walking = false;
     defend_selected = false;
     selector.get_selection().set_defending(true);
     selector.get_selection().set_moved(true);
