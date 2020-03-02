@@ -69,7 +69,7 @@ int Game::play_game(sf::RenderWindow& window) {
                 unit_walking = false;
                 defend_selected = false;
                 wait_selected = false;
-                sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
+                sidebar.setTurn("Player" + std::to_string(get_current_player_id()) +" turn");
             }
 
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
@@ -287,29 +287,32 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
     turn_count++;
+    turn_text.start_clock();
     player1.reset_squaderon_exhaustion();
     player2.reset_squaderon_exhaustion();
-    turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + "'s Turn begin");
-    turn_text.start_clock();
     if (player1.get_is_turn()){
         std::cout << "- Player " + std::to_string(player2.get_player_id() + 1) << "'s Turn begin -\n";
         player1.set_is_turn(false);
         player2.set_is_turn(true);
         cur.jump_to(*player2.get_squadron()[0]->get_coordinate());
         selector.clear();
+        turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + "'s Turn");
         return player2.get_player_id();
     }
     else if (player2.get_is_turn()) {
-        std::cout << "Player " + std::to_string(player1.get_player_id() + 1) << "'s Turn begin -\n";
+        std::cout << "Player " + std::to_string(player1.get_player_id() + 1) << "'s Turn -\n";
         player2.set_is_turn(false);
         player1.set_is_turn(true);
         cur.jump_to(*player1.get_squadron()[0]->get_coordinate());
         selector.clear();
+        turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + "'s Turn begin");
         return player1.get_player_id();
     }
     else {
         std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
     }
+
+
 }
 void Game::update_map() {
 //    for (int y = 0; y < 22; ++y) {
