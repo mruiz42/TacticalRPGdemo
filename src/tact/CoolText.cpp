@@ -29,9 +29,22 @@ void CoolText::start_clock() {
     this->set_clock(sf::Clock());
 }
 
-bool CoolText::is_alive() {
+bool CoolText::draw_raising() {
     if (this->clock.getElapsedTime().asMilliseconds() < 1000) {
         this->text.move(0, -0.32);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool CoolText::draw_centered(){
+    if (this->clock.getElapsedTime().asMilliseconds() < 2000) {
+        text.setCharacterSize(32);
+        text.setColor(sf::Color::White);
+        text.setOutlineThickness(4);
+        text.setOutlineColor(sf::Color::Black);
+        this->set_position(1024/2 - (text.getGlobalBounds().width)/2, 704/2 - (text.getGlobalBounds().height)/2);
         return true;
     }
     else

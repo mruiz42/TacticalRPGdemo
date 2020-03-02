@@ -31,11 +31,12 @@ public:
 
     void set_text(std::string string);
 
-    bool is_alive();
+    bool draw_raising();
 
     void start_clock();
 
 
+    bool draw_centered();
 };
 
 

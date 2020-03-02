@@ -50,7 +50,8 @@ private:
     sf::SoundBuffer buffer;
     sf::Event event;
     Sidebar sidebar;
-    CoolText cool_text;
+    CoolText hit_text;
+    CoolText turn_text;
     Player player1;
     Player player2;
     Selector selector;

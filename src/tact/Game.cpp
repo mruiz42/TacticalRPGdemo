@@ -7,10 +7,11 @@
 
 // Game constructor
 Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
-    cool_text(font_path), player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
+               hit_text(font_path), turn_text(font_path),
+               player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
     {
     iterator = 0;
-        move_frame = 0;
+    move_frame = 0;
     turn_count = 1;
     unit_selected = false;
     unit_walking = false;
@@ -114,8 +115,12 @@ int Game::play_game(sf::RenderWindow& window) {
         //window.draw(c_map);
         window.draw(cur.get_sprite());
         foo();
-        if (cool_text.is_alive()){
-            window.draw(cool_text.get_text());
+
+        if (hit_text.draw_raising()){
+            window.draw(hit_text.get_text());
+        }
+        if (turn_text.draw_centered()) {
+            window.draw(turn_text.get_text());
         }
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
@@ -267,9 +272,10 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
             }
         }
         else {
-            if (c_ptr->is_moved())
+            if (c_ptr->is_moved() && !c_ptr->can_attack())
                 c_ptr->get_map_sprite().setColor(sf::Color(80,80,80,200));
-
+            else
+                c_ptr->get_map_sprite().setColor(sf::Color(255,255,255,255));
             c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
             c_ptr->get_map_sprite().setScale({-1,1});
             float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
@@ -283,6 +289,8 @@ int Game::swap_turns(){
     turn_count++;
     player1.reset_squaderon_exhaustion();
     player2.reset_squaderon_exhaustion();
+    turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + "'s Turn begin");
+    turn_text.start_clock();
     if (player1.get_is_turn()){
         std::cout << "- Player " + std::to_string(player2.get_player_id() + 1) << "'s Turn begin -\n";
         player1.set_is_turn(false);
@@ -601,9 +609,9 @@ void Game::attack_character_key_poll() {
                 selector.get_selection()->set_can_attack(false);
 
                 std::cout << "Player " << get_enemy_player_id() << "'s " << selector.get_target()->get_name() << "took X damage!" << std::endl;
-                cool_text.start_clock();
-                cool_text.set_text("MISS");
-                cool_text.set_position(cur.get_map_x(), cur.get_map_y());
+                hit_text.start_clock();
+                hit_text.set_text("MISS");
+                hit_text.set_position(cur.get_map_x(), cur.get_map_y());
                 selector.clear();
             }
             break;
