@@ -41,14 +41,13 @@ Menu::Menu(std::string font_filename) {
 Menu::~Menu() { }
 
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    for(int i = 0;i<text.size();i++) {
+    for(int i = 0; i < text.size(); i++) {
         target.draw(text[i]);
     }
 
 }
 
 void Menu::move_right() {
-    set_all_text_color(sf::Color::White);
     if (selection == 2){
         selection = 3;
     }
@@ -61,40 +60,34 @@ void Menu::move_right() {
 }
 
 void Menu::move_left() {
-    set_all_text_color(sf::Color::White);
     if (selection == 1){
         selection = 0;
     }
     else if (selection == 3){
         selection = 2;
     }
-    text[selection].setColor(sf::Color::Red);
     std::cout << selection << std::endl;
 
 }
 
 void Menu::move_up() {
-    set_all_text_color(sf::Color::White);
     if (selection == 2){
         selection = 0;
     }
     else if (selection == 3) {
         selection = 1;
     }
-    text[selection].setColor(sf::Color::Red);
     std::cout << selection << std::endl;
 
 }
 
 void Menu::move_down() {
-    set_all_text_color(sf::Color::White);
     if (selection == 0){
         selection = 2;
     }
     else if (selection == 1){
         selection = 3;
     }
-    text[selection].setColor(sf::Color::Red);
     std::cout << selection << std::endl;
 }
 
@@ -103,25 +96,35 @@ void Menu::set_selection_text_color(sf::Color color){
     sf::Clock clock;
     float elapsed = clock.getElapsedTime().asMilliseconds();
     text[selection].setColor(color);
-//    while (elapsed < 2) {
-//        std::cout << elapsed << " ";
-//        text[selection].setColor(color);
-//        elapsed = clock.getElapsedTime().asSeconds();
-//    }
-//    text[selection].setColor(prev_color);
 }
 
 void Menu::set_one_text_color(sf::Color color, int position){
     text[position].setColor(color);
-    // wait
 }
 
 void Menu::set_all_text_color(sf::Color color){
     for (auto i = 0; i < text.size(); i++){
         this->text[i].setColor(color);
     }
-    if (selection > 3 || selection < 0) {
+    if (selection <= 3 && selection >= 0) {
         this->text[selection].setColor(sf::Color::Red);
     }
 }
 
+void Menu::toggle_selection() {
+    if (this->selection > 3 || this->selection < 0)
+        this->selection = 0;
+    else
+        this->selection = -1;
+}
+
+void Menu::turn_on() {
+    this->set_all_text_color(sf::Color::White);
+    if (this->selection > 3 || this->selection < 0)
+        this->selection = 0;
+}
+
+void Menu::turn_off() {
+    this->selection = -1;
+    this->set_all_text_color(sf::Color(128,128,128, 255));
+}

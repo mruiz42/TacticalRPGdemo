@@ -25,6 +25,7 @@
 #include "Cursor.h"
 #include "CharacterMap.h"
 #include "Selector.h"
+#include "CoolText.h"
 #include "Player.h"
 #include <iostream>
 #include <cstdlib>
@@ -49,10 +50,11 @@ private:
     sf::SoundBuffer buffer;
     sf::Event event;
     Sidebar sidebar;
+    CoolText cool_text;
     Player player1;
     Player player2;
     Selector selector;
-    unsigned int it;
+    unsigned int move_frame;
     unsigned int iterator;
     bool unit_selected;
     bool unit_walking;
@@ -65,6 +67,7 @@ private:
     int turn_count;
 public:
     Game();
+    // Main game loop
     int play_game(sf::RenderWindow&);
     int set_iterator();
     int toggle_music();

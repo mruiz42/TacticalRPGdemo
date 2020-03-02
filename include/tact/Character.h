@@ -12,6 +12,7 @@
 
 class Character : public sf::Drawable {
 protected:
+    // sf::Audio voiceline
     sf::Texture texture;
     sf::Sprite sidebar_sprite;
 	sf::Sprite charFace1;
