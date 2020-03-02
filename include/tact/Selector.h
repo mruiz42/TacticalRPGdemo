@@ -16,10 +16,10 @@ public:
     // Constructors
     Selector() : selection(nullptr), target(nullptr), selection_pos(nullptr), target_pos(nullptr) {}
     // Accessors
-    Character get_selection() { return *this->selection; }
-    Coordinate get_selection_pos() { return *this->selection_pos; }
-    Character get_target() { return *this->target; }
-    Coordinate get_target_pos() { return *this->target_pos; }
+    Character* get_selection() { return this->selection; }
+    Coordinate* get_selection_pos() { return this->selection_pos; }
+    Character* get_target() { return this->target; }
+    Coordinate* get_target_pos() { return this->target_pos; }
 
     // Mutators
     void set_selection(Character* selection) { this->selection = selection; }
