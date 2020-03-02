@@ -103,6 +103,8 @@ public:
     bool belongs_to_enemy_player(Character *character);
 
     void draw_units(sf::RenderWindow &window, Player player);
+
+    void foo();
 };
 
 

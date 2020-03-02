@@ -57,6 +57,7 @@ Game::Game() : cur(0, 0),
 int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
     while (window.isOpen()) {
+
         while (window.pollEvent(event) && !unit_walking) {
         if(this->get_current_player().is_turn_end() && !unit_walking && !menu_selected){
                 this->swap_turns();
@@ -104,6 +105,7 @@ int Game::play_game(sf::RenderWindow& window) {
 
 
         }
+        // These objects will only be updated when a poll event is detected
         window.clear();
         update_map();
         window.draw(v_map);
@@ -111,13 +113,28 @@ int Game::play_game(sf::RenderWindow& window) {
         draw_units(window, player2);
         //window.draw(c_map);
         window.draw(cur.get_sprite());
+        foo();
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
         sidebar.drawStat(window);
         window.display();
     }
+
+
     std::cout << "Game Over!" << std::endl;
     return 0;
+}
+
+
+void Game::foo() {
+    // Set attack grey
+    if (!unit_selected){
+        sidebar.get_menu().set_all_text_color(sf::Color(128,128,128,255));
+    }
+    else {
+        sidebar.get_menu().set_all_text_color(sf::Color::White);
+    }
+
 }
 
 void Game::draw_units(sf::RenderWindow& window, Player player){
@@ -317,6 +334,10 @@ Player& Game::get_enemy_player() {
 }
 
 bool Game::has_enemy_adjacent(){
+    // TODO: If selector.get_selection() is empty, call exception
+//    if (this->selector.is_selection_empty()){
+//        // do exception here
+//    }
     Coordinate* xy = selector.get_selection()->get_coordinate();
     const Player* enemy_player = &get_enemy_player();
     int x = xy->get_x();

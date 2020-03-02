@@ -29,6 +29,5 @@ public:
     void set_one_text_color(sf::Color, int);
     void set_selection_text_color(sf::Color);
     void set_all_text_color(sf::Color color);
-
 };
 #endif //CIS29GROUP2GAME_MENU_H
