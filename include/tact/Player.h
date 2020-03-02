@@ -29,7 +29,7 @@ public:
     void set_fort(Fortress fort) { this->fort = fort; }
     void set_fort_coord(int x, int y) { this->fort.set_coordinate(x, y); }
     void set_player_id(unsigned int player_id) { this->player_id = player_id; }
-    void set_number_units(unsigned int number_units) {this->number_units; }
+    void set_number_units(unsigned int number_units) {this->number_units = number_units; }
     void set_is_turn(bool is_turn) { this->is_turn = is_turn; }
 
     void reset_squaderon_exhaustion();

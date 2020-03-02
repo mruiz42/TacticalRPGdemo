@@ -29,6 +29,8 @@
 #include "Player.h"
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
+#include <cmath>
 
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/textures/map_tiles32.png";
@@ -57,6 +59,7 @@ private:
     Selector selector;
     unsigned int move_frame;
     unsigned int iterator;
+    bool game_end;
     bool unit_selected;
     bool unit_walking;
     bool menu_selected;
@@ -64,7 +67,6 @@ private:
     bool attack_selected;
     bool defend_selected;
     bool wait_selected;
-
     int turn_count;
 public:
     Game();
