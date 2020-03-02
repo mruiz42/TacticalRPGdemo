@@ -663,10 +663,7 @@ void Game::attack_character_key_poll() {
                               << selector.get_target()->get_name() << " took " << thisDamage << " points of damage!"
                               << std::endl;
 
-                    hit_text.start_clock();
-                    std::string damage_string = std::to_string(static_cast<int>(Damage));
-                    hit_text.set_text(damage_string);
-                    hit_text.set_position(cur.get_map_x(), cur.get_map_y());
+
 
                     //Update attack chance
                     attackChance /= 2;
@@ -742,9 +739,10 @@ void Game::attack_character_key_poll() {
                               << "took X damage!" << std::endl;
 
                 }
+                int damage_int = static_cast<unsigned int>(Damage);
                 hit_text.start_clock();
-                hit_text.set_text(std::to_string(Damage));
-                hit_text.set_position(cur.get_map_x(), cur.get_map_y());
+                hit_text.set_text(std::to_string(damage_int));
+                hit_text.set_position(cur.get_map_x()+4, cur.get_map_y());
                 selector.clear();
                 break;
             }
