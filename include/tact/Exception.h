@@ -30,7 +30,8 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void showExcept();
     void hideExpect();
-    void shift(float,float);
+    void shift(sf::Vector2f);
+    
     
 };
 

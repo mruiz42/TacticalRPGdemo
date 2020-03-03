@@ -512,7 +512,8 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
                 std::string s = "Can't go here\n";
-                throw (s);
+                
+                throw (cur.get_sprite().getPosition());
                 
             }
 //            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
@@ -552,13 +553,14 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             break;
     }
     }
-    catch (std::string s)
-    {
+    catch (sf::Vector2f input )
+    {   
+        
         except.showExcept();
-        except.shift(cur.get_sprite().getPosition().x,cur.get_sprite().getPosition().y);
-        
-        
+        except.shift(input);
     }
+   
+    
 }
 int Game::menu_key_poll() {
     if (has_enemy_adjacent()){
