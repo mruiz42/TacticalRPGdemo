@@ -27,6 +27,7 @@
 #include "Selector.h"
 #include "CoolText.h"
 #include "Player.h"
+#include "Exception.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -46,6 +47,7 @@ class Game {
 private:
     sf::Music music;
     Cursor cur;
+    Exception except;
     VertexMap v_map;
     CharacterMap c_map;
     sf::Sound sound;

@@ -136,8 +136,10 @@ int Game::play_game(sf::RenderWindow& window) {
         if (turn_text.draw_centered()) {
             window.draw(turn_text.get_text());
         }
+         window.draw(except.returnText());
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
+       
         sidebar.drawStat(window);
         window.display();
     }
@@ -465,6 +467,9 @@ void Game::move_cursor_key_poll() {
 }
 void Game::move_character_key_poll(sf::RenderWindow& window){
     std::cout << "pickedup ";
+    try {
+
+    
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992){
@@ -500,11 +505,15 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             Character* c_ptr = selector.get_selection();
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+                
                 break;
+                
             }
             else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
-                break;
+                std::string s = "Can't go here\n";
+                throw (s);
+                
             }
 //            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
 //                std::cout << "character can't move that far. ";
@@ -512,7 +521,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 //            }
 
             std::cout << "placed at :" << cur << std::endl;
-
+            except.hideExpect();
             c_map.set_character_at(cur, selector.get_selection());
             c_map.null_character_at(*c_ptr->get_coordinate());
 //            selector.get_selection().set_coordinate(cur);
@@ -541,6 +550,14 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             unit_walking = false;
             selector.clear();
             break;
+    }
+    }
+    catch (std::string s)
+    {
+        except.showExcept();
+        except.shift(cur.get_sprite().getPosition().x,cur.get_sprite().getPosition().y);
+        
+        
     }
 }
 int Game::menu_key_poll() {
