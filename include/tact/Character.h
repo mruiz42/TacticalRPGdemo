@@ -8,11 +8,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "Coordinate.h"
+const std::string death_sound_m_path = "share/audio/ff-death-scream-male.wav";
+const std::string death_sound_f_path = "share/audio/ff-death-scream-female.wav";
 
 class Character : public sf::Drawable {
 protected:
-    // sf::Audio voiceline
+    sf::SoundBuffer buffer;
+    sf::Sound voice;
     sf::Texture texture;
     sf::Sprite sidebar_sprite;
 	sf::Sprite charFace1;
@@ -81,6 +86,7 @@ public:
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void play_voice();
 };
 
 

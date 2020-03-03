@@ -1,11 +1,11 @@
 CC      = g++
-FCLAGS  = -std=c++14  -Wall   -Wextra -pedantic
+CFLAGS  = -std=c++14 -Wall -Wextra -pedantic
 INCLUDE = ./include/tact/
-COMPILE = $(CC) $(CFLAGS) -I $(INCLUDE) -c
-BUILD   = $(CC) $(CFLAGS) -I $(INCLUDE)
+COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
+BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)
 OUTBIN     = ./bin/somethingTactics.out
 LINKSFML= -lsfml-graphics -lsfml-system -lsfml-window -lsfml-audio
-LINKSTT = -L $(LIBDIR)
+LINKSTT = -L$(LIBDIR)
 # source directories
 SOURCE	= ./src/
 TACTSRC	= $(SOURCE)tact/
@@ -20,14 +20,14 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Game.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
-# library dependencies
-#LIBDEP	=
+OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Game.o
+LIBDEP	= $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
+
 .PHONY : clean all run
 
 # Rule to create the primary executable
-$(OUTBIN) : $(OUTBINDEPS)  $(STTLIB)
-	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(LINKSTT) -o $(OUTBIN)
+$(OUTBIN) : $(OUTBINDEPS) $(STTLIB)
+	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(STTLIB) -o $(OUTBIN)
 	@echo './bin/somethingTactics.out' is built!
 	
 $(STTLIB) : $(LIBDEP)

@@ -17,6 +17,10 @@ Ninja::Ninja() : Character() {
     if (!texture.loadFromFile(ninja_spritesheet_path)){
         std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
     }
+    if (!buffer.loadFromFile(death_sound_f_path)) {
+        std::cout << "Error: " + death_sound_f_path + " could not be loaded." << std::endl;
+    }
+    voice.setBuffer(buffer);
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
     charFace1.setTextureRect(sf::IntRect(8,400,64,87));
@@ -40,6 +44,10 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     if (!texture.loadFromFile(ninja_spritesheet_path)){
         std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
     }
+    if (!buffer.loadFromFile(death_sound_f_path)) {
+        std::cout << "Error: " + death_sound_f_path + " could not be loaded." << std::endl;
+    }
+    voice.setBuffer(buffer);
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
     charFace1.setTextureRect(sf::IntRect(8,400,64,87));
@@ -58,3 +66,4 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     this->special_attack = 23;
     this->special_defense = 26;
 }
+

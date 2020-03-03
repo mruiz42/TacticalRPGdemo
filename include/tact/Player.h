@@ -32,7 +32,7 @@ public:
     void set_number_units(unsigned int number_units) {this->number_units = number_units; }
     void set_is_turn(bool is_turn) { this->is_turn = is_turn; }
 
-    void reset_squaderon_exhaustion();
+    void reset_squadron_exhaustion();
     bool is_turn_end();
     Character* get_next_character(int);
 };

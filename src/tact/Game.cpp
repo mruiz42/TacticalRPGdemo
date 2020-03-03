@@ -302,8 +302,8 @@ int Game::swap_turns(){
     std::cout << "- End turn - \n";
     turn_count++;
     turn_text.start_clock();
-    player1.reset_squaderon_exhaustion();
-    player2.reset_squaderon_exhaustion();
+    player1.reset_squadron_exhaustion();
+    player2.reset_squadron_exhaustion();
     if (player1.get_is_turn()){
         std::cout << "- Player " + std::to_string(player2.get_player_id() + 1) << "'s Turn begin -\n";
         player1.set_is_turn(false);
@@ -566,6 +566,7 @@ int Game::menu_key_poll() {
 
         case sf::Keyboard::Key::Return: {         // Pick up
             int menu_selection = sidebar.get_menu().get_selection();
+            selector.get_selection()->play_voice();
             if (menu_selection == 0 && selector.get_selection()->is_moved()) {
                 return -1;
             }
@@ -725,12 +726,11 @@ void Game::attack_character_key_poll() {
                     }
                     selector.get_selection()->set_hit_points(selectionHP);
                 }
-                if (selectionHP == 0) {
+                if (selectionHP <= 0) {
                     c_map.null_character_at(*selector.get_selection()->get_coordinate());
                     for (int thischar = 0; thischar < get_current_player().get_squadron().size(); thischar++) {
                         if (get_current_player().get_squadron()[thischar]->get_hit_points() == 0) {
-                            get_current_player().get_squadron().erase(
-                                    get_current_player().get_squadron().begin() + thischar);
+                            get_current_player().get_squadron().erase(get_current_player().get_squadron().begin() + thischar);
                             break;
                         }
                     }

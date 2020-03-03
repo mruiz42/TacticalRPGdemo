@@ -34,9 +34,10 @@ Character* Player::get_next_character(int iterator) {
             return c_ptr;
         }
     }
+    return nullptr;
 }
 
-void Player::reset_squaderon_exhaustion() {
+void Player::reset_squadron_exhaustion() {
     for (auto i = 0; i < squadron.size(); i++) {
         this->squadron[i]->set_moved(false);
         this->squadron[i]->set_defending(false);

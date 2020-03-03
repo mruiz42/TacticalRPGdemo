@@ -3,7 +3,7 @@
 //
 
 #include "../../include/tact/Character.h"
-
+#include <SFML/Audio/SoundBuffer.hpp>
 
 Character::Character() : xy(0,0) {
     name = "";
@@ -83,4 +83,8 @@ void Character::set_coordinate(int x, int y) {
 
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(this->map_sprite, states);
+}
+
+void Character::play_voice() {
+    voice.play();
 }
