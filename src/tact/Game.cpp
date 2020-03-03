@@ -7,8 +7,9 @@
 #include <ctime>
 #include <cmath>
 
+
 Game::Game() : cur(0, 0),
-    sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
+    sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + battleLog_font_path ),
     player1(0, Coordinate(2, 17)),
     player2(1, Coordinate(29, 3))
     {
@@ -21,6 +22,7 @@ Game::Game() : cur(0, 0),
     defend_selected = false;
     wait_selected = false;
     check_controllers();
+	sidebar.update_battleLog("- Start Game -");
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
     sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) + " turn");
@@ -69,11 +71,15 @@ int Game::play_game(sf::RenderWindow& window) {
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) +" turn");
             }
 			if (get_enemy_player().get_squadron().size() == 0) {
+				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " wins!");
+				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
 				gameEnd = true;
 				break;
 			}
 			if (get_current_player().get_squadron().size() == 0) {
+				sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " wins!");
+				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;
 				gameEnd = true;
 				break;
@@ -112,7 +118,7 @@ int Game::play_game(sf::RenderWindow& window) {
                 poll_joy_logic();
             }
             else if (event.type == sf::Event::KeyPressed) {
-                poll_key_logic();
+                poll_key_logic(window);
             }
 
             window.clear();
@@ -125,6 +131,7 @@ int Game::play_game(sf::RenderWindow& window) {
             window.draw(sidebar);
             window.draw(sidebar.get_menu());
             sidebar.drawStat(window);
+			sidebar.drawBattleLog(window);
             window.display();
         }
 		if (gameEnd) break;
@@ -132,7 +139,7 @@ int Game::play_game(sf::RenderWindow& window) {
     std::cout << "Game Over!" << std::endl;
     return 0;
 }
-void Game::poll_key_logic() {
+void Game::poll_key_logic(sf::RenderWindow& window) {
     adjust_volume_key_poll();
     // Move cursor routine
     if (!unit_selected) {
@@ -183,7 +190,7 @@ void Game::poll_key_logic() {
     }
 
     else if (attack_selected) {
-        attack_character_key_poll();
+        attack_character_key_poll(window);
     }
 
     else if (wait_selected) {
@@ -731,7 +738,7 @@ void Game::move_character_joy_poll() {
             selector.clear();
         }
 }
-void Game::attack_character_key_poll() {
+void Game::attack_character_key_poll(sf::RenderWindow& window) {
     Coordinate sprite_coordinate = selector.get_selection().get_coordinate();
     float up_bound = (sprite_coordinate.get_y() * 32 ) - 32;
     float down_bound = (sprite_coordinate.get_y() * 32 ) + 32;
@@ -772,14 +779,18 @@ void Game::attack_character_key_poll() {
                 selector.get_selection().set_can_attack(false);
 				
 				// Selection attacks target
-				attack_character_rules(get_enemy_player(), selector.get_selection(),selector.get_target(), get_enemy_player_id());
+				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " initiates attack." );
+				sidebar.drawBattleLog(window);
+				attack_character_rules(&get_enemy_player(), &selector.get_selection(), &selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
 				
 				// Target can revenge attack if not defending and is still alive.
 				if (!selector.get_target().is_defending() && selector.get_target().get_hit_points() > 0) {
-					attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_current_player_id());
+					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
+					sidebar.drawBattleLog(window);
+					attack_character_rules(&get_current_player(), &selector.get_target(), &selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
 				}
-				
                 selector.clear();
+				
             }
             break;
         }
@@ -791,23 +802,25 @@ void Game::attack_character_key_poll() {
 
 
 }
-void Game::attack_character_rules(Player &attackedP, Character &attackerC, Character &attackedC, int attackedPID) {
+void Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window) {
 	// Get used stats
-	int attackedDEF = attackedC.get_defense();
-	int attackedHP = attackedC.get_hit_points();
-	int attackedATK = attackedC.get_attack();
-	int attackedSpeed = attackedC.get_speed();
+	int attackedDEF = attackedC->get_defense();
+	int attackedHP = attackedC->get_hit_points();
+	int attackedATK = attackedC->get_attack();
+	int attackedSpeed = attackedC->get_speed();
 	
-	int attackerDEF = attackerC.get_defense();
-	int attackerHP = attackerC.get_hit_points();
-	int attackerATK = attackerC.get_attack();
-	int attackerSpeed = attackerC.get_speed();
+	int attackerDEF = attackerC->get_defense();
+	int attackerHP = attackerC->get_hit_points();
+	int attackerATK = attackerC->get_attack();
+	int attackerSpeed = attackerC->get_speed();
 	
 	//First attack, attacker > attacked
 	double Damage = (double)attackerATK * (double)attackerATK / (double)attackedDEF;
-	if (attackedC.is_defending())
+	if (attackedC->is_defending()) {
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " defenses!");
+		sidebar.drawBattleLog(window);
 		Damage /= 2;
-	
+	}
 	// Chance for zero (evaded) or more attacks, based on speed
 	double attackChance = 0.9 * attackerSpeed/(double)attackedSpeed;
 	srand (time(NULL) + 1 + attackedPID);
@@ -822,26 +835,35 @@ void Game::attack_character_rules(Player &attackedP, Character &attackerC, Chara
 		attackedHP -= round(thisDamage);
 		if (attackedHP < 0) attackedHP = 0;
 		
-		std::cout << "Attack " << numAttack << "! Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " took " << thisDamage << " points of damage!" << std::endl;
-		
 		//Update attack chance
 		attackChance /= 2;
 		srand (time(NULL) + 3 + numAttack + attackedPID);
 		attackRoll = (rand() % 100 + 1)/100.0;
 	}
+	//Print outcome to battle log
 	if (numAttack == 0) {
-		std::cout << "Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " evaded the attack!" << std::endl;
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " evades!");
+		sidebar.drawBattleLog(window);
+	} else if (numAttack == 1){
+		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks!");
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
+		sidebar.drawBattleLog(window);
+	}  else {
+		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks " + std::to_string(numAttack) + " times!");
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
+		sidebar.drawBattleLog(window);
 	}
-	attackedC.set_hit_points(attackedHP);
+	attackedC->set_hit_points(attackedHP);
 	if (attackedHP == 0) {
-		c_map.null_character_at(attackedC.get_coordinate());
-		for (int thischar = 0; thischar < attackedP.get_squadron().size(); thischar++) {
-			if (attackedP.get_squadron()[thischar]->get_hit_points() == 0) {
-				attackedP.get_squadron().erase(attackedP.get_squadron().begin()+thischar);
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
+		c_map.null_character_at(attackedC->get_coordinate());
+		attackedC = nullptr;
+		for (int thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
+			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {
+				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+thischar);
 				break;
 			}
 		}
-		std::cout << "Player " << attackedPID + 1 << "'s " << attackedC.get_name() << " is dead!" << std::endl;
 	}
 }
 
