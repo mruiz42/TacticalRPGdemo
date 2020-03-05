@@ -824,7 +824,7 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 		damage /= 2;
 	}
 	// Chance for zero (evaded) or more attacks, based on speed
-	attackChance = (90 * attackerSpeed/attackedSpeed) % 100;
+	attackChance = (90 * attackerSpeed /attackedSpeed ) % 100;
 	srand (time(NULL) + 1 + attackedPID);
 	attackRoll = (rand() % 100 + 1); // random 1 to 100
 
@@ -840,7 +840,7 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 		//Update attack chance
 		attackChance /= 2;
 		srand (time(NULL) + 3 + numAttack + attackedPID);
-		attackRoll = (rand() % 100 + 1)/100;
+		attackRoll = (rand() % 100 + 1);
 	}
 	//Print outcome to battle log
 	if (numAttack == 0) {

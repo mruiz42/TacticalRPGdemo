@@ -20,9 +20,9 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	= $(TACTOBJ)Menu.o $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Game.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o
+OUTBINDEPS	= $(TACTOBJ)Menu.o $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Game.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(SRCOBJ)main.o $(TACTOBJ)Character.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o $(TACTOBJ)Tank.o
 # library dependencies
-LIBDEP	=    $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o
+LIBDEP	= $(TACTOBJ)Spell.o
 
 .PHONY : clean all run
 
