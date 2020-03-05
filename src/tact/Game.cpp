@@ -402,7 +402,7 @@ void Game::update_map() {
         c_map.set_character_at(player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }
-/*****sound/mucis code needs update ****/
+
 void Game::adjust_volume_key_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::Dash: // Volume Down
@@ -814,31 +814,33 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	int attackerATK = attackerC->get_attack();
 	int attackerSpeed = attackerC->get_speed();
 	
+	int damage = 0, attackChance = 0, attackRoll = 0, numAttack = 0 , damageRoll = 0, thisDamage = 0;
+	
 	//First attack, attacker > attacked
-	double Damage = (double)attackerATK * (double)attackerATK / (double)attackedDEF;
+	damage = attackerATK * attackerATK / attackedDEF;
 	if (attackedC->is_defending()) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " defenses!");
 		sidebar.drawBattleLog(window);
-		Damage /= 2;
+		damage /= 2;
 	}
 	// Chance for zero (evaded) or more attacks, based on speed
-	double attackChance = 0.9 * attackerSpeed/(double)attackedSpeed;
+	attackChance = (90 * attackerSpeed/attackedSpeed) % 100;
 	srand (time(NULL) + 1 + attackedPID);
-	double attackRoll = (rand() % 100 + 1)/100.0; // random 1 to 100
-	int numAttack = 0;
+	attackRoll = (rand() % 100 + 1); // random 1 to 100
+
 	while (attackRoll < attackChance && attackedHP > 0) {
 		numAttack += 1;
 		// multiply damage by a random number between 0.9 and 1.1
 		srand (time(NULL) + 2 + numAttack + attackedPID);
-		double DamageRoll = 90.0 + (rand() % 20 + 1);
-		int thisDamage = Damage * DamageRoll / 100.0;
+		damageRoll = 90 + (rand() % 20 + 1);
+		thisDamage = damage * damageRoll / 100;
 		attackedHP -= round(thisDamage);
 		if (attackedHP < 0) attackedHP = 0;
 		
 		//Update attack chance
 		attackChance /= 2;
 		srand (time(NULL) + 3 + numAttack + attackedPID);
-		attackRoll = (rand() % 100 + 1)/100.0;
+		attackRoll = (rand() % 100 + 1)/100;
 	}
 	//Print outcome to battle log
 	if (numAttack == 0) {
@@ -858,7 +860,7 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
 		c_map.null_character_at(attackedC->get_coordinate());
 		attackedC = nullptr;
-		for (int thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
+		for (auto thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
 			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {
 				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+thischar);
 				break;

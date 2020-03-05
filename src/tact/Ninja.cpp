@@ -25,10 +25,10 @@ Ninja::Ninja() : Character() {
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
     this->name = "Ninja";
-    this->level = 1;
+    this->level = 10;
     this->experience = 0;
-    this->hit_points = 100;
-    this->mana_points = 25;
+    this->hit_points = 800;
+    this->mana_points = 625;
     this->attack = 28;
     this->defense = 20;
     this->speed = 39;
@@ -50,8 +50,8 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     this->name = "Ninja";
     this->level = 1;
     this->experience = 0;
-    this->hit_points = 100;
-    this->mana_points = 25;
+    this->hit_points = 800;
+    this->mana_points = 625;
     this->attack = 28;
     this->defense = 20;
     this->speed = 39;
