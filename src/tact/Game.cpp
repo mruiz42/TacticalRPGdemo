@@ -565,8 +565,12 @@ int Game::menu_key_poll() {
             return -1;
 
         case sf::Keyboard::Key::Return: {         // Pick up
+
             int menu_selection = sidebar.get_menu().get_selection();
+            // testing
             selector.get_selection()->play_voice();
+            selector.get_selection()->get_map_sprite().setOrigin({selector.get_selection()->get_map_sprite().getLocalBounds().width,0});
+            selector.get_selection()->get_map_sprite().setScale({-3,3});
             if (menu_selection == 0 && selector.get_selection()->is_moved()) {
                 return -1;
             }
@@ -854,6 +858,7 @@ int Game::move_cursor_joy_poll() {
         iterator++;
     }
 }
+
 int Game::menu_joy_poll() {
     int selection = -1;
     if(event.type == sf::Event::JoystickMoved) { // Controller input events

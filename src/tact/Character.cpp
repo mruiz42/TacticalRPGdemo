@@ -88,3 +88,7 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 void Character::play_voice() {
     voice.play();
 }
+
+void Character::flip_sprite() {
+//    this->map_sprite.setOrigin()
+}

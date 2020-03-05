@@ -1,7 +1,6 @@
 //
 // Created by michael on 1/21/20.
 //
-
 #ifndef CIS29GROUP2GAME_CHARACTER_H
 #define CIS29GROUP2GAME_CHARACTER_H
 #include <string>
@@ -11,6 +10,7 @@
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include "Coordinate.h"
+
 const std::string death_sound_m_path = "share/audio/ff-death-scream-male.wav";
 const std::string death_sound_f_path = "share/audio/ff-death-scream-female.wav";
 
@@ -87,7 +87,8 @@ public:
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void play_voice();
-};
 
+    void flip_sprite();
+};
 
 #endif //CIS29GROUP2GAME_CHARACTER_H

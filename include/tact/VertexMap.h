@@ -25,7 +25,6 @@ private:
 public:
     VertexMap();
     bool loadMap(const std::string&, const std::string&, sf::Vector2u, const unsigned int, const unsigned int);
-
     int get_type_at(int, int) const;
     int get_type_at(Coordinate xy) const;
 };

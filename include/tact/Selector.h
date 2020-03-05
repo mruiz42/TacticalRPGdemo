@@ -35,6 +35,8 @@ public:
     bool is_empty();
     bool is_target_empty();
     bool is_selection_empty();
+    void kill_selection();
+    void kill_target();
 };
 
 

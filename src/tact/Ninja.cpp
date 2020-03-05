@@ -14,12 +14,10 @@
 #include "../../include/tact/Ninja.h"
 
 Ninja::Ninja() : Character() {
-    if (!texture.loadFromFile(ninja_spritesheet_path)){
+    if (!texture.loadFromFile(ninja_spritesheet_path))
         std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
-    }
-    if (!buffer.loadFromFile(death_sound_f_path)) {
+    if (!buffer.loadFromFile(death_sound_f_path))
         std::cout << "Error: " + death_sound_f_path + " could not be loaded." << std::endl;
-    }
     voice.setBuffer(buffer);
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
@@ -41,12 +39,10 @@ Ninja::Ninja() : Character() {
 }
 
 Ninja::Ninja(int x, int y) : Character(x, y) {
-    if (!texture.loadFromFile(ninja_spritesheet_path)){
+    if (!texture.loadFromFile(ninja_spritesheet_path))
         std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
-    }
-    if (!buffer.loadFromFile(death_sound_f_path)) {
+    if (!buffer.loadFromFile(death_sound_f_path))
         std::cout << "Error: " + death_sound_f_path + " could not be loaded." << std::endl;
-    }
     voice.setBuffer(buffer);
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
@@ -55,6 +51,9 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     charFace2.setTextureRect(sf::IntRect(272,400,64,87));
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
+
+    map_sprite.setScale({-1,1});
+
     this->name = "Ninja";
     this->level = 1;
     this->experience = 0;

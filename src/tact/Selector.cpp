@@ -35,3 +35,11 @@ bool Selector::is_empty() {
 Coordinate Selector::get_delta_pos(Coordinate origin, Coordinate final) {
     return final - origin;
 }
+
+void Selector::kill_selection() {
+
+}
+
+void Selector::kill_target() {
+    
+}
