@@ -19,6 +19,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "Speaker.h"
 #include "Sidebar.h"
 #include "VertexMap.h"
 #include "Character.h"
@@ -40,6 +41,8 @@ const std::string battleLog_font_path = "share/resources/arial.ttf";
 const std::string sidebar_bg_path = "share/textures/sidebar_background.png";
 const std::string vol_change_sound_path = "share/audio/volume_change.wav";
 
+
+
 const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
 const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
 const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
@@ -50,6 +53,7 @@ private:
     Cursor cur;
     VertexMap v_map;
     CharacterMap c_map;
+    Speaker speaker;
     sf::Sound sound;
     sf::SoundBuffer buffer;
     sf::Event event;

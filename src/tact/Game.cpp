@@ -9,7 +9,7 @@
 
 // Game constructor
 Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
-               hit_text(font_path), turn_text(font_path),
+               hit_text(font_path), turn_text(font_path), speaker(),
                player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
     {
     iterator = 0;
