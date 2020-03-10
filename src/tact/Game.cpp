@@ -8,7 +8,7 @@
 #include <cmath>
 
 // Game constructor
-Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path),
+Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
                hit_text(font_path), turn_text(font_path),
                player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
     {
@@ -144,7 +144,7 @@ int Game::play_game(sf::RenderWindow& window) {
             update_map();
             window.draw(v_map);
 
-            window.draw(c_map);
+//            window.draw(c_map);
 
             window.draw(cur.get_sprite());
             window.draw(sidebar);
@@ -155,7 +155,7 @@ int Game::play_game(sf::RenderWindow& window) {
         }
 		if (gameEnd) break;
 
-        }
+
         // These objects will only be updated when a poll event is detected
         window.clear();
         update_map();
@@ -190,20 +190,20 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
             move_cursor_key_poll();
         }
     }
-    // Menu selection routine
+        // Menu selection routine
     else if (menu_selected) {
         int selection = -1;
         if (event.type == sf::Event::KeyPressed) {
             selection = menu_key_poll();
         }
         if (selection != -1) {
-            switch(selection) {
+            switch (selection) {
                 case 0: // Move
                     move_selected = true;
                     menu_selected = false;
                     break;
                 case 1: // Wait
-                    selector.get_selection().set_can_attack(false);
+                    selector.get_selection()->set_can_attack(false);
                     wait_selected = true;
                     move_selected = false;
                     menu_selected = false;
@@ -214,28 +214,21 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
                     menu_selected = false;
                     break;
                 case 3: // Defend
-                    selector.get_selection().set_can_attack(false);
+                    selector.get_selection()->set_can_attack(false);
                     defend_selected = true;
                     move_selected = false;
                     menu_selected = false;
                     break;
             }
         }
-    }
-
-
-    else if (move_selected){
-        move_character_key_poll();
-    }
-
-    else if (defend_selected) {
+    } else if (move_selected) {
+        move_character_key_poll(window);
+    } else if (defend_selected) {
         defend_character_poll();
-    }
-
-    else if (attack_selected) {
+    } else if (attack_selected) {
         attack_character_key_poll(window);
     }
-
+}
 void Game::foo() {
     // Set attack grey
     if (!unit_selected){
@@ -244,7 +237,6 @@ void Game::foo() {
     else {
         sidebar.get_menu().turn_on();
     }
-
 }
 // Accessors / Mutators / if-trues
 Player& Game::get_current_player() {
@@ -430,66 +422,6 @@ void Game::update_map() {
     }
 }
 
-// Keyboard control routines
-// TODO: Fix sound / music
-void Game::poll_key_logic(sf::RenderWindow& window) {
-    adjust_volume_key_poll();
-    // Move cursor routine
-    if (!unit_selected) {
-        if (event.type == sf::Event::KeyPressed) {
-            move_cursor_key_poll();
-        }
-    }
-        // Menu selection routine
-    else if (menu_selected) {
-        int selection = -1;
-        if (event.type == sf::Event::KeyPressed) {
-            selection = menu_key_poll();
-        }
-        if (selection != -1) {
-            switch(selection) {
-                case 0: // Move
-                    move_selected = true;
-                    menu_selected = false;
-                    break;
-                case 1: // Wait
-                    selector.get_selection()->set_can_attack(false);
-                    wait_selected = true;
-                    move_selected = false;
-                    menu_selected = false;
-                    break;
-                case 2: // Attack
-                    attack_selected = true;
-                    move_selected = false;
-                    menu_selected = false;
-                    break;
-                case 3: // Defend
-                    selector.get_selection()->set_can_attack(false);
-                    defend_selected = true;
-                    move_selected = false;
-                    menu_selected = false;
-                    break;
-            }
-        }
-    }
-
-
-    else if (move_selected){
-        move_character_key_poll(window);
-    }
-
-    else if (defend_selected) {
-        defend_character_poll();
-    }
-
-    else if (attack_selected) {
-        attack_character_key_poll();
-    }
-
-    else if (wait_selected) {
-        wait_character_poll();
-    }
-}
 void Game::adjust_volume_key_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::Dash: // Volume Down
@@ -676,177 +608,6 @@ int Game::menu_key_poll() {
             return -1;
         }
     }
-}
-void Game::attack_character_key_poll() {
-    Coordinate sprite_coordinate = *selector.get_selection()->get_coordinate();
-
-    float up_bound = (sprite_coordinate.get_y() * 32 ) - 32;
-    float down_bound = (sprite_coordinate.get_y() * 32 ) + 32;
-    float left_bound = (sprite_coordinate.get_x() * 32 ) - 32;
-    float right_bound = (sprite_coordinate.get_x() * 32 ) + 32;
-
-    switch (event.key.code) {
-        case sf::Keyboard::Key::D:   // Right
-            if (cur.get_sprite().getPosition().x < 992 && cur.get_sprite().getPosition().x < right_bound)
-                cur.moveSprite(TEXTURE_SIZE, 0);
-            break;
-
-        case sf::Keyboard::Key::A:  // Left
-            if (cur.get_sprite().getPosition().x > 0 && cur.get_sprite().getPosition().x > left_bound)
-                cur.moveSprite(-TEXTURE_SIZE, 0);
-            break;
-
-        case sf::Keyboard::Key::W: // UP
-            if (cur.get_sprite().getPosition().y > 0 && cur.get_sprite().getPosition().y > up_bound)
-                cur.moveSprite(0, -TEXTURE_SIZE);
-            break;
-
-        case sf::Keyboard::Key::S: // DOWN
-            if (cur.get_sprite().getPosition().y < 672 && cur.get_sprite().getPosition().y < down_bound)
-                cur.moveSprite(0, TEXTURE_SIZE);
-            break;
-
-        case sf::Keyboard::Key::Return: {         // Attack
-            std::cout << "Attacking!" << std::endl;
-            Character *c_ptr = c_map.get_character_at(cur);
-            if (c_ptr != nullptr && !belongs_to_current_player(c_ptr) && !c_ptr->is_moved()) {
-                unit_selected = false;
-                menu_selected = false;
-                attack_selected = false;
-                selector.set_target(c_map.get_character_at(cur));
-                // Do attack call here
-                selector.get_selection()->set_moved(true);
-                selector.get_selection()->set_can_attack(false);
-
-                // Get used stats
-                unsigned int targetDEF = selector.get_target()->get_defense();
-                unsigned int targetHP = selector.get_target()->get_hit_points();
-                unsigned int targetATK = selector.get_target()->get_attack();
-                unsigned int targetSpeed = selector.get_target()->get_speed();
-
-                unsigned int selectionDEF = selector.get_selection()->get_defense();
-                unsigned int selectionHP = selector.get_selection()->get_hit_points();
-                unsigned int selectionATK = selector.get_selection()->get_attack();
-                unsigned int selectionSpeed = selector.get_selection()->get_speed();
-
-                //First attack, selection > target
-                double Damage = (double) selectionATK * (double) selectionATK / (double) targetDEF;
-                if (selector.get_target()->is_defending())
-                    Damage /= 2;
-                // multiply damage by a random number between 0.9 and 1.1
-                srand(time(NULL));
-                double DamageRoll = 90.0 + (rand() % 20 + 1);
-                Damage *= DamageRoll / 100.0;
-
-                // Chance for zero (evaded) or more attacks, based on speed
-                double attackChance = 0.9 * selectionSpeed / (double) targetSpeed;
-                srand(time(NULL) + 1);
-                double attackRoll = (rand() % 100 + 1) / 100.0; // random 1 to 100
-                int numAttack = 0;
-                while (attackRoll < attackChance && targetHP > 0) {
-                    numAttack += 1;
-                    // multiply damage by a random number between 0.9 and 1.1
-                    srand(time(NULL) + 2 + numAttack);
-                    double DamageRoll = 90.0 + (rand() % 20 + 1);
-                    int thisDamage = Damage * DamageRoll / 100.0;
-                    targetHP -= round(thisDamage);
-                    if (targetHP < 0) targetHP = 0;
-
-                    std::cout << "Attack " << numAttack << "! Player " << get_enemy_player_id() + 1 << "'s "
-                              << selector.get_target()->get_name() << " took " << thisDamage << " points of damage!"
-                              << std::endl;
-
-
-
-                    //Update attack chance
-                    attackChance /= 2;
-                    srand(time(NULL) + 3 + numAttack);
-                    attackRoll = (rand() % 100 + 1) / 100.0;
-                }
-                if (numAttack == 0) {
-                    std::cout << "Player " << get_enemy_player_id() + 1 << "'s " << selector.get_target()->get_name()
-                              << " evaded the attack!" << std::endl;
-                }
-                selector.get_target()->set_hit_points(targetHP);
-                if (targetHP == 0) {
-                    c_map.null_character_at(*selector.get_target()->get_coordinate());
-                    for (int thischar = 0; thischar < get_enemy_player().get_squadron().size(); thischar++) {
-                        if (get_enemy_player().get_squadron()[thischar]->get_hit_points() == 0) {
-                            get_enemy_player().get_squadron().erase(
-                                    get_enemy_player().get_squadron().begin() + thischar);
-                            break;
-                        }
-                    }
-                    std::cout << "Player " << get_enemy_player_id() + 1 << "'s " << selector.get_target()->get_name()
-                              << " is dead!" << std::endl;
-                }
-                // Target can revenge attack if not defending and is still alive.
-                if (!selector.get_target()->is_defending() && targetHP > 0) {
-                    double Damage = (double) selectionATK * (double) selectionATK / (double) selectionDEF;
-                    // multiply damage by a random number between 0.9 and 1.1
-                    srand(time(NULL) + 4);
-                    double DamageRoll = 90.0 + (rand() % 20 + 1);
-                    Damage *= DamageRoll / 100.0;
-
-                    // Chance for zero (evaded) or more attacks, based on speed
-                    double attackChance = 0.9 * targetSpeed / (double) selectionSpeed;
-                    srand(time(NULL) + 5);
-                    double attackRoll = (rand() % 100 + 1) / 100.0; // random 1 to 100
-                    int numAttack = 0;
-                    while (attackRoll < attackChance && selectionHP > 0) {
-                        numAttack += 1;
-                        // multiply damage by a random number between 0.9 and 1.1
-                        srand(time(NULL) + 6 + numAttack);
-                        double DamageRoll = 90.0 + (rand() % 20 + 1);
-                        int thisDamage = Damage * DamageRoll / 100.0;
-                        selectionHP -= round(thisDamage);
-                        if (selectionHP < 0) selectionHP = 0;
-
-                        std::cout << "Revenging attack " << numAttack << "! Player " << get_current_player_id() + 1
-                                  << "'s " << selector.get_selection()->get_name() << " took " << thisDamage
-                                  << " points of damage!" << std::endl;
-
-                        //Update attack chance
-                        attackChance /= 2;
-                        srand(time(NULL) + 7 + numAttack);
-                        attackRoll = (rand() % 100 + 1) / 100.0;
-                    }
-                    if (numAttack == 0) {
-                        std::cout << "Player " << get_current_player_id() + 1 << "'s "
-                                  << selector.get_selection()->get_name() << " evaded the counter attack!"
-                                  << std::endl;
-                    }
-                    selector.get_selection()->set_hit_points(selectionHP);
-                }
-                if (selectionHP <= 0) {
-                    c_map.null_character_at(*selector.get_selection()->get_coordinate());
-                    for (int thischar = 0; thischar < get_current_player().get_squadron().size(); thischar++) {
-                        if (get_current_player().get_squadron()[thischar]->get_hit_points() == 0) {
-                            get_current_player().get_squadron().erase(get_current_player().get_squadron().begin() + thischar);
-                            break;
-                        }
-                    }
-
-                    std::cout << "Player " << get_enemy_player_id() << "'s " << selector.get_target()->get_name()
-                              << "took X damage!" << std::endl;
-
-                }
-                int damage_int = static_cast<unsigned int>(Damage);
-                hit_text.start_clock();
-                hit_text.set_text(std::to_string(damage_int));
-                hit_text.set_position(cur.get_map_x()+4, cur.get_map_y());
-                selector.clear();
-                break;
-            }
-        }
-        case sf::Keyboard::Key::BackSpace:              // Cancel
-            attack_selected = false;
-            menu_selected = true;
-            break;
-    }
-
-
-
 }
 
 // Joystick control routines
@@ -1059,11 +820,11 @@ void Game::move_character_joy_poll() {
         }
 }
 void Game::attack_character_key_poll(sf::RenderWindow& window) {
-    Coordinate sprite_coordinate = selector.get_selection().get_coordinate();
-    float up_bound = (sprite_coordinate.get_y() * 32 ) - 32;
-    float down_bound = (sprite_coordinate.get_y() * 32 ) + 32;
-    float left_bound = (sprite_coordinate.get_x() * 32 ) - 32;
-    float right_bound = (sprite_coordinate.get_x() * 32 ) + 32;
+    Coordinate* sprite_coordinate = selector.get_selection()->get_coordinate();
+    float up_bound = (sprite_coordinate->get_y() * 32 ) - 32;
+    float down_bound = (sprite_coordinate->get_y() * 32 ) + 32;
+    float left_bound = (sprite_coordinate->get_x() * 32 ) - 32;
+    float right_bound = (sprite_coordinate->get_x() * 32 ) + 32;
 
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
@@ -1095,19 +856,19 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
                 attack_selected = false;
                 selector.set_target(c_map.get_character_at(cur));
                 // Do attack call here
-                selector.get_selection().set_moved(true);
-                selector.get_selection().set_can_attack(false);
+                selector.get_selection()->set_moved(true);
+                selector.get_selection()->set_can_attack(false);
 
 				// Selection attacks target
 				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " initiates attack." );
 				sidebar.drawBattleLog(window);
-				attack_character_rules(&get_enemy_player(), &selector.get_selection(), &selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
+				attack_character_rules(&get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
 
 				// Target can revenge attack if not defending and is still alive.
-				if (!selector.get_target().is_defending() && selector.get_target().get_hit_points() > 0) {
+				if (!selector.get_target()->is_defending() && selector.get_target()->get_hit_points() > 0) {
 					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
 					sidebar.drawBattleLog(window);
-					attack_character_rules(&get_current_player(), &selector.get_target(), &selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
+					attack_character_rules(&get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
 				}
                 selector.clear();
 
@@ -1178,7 +939,7 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	attackedC->set_hit_points(attackedHP);
 	if (attackedHP == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
-		c_map.null_character_at(attackedC->get_coordinate());
+		c_map.null_character_at(*attackedC->get_coordinate());
 		attackedC = nullptr;
 		for (auto thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
 			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {

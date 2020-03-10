@@ -28,7 +28,6 @@ public:
     void set_position(sf::Vector2f vector) { this->position = position; }
     void set_position(float, float);
     void set_clock(sf::Clock clock) { this->clock = clock; }
-
     void set_text(std::string string);
 
     bool draw_raising();
