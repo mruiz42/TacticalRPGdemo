@@ -10,10 +10,10 @@
 #include <string>
 
 namespace tact {
-    class Character;
+    class CoolText;
 }
 
-class CoolText {
+class tact::CoolText {
 private:
     sf::Font font;
     sf::Text text;

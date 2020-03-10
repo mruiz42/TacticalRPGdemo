@@ -4,6 +4,8 @@
 
 #include "../../include/tact/VertexMap.h"
 #include <iostream>
+using namespace tact;
+
 VertexMap::VertexMap() {
     map = {
             {69,48,39,5,0,0,0,0,0,0,0,0,7,46,46,46,69,259,69,69,69,69,69,69,69,69,69,69,69,69,39,39,39},

@@ -12,7 +12,7 @@ namespace tact {
     class Coordinate;
 }
 
-class Coordinate {
+class tact::Coordinate {
 protected:
     int x;
     int y;

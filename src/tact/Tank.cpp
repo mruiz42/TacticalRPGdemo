@@ -3,6 +3,7 @@
 //
 
 #include "../../include/tact/Tank.h"
+using namespace tact;
 
 Tank::Tank() : Character() {
     if (!texture.loadFromFile(tank_spritesheet_path)){

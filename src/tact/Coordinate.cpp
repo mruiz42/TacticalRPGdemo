@@ -56,7 +56,7 @@ float Coordinate::get_map_y() const {
 
 
 
-std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate){
+std::ostream& tact::operator<< (std::ostream& out, const Coordinate& coordinate){
     out << "(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")" << std::endl;
     return out;
 }

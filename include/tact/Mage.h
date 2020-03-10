@@ -15,7 +15,7 @@ namespace tact {
     class Mage;
 }
 
-class Mage : public Character {
+class tact::Mage : public tact::Character {
 private:
     std::vector<Spell> spell_list;
 protected:

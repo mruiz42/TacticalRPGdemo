@@ -18,7 +18,7 @@ namespace tact {
     class VertexMap;
 }
 
-class VertexMap : public sf::Drawable, public sf::Transformable {
+class tact::VertexMap : public sf::Drawable, public sf::Transformable {
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -9,7 +9,7 @@ namespace tact {
     class SpriteSheet;
 }
 
-class SpriteSheet {
+class tact::SpriteSheet {
 
 };
 

@@ -8,7 +8,7 @@
 namespace tact {
     class Spell;
 }
-class Spell {
+class tact::Spell {
 private:
     std::string spell_name;
     unsigned int cost;

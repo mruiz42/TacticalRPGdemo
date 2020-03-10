@@ -7,6 +7,8 @@
 #include <ctime>
 #include <cmath>
 
+using namespace tact;
+using namespace std;
 // Game constructor
 Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
                hit_text(font_path), turn_text(font_path),
@@ -940,7 +942,9 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	attackedC->set_hit_points(attackedHP);
 	if (attackedHP == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
+
 		c_map.null_character_at(*attackedC->get_coordinate());
+		delete attackedC;
 		attackedC = nullptr;
 		for (auto thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
 			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {

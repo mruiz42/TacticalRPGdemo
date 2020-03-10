@@ -12,7 +12,7 @@ namespace tact {
     class Sprite;
 }
 
-class Sprite {
+class tact::Sprite {
 
 protected:
     std::string filename;

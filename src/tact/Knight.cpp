@@ -35,12 +35,12 @@ using namespace tact;
 //    }
 //}
 
-sf::Sprite Knight :: returnSprite()
+sf::Sprite Knight::returnSprite()
 {
     return knight_sprite;
 }
 
-void Knight :: moveSprite(float x, float y)
+void Knight::moveSprite(float x, float y)
 {
     knight_sprite.move(sf::Vector2f(x,y));
 }

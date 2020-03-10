@@ -12,7 +12,7 @@ namespace tact {
     class Tank;
 }
 
-class Tank : public Character {
+class tact::Tank : public tact::Character {
 private:
     unsigned int armor;
 public:

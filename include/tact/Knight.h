@@ -14,7 +14,7 @@ namespace tact {
 }
 
 // Medium defense, medium attack
-class Knight : public Character {
+class tact::Knight : public tact::Character {
 private:
     Character knight;
     const std::string FileName = "./share/sprites/knight.png";

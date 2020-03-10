@@ -87,6 +87,9 @@ $(TACTOBJ)CharacterMap.o : $(TACTSRC)CharacterMap.cpp
 $(TACTOBJ)CoolText.o : $(TACTSRC)CoolText.cpp
 	$(COMPILE) $(TACTSRC)CoolText.cpp -o $(TACTOBJ)CoolText.o
 
+$(TACTOBJ)Speaker.o : $(TACTSRC)Speaker.cpp
+	$(COMPILE) $(TACTSRC)Speaker.cpp -o $(TACTOBJ)Speaker.o
+
 $(TACTOBJ)Game.o : $(TACTSRC)Game.cpp
 	$(COMPILE) $(TACTSRC)Game.cpp -o $(TACTOBJ)Game.o
 

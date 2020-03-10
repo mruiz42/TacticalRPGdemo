@@ -14,7 +14,7 @@ namespace tact {
     class Cursor;
 }
 
-class Cursor : public Coordinate {
+class tact::Cursor : public Coordinate {
 private:
     sf::Texture texture;
     sf::Sprite sprite;

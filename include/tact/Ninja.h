@@ -13,7 +13,7 @@ namespace tact {
     class Ninja;
 }
 
-class Ninja : public Character {
+class tact::Ninja : public tact::Character {
 private:
 public:
     Ninja();

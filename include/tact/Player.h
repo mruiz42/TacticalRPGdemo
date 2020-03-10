@@ -15,7 +15,7 @@ namespace tact {
     class Player;
 }
 
-class Player {
+class tact::Player {
 private:
     Fortress fort;
     std::vector<Character *> squadron;

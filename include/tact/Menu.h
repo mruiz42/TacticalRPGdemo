@@ -13,7 +13,7 @@ namespace tact {
     class Menu;
 }
 
-class Menu : public sf::Drawable {
+class tact::Menu : public sf::Drawable {
 private:
     int selection;
     sf::Font font;

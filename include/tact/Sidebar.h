@@ -22,7 +22,7 @@
 namespace tact {
     class Sidebar;
 }
-class Sidebar : public sf::Drawable, public sf::Transformable {
+class tact::Sidebar : public sf::Drawable, public sf::Transformable {
 private:
     sf::Texture background;
     sf::Sprite sidebar;

@@ -13,7 +13,7 @@ namespace tact {
     class CharacterMap;
 }
 
-class CharacterMap : public sf::Drawable, public sf::Transformable {
+class tact::CharacterMap : public sf::Drawable, public sf::Transformable {
 private:
 //    sf::VertexArray m_vertices;
     std::vector<std::vector<Character*> > map;

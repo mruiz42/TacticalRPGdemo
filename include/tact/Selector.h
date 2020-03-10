@@ -10,7 +10,7 @@ namespace tact {
     class Selector;
 }
 
-class Selector {
+class tact::Selector {
 private:
     Character* selection;
     Coordinate* selection_pos;

@@ -6,6 +6,9 @@
 #include <thread>
 #include <chrono>
 
+using namespace tact;
+
+
 /*	sf::Text turn;
     sf::Text lv;
     sf::Text exp;

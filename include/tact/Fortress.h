@@ -10,7 +10,7 @@ namespace tact {
     class Fortress;
 }
 
-class Fortress {
+class tact::Fortress {
 private:
     unsigned int hit_points;
     Coordinate xy;
