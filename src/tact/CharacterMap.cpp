@@ -4,6 +4,7 @@
 
 #include "../../include/tact/CharacterMap.h"
 #include "../../include/tact/Ninja.h"
+#include "../../include/tact/Mage.h"
 #include <iostream>
 CharacterMap::CharacterMap() {
     map.resize(22);

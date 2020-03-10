@@ -7,17 +7,26 @@
 Player::Player(){
     is_turn = false;
     number_units = 3;
+	/*
     for (int i = 0; i < number_units; i++){
         squadron.push_back(new Ninja(fort.get_coordinate().get_x() + i - 1, fort.get_coordinate().get_y() + i - 1)); // figure out how to spawn different types
-    }
+	}
+	*/
+     squadron.push_back(new Ninja(fort.get_coordinate().get_x() + 0 - 1, fort.get_coordinate().get_y() + 0 - 1)); 
+	 squadron.push_back(new Mage(fort.get_coordinate().get_x() + 1 - 1, fort.get_coordinate().get_y() + 1 - 1)); 
+	 squadron.push_back(new Tank(fort.get_coordinate().get_x() + 2 - 1, fort.get_coordinate().get_y() + 2 - 1)); 
 }
 
 Player::Player(int id, Coordinate xy) : player_id(id), fort(xy) {
     is_turn = false;
     number_units = 3;
+	/*
     for (int i = 0; i < number_units; i++){
         squadron.push_back(new Ninja(fort.get_coordinate().get_x() + i - 1, fort.get_coordinate().get_y() + i - 1)); // figure out how to spawn different types
-    }
+	*/
+	squadron.push_back(new Tank(fort.get_coordinate().get_x() + 0 - 1, fort.get_coordinate().get_y() + 0 - 1));
+	squadron.push_back(new Mage(fort.get_coordinate().get_x() + 1 - 1, fort.get_coordinate().get_y() + 1 - 1));
+	squadron.push_back(new Ninja(fort.get_coordinate().get_x() + 2 - 1, fort.get_coordinate().get_y() + 2 - 1));
 }
 
 Player::~Player() {

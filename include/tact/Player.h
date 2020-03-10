@@ -8,6 +8,8 @@
 #include "Character.h"
 #include "Coordinate.h"
 #include "Ninja.h"
+#include "Mage.h"
+#include "Tank.h"
 
 class Player {
 private:

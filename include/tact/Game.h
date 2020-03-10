@@ -36,6 +36,7 @@ const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/textures/map_tiles32.png";
 const std::string font_path = "share/resources/PressStart2P-Regular.ttf";
 const std::string sidebar_font_path = "share/resources/ChunkyDunk.ttf";
+const std::string battleLog_font_path = "share/resources/arial.ttf";
 const std::string sidebar_bg_path = "share/textures/sidebar_background.png";
 const std::string vol_change_sound_path = "share/audio/volume_change.wav";
 
@@ -89,7 +90,7 @@ public:
     void move_character_key_poll(sf::RenderWindow&);
     int menu_key_poll();
 
-    void poll_key_logic(sf::RenderWindow&);
+    void poll_key_logic(sf::RenderWindow& window);
 
     int menu_joy_poll();
 
@@ -103,7 +104,8 @@ public:
 
     void defend_character_poll();
 
-    void attack_character_key_poll();
+    void attack_character_key_poll(sf::RenderWindow& window);
+	void attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window);
 
     bool has_enemy_adjacent();
 
