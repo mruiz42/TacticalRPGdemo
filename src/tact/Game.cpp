@@ -139,19 +139,6 @@ int Game::play_game(sf::RenderWindow& window) {
             else if (event.type == sf::Event::KeyPressed) {
                 poll_key_logic(window);
             }
-
-            window.clear();
-            update_map();
-            window.draw(v_map);
-
-//            window.draw(c_map);
-
-            window.draw(cur.get_sprite());
-            window.draw(sidebar);
-            window.draw(sidebar.get_menu());
-            sidebar.drawStat(window);
-			sidebar.drawBattleLog(window);
-            window.display();
         }
 		if (gameEnd) break;
 
@@ -870,6 +857,7 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
 					sidebar.drawBattleLog(window);
 					attack_character_rules(&get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
 				}
+
                 selector.clear();
 
             }
@@ -927,15 +915,28 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	if (numAttack == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " evades!");
 		sidebar.drawBattleLog(window);
-	} else if (numAttack == 1){
+
+        hit_text.start_clock();
+        hit_text.set_text("MISS");
+        hit_text.set_position(cur.get_map_x(), cur.get_map_y());
+        hit_text.set_position(cur.get_map_x()+4, cur.get_map_y());
+	}
+	else if (numAttack == 1) {
 		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks!");
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
 		sidebar.drawBattleLog(window);
-	}  else {
+        int damage_int = static_cast<unsigned int>(attackedC->get_hit_points() - attackedHP);
+        hit_text.start_clock();
+        hit_text.set_text(std::to_string(damage_int));
+        hit_text.set_position(cur.get_map_x(), cur.get_map_y());
+
+	}
+	else {
 		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks " + std::to_string(numAttack) + " times!");
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
 		sidebar.drawBattleLog(window);
 	}
+
 	attackedC->set_hit_points(attackedHP);
 	if (attackedHP == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
@@ -948,6 +949,7 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 			}
 		}
 	}
+
 }
 
 void Game::wait_character_poll() {
