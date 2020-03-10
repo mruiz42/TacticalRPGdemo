@@ -584,7 +584,7 @@ int Game::menu_key_poll() {
             else if (menu_selection == 2 && !this->selector.get_selection()->can_attack()) {
                 return -1;
             }
-            this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
+//            this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
             return menu_selection;
         }
 
