@@ -8,6 +8,11 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
+
+namespace tact {
+    class Knight;
+}
+
 // Medium defense, medium attack
 class Knight : public Character {
 private:

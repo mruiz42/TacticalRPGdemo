@@ -10,6 +10,10 @@
 #include <iostream>
 const std::string cur_path = "share/sprites/cursor.png";
 
+namespace tact {
+    class Cursor;
+}
+
 class Cursor : public Coordinate {
 private:
     sf::Texture texture;

@@ -4,6 +4,8 @@
 
 #include "../../include/tact/Cursor.h"
 
+using namespace tact;
+
 Cursor::Cursor() : Coordinate(0, 0) {
     if (!texture.loadFromFile(cur_path, sf::IntRect(0,0,32,32))) {
         std::cerr << "Couldn't load sprite:" << cur_path;

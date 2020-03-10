@@ -4,6 +4,8 @@
 
 #include "../../include/tact/Selector.h"
 
+using namespace tact;
+
 void Selector::clear() {
     this->selection = nullptr;
     this->target = nullptr;

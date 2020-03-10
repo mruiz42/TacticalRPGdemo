@@ -14,6 +14,10 @@
 #include <string>
 #include "Coordinate.h"
 
+namespace tact {
+    class VertexMap;
+}
+
 class VertexMap : public sf::Drawable, public sf::Transformable {
 
 private:

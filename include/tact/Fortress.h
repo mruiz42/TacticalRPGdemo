@@ -6,6 +6,10 @@
 #define CIS29GROUP2GAME_FORTRESS_H
 #include "Coordinate.h"
 
+namespace tact {
+    class Fortress;
+}
+
 class Fortress {
 private:
     unsigned int hit_points;

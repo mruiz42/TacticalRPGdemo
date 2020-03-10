@@ -14,6 +14,10 @@
 const std::string death_sound_m_path = "share/audio/ff-death-scream-male.wav";
 const std::string death_sound_f_path = "share/audio/ff-death-scream-female.wav";
 
+namespace tact {
+    class Character;
+}
+
 class Character : public sf::Drawable {
 protected:
     sf::SoundBuffer buffer;

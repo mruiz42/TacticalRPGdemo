@@ -19,7 +19,9 @@
 #include <sstream>
 #include <vector>
 #include <deque>
-
+namespace tact {
+    class Sidebar;
+}
 class Sidebar : public sf::Drawable, public sf::Transformable {
 private:
     sf::Texture background;

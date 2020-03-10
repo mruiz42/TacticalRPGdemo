@@ -4,6 +4,8 @@
 
 #include "../../include/tact/CoolText.h"
 
+using namespace tact;
+
 CoolText::CoolText(std::string font_path) {
 
     if (!font.loadFromFile(font_path))

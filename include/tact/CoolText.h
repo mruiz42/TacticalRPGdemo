@@ -9,6 +9,10 @@
 #include <iostream>
 #include <string>
 
+namespace tact {
+    class Character;
+}
+
 class CoolText {
 private:
     sf::Font font;

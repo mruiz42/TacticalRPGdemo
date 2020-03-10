@@ -9,6 +9,10 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Character.h"
 
+namespace tact {
+    class CharacterMap;
+}
+
 class CharacterMap : public sf::Drawable, public sf::Transformable {
 private:
 //    sf::VertexArray m_vertices;

@@ -9,6 +9,10 @@
 // Attack increase in forest, high critical
 const std::string ninja_spritesheet_path = "share/sprites/ninja.png";
 
+namespace tact {
+    class Ninja;
+}
+
 class Ninja : public Character {
 private:
 public:

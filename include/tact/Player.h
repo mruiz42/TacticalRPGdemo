@@ -11,6 +11,10 @@
 #include "Mage.h"
 #include "Tank.h"
 
+namespace tact {
+    class Player;
+}
+
 class Player {
 private:
     Fortress fort;

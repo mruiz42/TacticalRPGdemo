@@ -4,6 +4,9 @@
 
 #include "../../include/tact/Knight.h"
 #include<iostream>
+
+using namespace tact;
+
 //Knight::Knight() {
 //    knight_sprite.setTexture(knight_texture);
 //    knight_sprite.setColor(sf::Color(255,255,255));

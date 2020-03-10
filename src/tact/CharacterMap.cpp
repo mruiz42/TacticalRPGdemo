@@ -6,6 +6,9 @@
 #include "../../include/tact/Ninja.h"
 #include "../../include/tact/Mage.h"
 #include <iostream>
+
+using namespace tact;
+
 CharacterMap::CharacterMap() {
     map.resize(22);
     for (int y = 0; y < 22; ++y){

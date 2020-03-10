@@ -1,6 +1,8 @@
 //
 // Created by michael on 1/21/20.
 //
+
+
 /*    unsigned int level;
     unsigned int experience;
     unsigned int hit_points;
@@ -12,6 +14,8 @@
     unsigned int special_defense;*/
 
 #include "../../include/tact/Ninja.h"
+
+using namespace tact;
 
 Ninja::Ninja() : Character() {
     if (!texture.loadFromFile(ninja_spritesheet_path))

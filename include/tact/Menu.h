@@ -9,6 +9,10 @@
 #include <iostream>
 #include <SFML/System/Time.hpp>
 
+namespace tact {
+    class Menu;
+}
+
 class Menu : public sf::Drawable {
 private:
     int selection;
