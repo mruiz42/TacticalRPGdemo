@@ -12,13 +12,13 @@
 A simple turn based tactical rpg game. The point of the game is to eliminate the opposing team's units to claim victory.
 
 ## Controls
-####Keyboard:
+#### Keyboard:
 `WSAD - move cursor`
 `Enter - select`
 `Backspace - back`
 `Q - next unit`
 
-####Controller:
+#### Controller:
 `DPad - move cursor`
 `A - select`
 `B - back`
