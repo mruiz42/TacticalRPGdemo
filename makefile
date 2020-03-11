@@ -15,6 +15,7 @@ LIBSRC  = ./libsrc/
 LIBDIR  = ./lib/
 STTLIB	= $(LIBDIR)libgame.a
 CRDLIBPATH = $(LIBDIR)libselector.a
+
 # object files
 TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/

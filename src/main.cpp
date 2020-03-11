@@ -8,7 +8,7 @@
 int main()
 {
     // Create window
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "[Untitled game]");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tactical RPG demo");
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
     tact::Game game;
     game.play_game(window);

@@ -5,8 +5,8 @@
 #ifndef CIS29GROUP2GAME_CURSOR_H
 #define CIS29GROUP2GAME_CURSOR_H
 #include "Sprite.h"
-#include <string>
 #include "Coordinate.h"
+#include <string>
 #include <iostream>
 const std::string cur_path = "share/sprites/cursor.png";
 
