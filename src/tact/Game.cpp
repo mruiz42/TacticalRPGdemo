@@ -154,7 +154,6 @@ int Game::play_game(sf::RenderWindow& window) {
         //window.draw(c_map);
         window.draw(cur.get_sprite());
         foo();
-
         if (hit_text.draw_raising()){
             window.draw(hit_text.get_text());
         }
@@ -164,9 +163,9 @@ int Game::play_game(sf::RenderWindow& window) {
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
         sidebar.drawStat(window);
+        sidebar.drawBattleLog(window);
         window.display();
     }
-
 
     std::cout << "Game Over!" << std::endl;
     return 0;
@@ -218,6 +217,7 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
         attack_character_key_poll(window);
     }
 }
+
 void Game::foo() {
     // Set attack grey
     if (!unit_selected){
@@ -227,6 +227,7 @@ void Game::foo() {
         sidebar.get_menu().turn_on();
     }
 }
+
 // Accessors / Mutators / if-trues
 Player& Game::get_current_player() {
     if (player1.get_is_turn()) {
@@ -522,6 +523,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 
             std::cout << "placed at :" << cur << std::endl;
 
+            sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Red);
             c_map.set_character_at(cur, selector.get_selection());
             c_map.null_character_at(*c_ptr->get_coordinate());
 //            selector.get_selection().set_coordinate(cur);
@@ -966,6 +968,7 @@ void Game::wait_character_poll() {
     selector.get_selection()->set_moved(true);
     selector.clear();
 }
+
 void Game::defend_character_poll() {
     menu_selected = false;
     move_selected = false;

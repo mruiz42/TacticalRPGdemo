@@ -48,5 +48,7 @@ public:
     void clear();
 
     Menu& get_menu() { return this->menu; }
+
+	void update_battleLog(std::string newlog, sf::Color color);
 };
 #endif //CIS29GROUP2GAME_SIDEBAR_H
