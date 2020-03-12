@@ -57,6 +57,10 @@ Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + 
 
     /// display character's info on sidebar
     sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_prefix + font_path);
+
+    for (auto i = 0; i < player2.get_squadron().size(); i++){
+        player2.get_squadron().at(i)->flip_map_sprite();
+    }
 }
 // Main game loop
 int Game::play_game(sf::RenderWindow& window) {
@@ -341,11 +345,12 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
             Coordinate delta = selector.get_delta_pos(*selector.get_selection_pos(), *selector.get_target_pos());
             float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
             c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
-            c_ptr->get_map_sprite().setScale({-1,1});
             c_ptr->get_map_sprite().move(x, y);
+            c_ptr->walk();
             window.draw(c_ptr->get_map_sprite());
             move_frame++;
             if (move_frame == 60) {
+                c_ptr->reset_pos();
                 c_ptr->set_walking(false);
                 unit_walking = false;
                 move_frame = 0;

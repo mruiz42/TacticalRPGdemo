@@ -17,6 +17,7 @@ const std::string death_sound_f_path = "share/audio/ff-death-scream-female.wav";
 namespace tact {
     class Character;
 }
+
 class tact::Character : public sf::Drawable {
 protected:
     sf::SoundBuffer buffer;
@@ -27,6 +28,7 @@ protected:
 	sf::Sprite charFace2;
     sf::Sprite map_sprite;
     std::string name;
+    sf::IntRect textureRect;
     Coordinate xy;
     bool attack_on;
     bool moved;
@@ -41,6 +43,7 @@ protected:
     unsigned int speed;
     unsigned int special_attack;
     unsigned int special_defense;
+    unsigned int walk_animation[1];
 public:
     Character();
     Character(Coordinate xy);
@@ -88,9 +91,14 @@ public:
     void set_speed(unsigned int speed) { this->speed = speed; }
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
+    void flip_map_sprite();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void play_voice();
     void flip_sprite();
+    void walk();
+    void reset_pos();
+
+
 };
 
 #endif //CIS29GROUP2GAME_CHARACTER_H

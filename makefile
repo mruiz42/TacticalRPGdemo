@@ -22,7 +22,7 @@ SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Game.o
-LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
+LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)Main_Menu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
 LIBCORD = $(TACTOBJ)Coordinate.o $(TACTOBJ)Cursor.o
 
 .PHONY : clean all run
@@ -97,6 +97,9 @@ $(TACTOBJ)Speaker.o : $(TACTSRC)Speaker.cpp
 
 $(TACTOBJ)Game.o : $(TACTSRC)Game.cpp
 	$(COMPILE) $(TACTSRC)Game.cpp -o $(TACTOBJ)Game.o
+
+$(TACTOBJ)Main_Menu.o : $(TACTSRC)Main_Menu.cpp
+	$(COMPILE) $(TACTSRC)Main_Menu.cpp -o $(TACTOBJ)Main_Menu.o
 
 clean :
 	@rm -f $(SRCOBJ)main.o
