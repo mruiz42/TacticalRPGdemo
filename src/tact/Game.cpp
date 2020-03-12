@@ -256,9 +256,7 @@ int Game::get_current_player_id() {
     else if (player2.get_is_turn()) {
         return player2.get_player_id();
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
+    return -1;
 }
 int Game::get_enemy_player_id() {
     if (player1.get_is_turn()) {
@@ -267,9 +265,7 @@ int Game::get_enemy_player_id() {
     else if (player2.get_is_turn()) {
         return player1.get_player_id();
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
+    return -1;
 }
 bool Game::has_enemy_adjacent(){
     // TODO: If selector.get_selection() is empty, call exception
@@ -352,7 +348,10 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
                 c_ptr->set_walking(false);
                 unit_walking = false;
                 move_frame = 0;
+                c_map.null_character_at(*selector.get_selection_pos());
                 c_ptr->set_coordinate(*selector.get_target_pos());
+                selector.get_selection()->set_coordinate(cur);
+
             }
         }
         else {
@@ -392,11 +391,7 @@ int Game::swap_turns(){
         turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + "'s Turn begin");
         return player1.get_player_id();
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
-
-
+    return -1;
 }
 void Game::update_map() {
 //    for (int y = 0; y < 22; ++y) {
@@ -525,8 +520,6 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 
             sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Red);
             c_map.set_character_at(cur, selector.get_selection());
-            c_map.null_character_at(*c_ptr->get_coordinate());
-//            selector.get_selection().set_coordinate(cur);
 
             if (has_enemy_adjacent()) {
                 c_ptr->set_moved(true);

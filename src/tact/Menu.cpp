@@ -95,22 +95,22 @@ void Menu::move_down() {
 }
 
 void Menu::set_selection_text_color(sf::Color color){
-    sf::Color prev_color = text[selection].getColor();
+    sf::Color prev_color = text[selection].getFillColor();
     sf::Clock clock;
     float elapsed = clock.getElapsedTime().asMilliseconds();
-    text[selection].setColor(color);
+    text[selection].setFillColor(color);
 }
 
 void Menu::set_one_text_color(sf::Color color, int position){
-    text[position].setColor(color);
+    text[position].setFillColor(color);
 }
 
 void Menu::set_all_text_color(sf::Color color){
     for (auto i = 0; i < text.size(); i++){
-        this->text[i].setColor(color);
+        this->text[i].setFillColor(color);
     }
     if (selection <= 3 && selection >= 0) {
-        this->text[selection].setColor(sf::Color::Red);
+        this->text[selection].setFillColor(sf::Color::Red);
     }
 }
 

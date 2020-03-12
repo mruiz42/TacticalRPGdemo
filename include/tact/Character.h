@@ -90,7 +90,6 @@ public:
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void play_voice();
-
     void flip_sprite();
 };
 
