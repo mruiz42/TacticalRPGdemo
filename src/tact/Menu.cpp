@@ -16,25 +16,25 @@ Menu::Menu(std::string font_filename) {
     // 0 - MOVE
     text[0].setCharacterSize(24);
     text[0].setFont(font);
-    text[0].setColor(sf::Color::White);
+    text[0].setFillColor(sf::Color::White);
     text[0].setString("MOVE");
     text[0].setPosition(sf::Vector2f(1054, 512));
     // 1 - WAIT
     text[1].setCharacterSize(24);
     text[1].setFont(font);
-    text[1].setColor(sf::Color::White);
+    text[1].setFillColor(sf::Color::White);
     text[1].setString("WAIT");
     text[1].setPosition(sf::Vector2f(1180, 512));
     // 2 - ATTACK
     text[2].setCharacterSize(24);
     text[2].setFont(font);
-    text[2].setColor(sf::Color::White);
+    text[2].setFillColor(sf::Color::White);
     text[2].setString("ATTACK");
     text[2].setPosition(sf::Vector2f(1046, 576));
     // 3 - DEFEND
     text[3].setCharacterSize(24);
     text[3].setFont(font);
-    text[3].setColor(sf::Color::White);
+    text[3].setFillColor(sf::Color::White);
     text[3].setString("DEFEND");
     text[3].setPosition(sf::Vector2f(1170, 576));
 
@@ -95,22 +95,22 @@ void Menu::move_down() {
 }
 
 void Menu::set_selection_text_color(sf::Color color){
-    sf::Color prev_color = text[selection].getColor();
+    sf::Color prev_color = text[selection].getFillColor();
     sf::Clock clock;
     float elapsed = clock.getElapsedTime().asMilliseconds();
-    text[selection].setColor(color);
+    text[selection].setFillColor(color);
 }
 
 void Menu::set_one_text_color(sf::Color color, int position){
-    text[position].setColor(color);
+    text[position].setFillColor(color);
 }
 
 void Menu::set_all_text_color(sf::Color color){
     for (auto i = 0; i < text.size(); i++){
-        this->text[i].setColor(color);
+        this->text[i].setFillColor(color);
     }
     if (selection <= 3 && selection >= 0) {
-        this->text[selection].setColor(sf::Color::Red);
+        this->text[selection].setFillColor(sf::Color::Red);
     }
 }
 

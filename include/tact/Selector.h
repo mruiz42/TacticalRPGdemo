@@ -18,7 +18,7 @@ private:
     Coordinate* target_pos;
 public:
     // Constructors
-    Selector() : selection(nullptr), target(nullptr), selection_pos(nullptr), target_pos(nullptr) {}
+    Selector() : selection(nullptr), selection_pos(nullptr), target(nullptr), target_pos(nullptr) {}
     // Accessors
     Character* get_selection() { return this->selection; }
     Coordinate* get_selection_pos() { return this->selection_pos; }

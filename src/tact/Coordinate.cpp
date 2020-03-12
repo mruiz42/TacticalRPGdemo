@@ -4,8 +4,6 @@
 
 #include "../../include/tact/Coordinate.h"
 
-using namespace tact;
-
 //void Coordinate::set_coordinate(int x, int y) {
 //    this->x = x;
 //    this->y = y;
@@ -56,7 +54,7 @@ float Coordinate::get_map_y() const {
 
 
 
-std::ostream& tact::operator<< (std::ostream& out, const Coordinate& coordinate){
+std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate){
     out << "(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")" << std::endl;
     return out;
 }

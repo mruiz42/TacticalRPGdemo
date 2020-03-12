@@ -50,7 +50,7 @@ namespace tact {
 class tact::Game {
 private:
     sf::Music music;
-    tact::Cursor cur;
+    Cursor cur;
     tact::VertexMap v_map;
     tact::CharacterMap c_map;
     sf::Sound sound;
@@ -80,8 +80,8 @@ public:
     int set_iterator();
     int toggle_music();
     int swap_turns();
-    tact::Player& get_current_player();
-    tact::Player& get_enemy_player();
+    tact::Player* get_current_player();
+    tact::Player* get_enemy_player();
     int get_current_player_id();
     int get_enemy_player_id();
     int check_controllers();
@@ -92,32 +92,19 @@ public:
     void adjust_volume_key_poll();
     void move_character_key_poll(sf::RenderWindow&);
     int menu_key_poll();
-
     void poll_key_logic(sf::RenderWindow& window);
-
     int menu_joy_poll();
-
-    int move_cursor_joy_poll();
-
+    void move_cursor_joy_poll();
     void poll_joy_logic();
-
     void move_character_joy_poll();
-
     void wait_character_poll();
-
     void defend_character_poll();
-
     void attack_character_key_poll(sf::RenderWindow& window);
-
 	void attack_character_rules(tact::Player* attackedP, tact::Character* attackerC, tact::Character* attackedC, int attackerPID,
 	        int attackedPID, sf::RenderWindow& window);
-
     bool has_enemy_adjacent();
-
     bool belongs_to_enemy_player(tact::Character *character);
-
     void draw_units(sf::RenderWindow &window, tact::Player player);
-
     void foo();
 };
 

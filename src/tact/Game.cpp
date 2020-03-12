@@ -30,7 +30,7 @@ Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + 
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
     sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) + " turn");
-    cur.jump_to(*get_current_player().get_squadron()[0]->get_coordinate());
+    cur.jump_to(*get_current_player()->get_squadron()[0]->get_coordinate());
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
     }
@@ -68,19 +68,19 @@ int Game::play_game(sf::RenderWindow& window) {
         }
         while (window.pollEvent(event) && !unit_walking) {
 
-        if (get_enemy_player().get_squadron().size() == 0) {
+        if (get_enemy_player()->get_squadron().size() == 0) {
             std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
             game_end = true;
             break;
         }
-        if (get_current_player().get_squadron().size() == 0) {
+        if (get_current_player()->get_squadron().size() == 0) {
             std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;
             game_end = true;
             break;
         }
 
 
-            if(this->get_current_player().is_turn_end() && !unit_walking && !menu_selected){
+            if(this->get_current_player()->is_turn_end() && !unit_walking && !menu_selected){
                 this->swap_turns();
                 menu_selected = false;
                 move_selected = false;
@@ -91,14 +91,14 @@ int Game::play_game(sf::RenderWindow& window) {
                 wait_selected = false;
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id()) +" turn");
             }
-			if (get_enemy_player().get_squadron().size() == 0) {
+			if (get_enemy_player()->get_squadron().size() == 0) {
 				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " wins!");
 				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
 				gameEnd = true;
 				break;
 			}
-			if (get_current_player().get_squadron().size() == 0) {
+			if (get_current_player()->get_squadron().size() == 0) {
 				sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " wins!");
 				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;
@@ -231,28 +231,24 @@ void Game::foo() {
 }
 
 // Accessors / Mutators / if-trues
-Player& Game::get_current_player() {
+Player* Game::get_current_player() {
     if (player1.get_is_turn()) {
-        return player1;
+        return &player1;
     }
     else if (player2.get_is_turn()) {
-        return player2;
-    }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
+        return &player2;
     }
 }
-Player& Game::get_enemy_player() {
+Player* Game::get_enemy_player() {
     if (player1.get_is_turn()) {
-        return player2;
+        return &player2;
     }
     else if (player2.get_is_turn()) {
-        return player1;
+        return &player1;
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
+    return nullptr;
 }
+
 int Game::get_current_player_id() {
     if (player1.get_is_turn()) {
         return player1.get_player_id();
@@ -260,9 +256,7 @@ int Game::get_current_player_id() {
     else if (player2.get_is_turn()) {
         return player2.get_player_id();
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
+    return -1;
 }
 int Game::get_enemy_player_id() {
     if (player1.get_is_turn()) {
@@ -271,9 +265,7 @@ int Game::get_enemy_player_id() {
     else if (player2.get_is_turn()) {
         return player1.get_player_id();
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
+    return -1;
 }
 bool Game::has_enemy_adjacent(){
     // TODO: If selector.get_selection() is empty, call exception
@@ -281,13 +273,14 @@ bool Game::has_enemy_adjacent(){
 //        // do exception here
 //    }
     Coordinate* xy = selector.get_selection()->get_coordinate();
-    const Player* enemy_player = &get_enemy_player();
+//    const Player* enemy_player = &get_enemy_player();
     int x = xy->get_x();
     int y = xy->get_y();
     Character* up = c_map.get_character_at(x, y-1);
     Character* down = c_map.get_character_at(x, y+1);
     Character* left = c_map.get_character_at(x-1, y);
     Character* right = c_map.get_character_at(x+1, y);
+
     if (belongs_to_enemy_player(up) && up != nullptr) {
         return true;
     }
@@ -302,17 +295,18 @@ bool Game::has_enemy_adjacent(){
     }
     return false;
 }
+
 bool Game::belongs_to_current_player(Character* character) {
-    for (auto i = 0; i < this->get_current_player().get_squadron().size(); i++) {
-        if (character == this->get_current_player().get_squadron()[i]) {
+    for (std::vector<tact::Character*>::size_type i = 0; i < this->get_current_player()->get_squadron().size(); i++) {
+        if (character == this->get_current_player()->get_squadron()[i]) {
             return true;
         }
     }
     return false;
 }
 bool Game::belongs_to_enemy_player(Character* character){
-    for (auto i = 0; i < this->get_enemy_player().get_squadron().size(); i++) {
-        if (character == this->get_enemy_player().get_squadron()[i]) {
+    for (auto i = 0; i < this->get_enemy_player()->get_squadron().size(); i++) {
+        if (character == this->get_enemy_player()->get_squadron()[i]) {
             return true;
         }
     }
@@ -339,7 +333,7 @@ int Game::check_controllers() {
     }
 }
 void Game::draw_units(sf::RenderWindow& window, Player player){
-    for (int i = 0; i < get_current_player().get_squadron().size(); i++){
+    for (int i = 0; i < get_current_player()->get_squadron().size(); i++){
         Character* c_ptr = player.get_squadron()[i];
         if (c_ptr->is_walking()) {
             unit_walking = true;
@@ -354,7 +348,10 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
                 c_ptr->set_walking(false);
                 unit_walking = false;
                 move_frame = 0;
+                c_map.null_character_at(*selector.get_selection_pos());
                 c_ptr->set_coordinate(*selector.get_target_pos());
+                selector.get_selection()->set_coordinate(cur);
+
             }
         }
         else {
@@ -394,11 +391,7 @@ int Game::swap_turns(){
         turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + "'s Turn begin");
         return player1.get_player_id();
     }
-    else {
-        std::cout << "ERROR! Should probably throw something, because this shouldn't have happened...!!!" << std::endl;
-    }
-
-
+    return -1;
 }
 void Game::update_map() {
 //    for (int y = 0; y < 22; ++y) {
@@ -467,9 +460,9 @@ void Game::move_cursor_key_poll() {
             break;
         }
         case sf::Keyboard::Key::Q:
-            if (iterator == get_current_player().get_squadron().size())
+            if (iterator == get_current_player()->get_squadron().size())
                 iterator = 0;
-            Character* c_ptr = get_current_player().get_next_character(iterator);
+            Character* c_ptr = get_current_player()->get_next_character(iterator);
             cur.jump_to(*c_ptr->get_coordinate());
             iterator++;
             break;
@@ -511,7 +504,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             selector.set_target_pos(&cur);
             Character* c_ptr = selector.get_selection();
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
-                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player()->get_player_id());
                 break;
             }
             else if (v_map.get_type_at(cur) >= 69) {
@@ -527,8 +520,6 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 
             sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Red);
             c_map.set_character_at(cur, selector.get_selection());
-            c_map.null_character_at(*c_ptr->get_coordinate());
-//            selector.get_selection().set_coordinate(cur);
 
             if (has_enemy_adjacent()) {
                 c_ptr->set_moved(true);
@@ -657,7 +648,7 @@ void Game::poll_joy_logic() {
 
     }
 }
-int Game::move_cursor_joy_poll() {
+void Game::move_cursor_joy_poll() {
     if(event.type == sf::Event::JoystickMoved) {  // Controller input events
         // Get direction of D pad press
         float p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
@@ -693,9 +684,9 @@ int Game::move_cursor_joy_poll() {
         }
 }
     else if (sf::Joystick::isButtonPressed(get_current_player_id(), 4)) {
-        if (iterator == get_current_player().get_squadron().size())
+        if (iterator == get_current_player()->get_squadron().size())
             iterator = 0;
-        Character* c_ptr = get_current_player().get_next_character(iterator);
+        Character* c_ptr = get_current_player()->get_next_character(iterator);
         cur.jump_to(*c_ptr->get_coordinate());
         iterator++;
     }
@@ -789,7 +780,7 @@ void Game::move_character_joy_poll() {
             Character* c_ptr = selector.get_selection();
             Coordinate xy = *c_ptr->get_coordinate();
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
-                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player().get_player_id());
+                sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player()->get_player_id());
             }
             else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
@@ -855,13 +846,13 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
 				// Selection attacks target
 				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " initiates attack." );
 				sidebar.drawBattleLog(window);
-				attack_character_rules(&get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
+				attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
 
 				// Target can revenge attack if not defending and is still alive.
 				if (!selector.get_target()->is_defending() && selector.get_target()->get_hit_points() > 0) {
 					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
 					sidebar.drawBattleLog(window);
-					attack_character_rules(&get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
+					attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
 				}
 
                 selector.clear();

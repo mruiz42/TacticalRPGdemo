@@ -1,5 +1,5 @@
 CC      = g++
-CFLAGS  = -std=c++14 -Wall #-Wextra -pedantic
+CFLAGS  = -std=c++14 #-Wall #-Wextra -pedantic
 INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
 BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)
@@ -22,8 +22,8 @@ SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Game.o
-LIBDEP	= $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
-LIBCORD = $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Cursor.o
+LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
+LIBCORD = $(TACTOBJ)Coordinate.o $(TACTOBJ)Cursor.o
 
 .PHONY : clean all run
 
