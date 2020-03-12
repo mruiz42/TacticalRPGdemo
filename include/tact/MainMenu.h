@@ -3,8 +3,8 @@
 // Created by michael on 1/28/20.
 //
 
-#ifndef CIS29GROUP2GAME_MAIN_MENU_H
-#define CIS29GROUP2GAME_MAIN_MENU_H
+#ifndef CIS29GROUP2GAME_MAINMENU_H
+#define CIS29GROUP2GAME_MAINMENU_H
 
 #include <SFML/Audio.hpp>
 #include <SFML/Audio/Sound.hpp>
@@ -13,12 +13,12 @@
 
 #define MAX_NUMBER_OF_ITEMS 3
 
-class Main_Menu {
+class MainMenu {
 public:
     float width;
     float height;
-    Main_Menu(float w, float h);
-    ~Main_Menu();
+    MainMenu(float w, float h);
+    ~MainMenu();
     void draw(sf::RenderWindow &window);
     void draw_instruction(sf::RenderWindow &window);
     void moveUp();

@@ -1,5 +1,5 @@
 #include "../include/tact/Game.h"
-#include "../include/tact/Main_Menu.h"
+#include "../include/tact/MainMenu.h"
 
 //const int HP_MAX = 200;
 //const int HP_MIN = 0;
@@ -27,7 +27,7 @@ int main()
 void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions)
 {
 
-    Main_Menu main_menu(window.getSize().x,window.getSize().y);
+    MainMenu main_menu(window.getSize().x, window.getSize().y);
     window.clear();
 
 
