@@ -6,16 +6,8 @@
 #include <thread>
 #include <chrono>
 
-/*	sf::Text turn;
-    sf::Text lv;
-    sf::Text exp;
-    sf::Text mp;
-    sf::Text atk;
-    sf::Text def;
-    sf::Text spd;
-    sf::Text satk;
-    sf::Text sdef;
-	sf::Text hp;*/
+using namespace tact;
+
 Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::string battleLog_font_filename) : menu(font_filename) {
     if(!this->background.loadFromFile(texture_filename, sf::IntRect(0, 0, 256, 704)))
         std::cout << "Could not open: " + texture_filename << std::endl;
@@ -62,7 +54,7 @@ Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::s
 	battleLog.resize(8);
 	for(int i = 0; i < battleLog.size(); i++) {
 		battleLog[i].setFont(battleLog_font);
-		battleLog[i].setFillColor(sf::Color::White);
+		battleLog[i].setFillColor(sf::Color::Black);
 		battleLog[i].setCharacterSize(15);
 		int pw = 1040;
 		battleLog[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
@@ -80,6 +72,7 @@ void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // draw the vertex array
     target.draw(sidebar, states);
 }
+
 void Sidebar::update_sidebar(Coordinate coordinate, int turn, int player_id) {
     text[0].setString("Player" + std::to_string(player_id + 1) +" turn");
     text[11].setString("TURN." + std::to_string(turn));
@@ -96,6 +89,21 @@ void Sidebar::update_battleLog(std::string newlog) {
     }
 	battleLog.back().setString(newlog);
 }
+
+void Sidebar::update_battleLog(std::string newlog, sf::Color color) {
+    std::cout << "BL Update" <<  battleLog.size() << std::endl;
+
+    battleLog.push_back(battleLog.front());
+    battleLog.pop_front();
+    auto it = battleLog.end() - 1;
+    it->setFillColor(color);
+    for(int i = 0; i < battleLog.size(); i++) {
+        int pw = 1040;
+        battleLog[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
+    }
+    battleLog.back().setString(newlog);
+}
+
 
 void Sidebar::update_statbar(Character* character, Coordinate coordinate, int turn, int player_id) {
         text[0].setString("Player" + std::to_string(player_id + 1) +" turn");
@@ -124,6 +132,7 @@ void Sidebar::update_statbar(Character* character, Coordinate coordinate, int tu
 			charFace.scale(sf::Vector2f(1.5, 1.5));
 		}
 }
+
 
 void Sidebar::createStat(float const width, float const height, std::string filename) {
 	if(!font.loadFromFile(filename)) {
@@ -176,7 +185,6 @@ void Sidebar::drawBattleLog(sf::RenderTarget &window) {
 	for(int i =0; i < battleLog.size(); i++) {
 		window.draw(battleLog[i]);
 		std::string thisS = battleLog[i].getString();
-		std::cout << "drawing " << thisS  << std::endl;
 	}
 	//std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }

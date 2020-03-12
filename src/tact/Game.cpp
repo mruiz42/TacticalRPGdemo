@@ -7,6 +7,8 @@
 #include <ctime>
 #include <cmath>
 
+using namespace tact;
+using namespace std;
 // Game constructor
 Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
                hit_text(font_path), turn_text(font_path), speaker(),
@@ -152,7 +154,6 @@ int Game::play_game(sf::RenderWindow& window) {
         //window.draw(c_map);
         window.draw(cur.get_sprite());
         foo();
-
         if (hit_text.draw_raising()){
             window.draw(hit_text.get_text());
         }
@@ -162,9 +163,9 @@ int Game::play_game(sf::RenderWindow& window) {
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
         sidebar.drawStat(window);
+        sidebar.drawBattleLog(window);
         window.display();
     }
-
 
     std::cout << "Game Over!" << std::endl;
     return 0;
@@ -214,8 +215,11 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
         defend_character_poll();
     } else if (attack_selected) {
         attack_character_key_poll(window);
+    } else if (wait_selected) {
+        wait_character_poll();
     }
 }
+
 void Game::foo() {
     // Set attack grey
     if (!unit_selected){
@@ -225,6 +229,7 @@ void Game::foo() {
         sidebar.get_menu().turn_on();
     }
 }
+
 // Accessors / Mutators / if-trues
 Player& Game::get_current_player() {
     if (player1.get_is_turn()) {
@@ -520,6 +525,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 
             std::cout << "placed at :" << cur << std::endl;
 
+            sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Red);
             c_map.set_character_at(cur, selector.get_selection());
             c_map.null_character_at(*c_ptr->get_coordinate());
 //            selector.get_selection().set_coordinate(cur);
@@ -584,7 +590,7 @@ int Game::menu_key_poll() {
             else if (menu_selection == 2 && !this->selector.get_selection()->can_attack()) {
                 return -1;
             }
-            this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
+//            this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
             return menu_selection;
         }
 
@@ -877,7 +883,6 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	int attackedHP = attackedC->get_hit_points();
 	int attackedATK = attackedC->get_attack();
 	int attackedSpeed = attackedC->get_speed();
-
 	int attackerDEF = attackerC->get_defense();
 	int attackerHP = attackerC->get_hit_points();
 	int attackerATK = attackerC->get_attack();
@@ -940,7 +945,9 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	attackedC->set_hit_points(attackedHP);
 	if (attackedHP == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
+
 		c_map.null_character_at(*attackedC->get_coordinate());
+		delete attackedC;
 		attackedC = nullptr;
 		for (auto thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
 			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {
@@ -962,6 +969,7 @@ void Game::wait_character_poll() {
     selector.get_selection()->set_moved(true);
     selector.clear();
 }
+
 void Game::defend_character_poll() {
     menu_selected = false;
     move_selected = false;

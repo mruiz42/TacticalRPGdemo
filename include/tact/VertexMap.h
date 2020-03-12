@@ -14,7 +14,11 @@
 #include <string>
 #include "Coordinate.h"
 
-class VertexMap : public sf::Drawable, public sf::Transformable {
+namespace tact {
+    class VertexMap;
+}
+
+class tact::VertexMap : public sf::Drawable, public sf::Transformable {
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

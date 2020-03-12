@@ -8,7 +8,11 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <string>
 
-class Sprite {
+namespace tact {
+    class Sprite;
+}
+
+class tact::Sprite {
 
 protected:
     std::string filename;

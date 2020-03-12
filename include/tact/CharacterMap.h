@@ -9,7 +9,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Character.h"
 
-class CharacterMap : public sf::Drawable, public sf::Transformable {
+namespace tact {
+    class CharacterMap;
+}
+
+class tact::CharacterMap : public sf::Drawable, public sf::Transformable {
 private:
 //    sf::VertexArray m_vertices;
     std::vector<std::vector<Character*> > map;
@@ -22,7 +26,6 @@ public:
     Character* get_character_at(Coordinate coordinate);
     Character& get_character_address_at(Coordinate coordinate);
     void null_character_at(Coordinate coordinate);
-
     void set_character_at(Coordinate coordinate, Character*);
 };
 

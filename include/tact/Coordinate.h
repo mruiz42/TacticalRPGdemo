@@ -8,7 +8,11 @@
 
 #define TEXTURE_SIZE 32
 
-class Coordinate {
+namespace tact {
+    class Coordinate;
+}
+
+class tact::Coordinate {
 protected:
     int x;
     int y;

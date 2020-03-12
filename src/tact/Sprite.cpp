@@ -5,6 +5,8 @@
 #include "../../include/tact/Sprite.h"
 #include <iostream>
 
+using namespace tact;
+
 Sprite::Sprite (std::string s) {
     if (!texture.loadFromFile(s, sf::IntRect(0,0,32,32)))
     {

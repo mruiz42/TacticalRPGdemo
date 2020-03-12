@@ -19,8 +19,10 @@
 #include <sstream>
 #include <vector>
 #include <deque>
-
-class Sidebar : public sf::Drawable, public sf::Transformable {
+namespace tact {
+    class Sidebar;
+}
+class tact::Sidebar : public sf::Drawable, public sf::Transformable {
 private:
     sf::Texture background;
     sf::Sprite sidebar;
@@ -46,5 +48,7 @@ public:
     void clear();
 
     Menu& get_menu() { return this->menu; }
+
+	void update_battleLog(std::string newlog, sf::Color color);
 };
 #endif //CIS29GROUP2GAME_SIDEBAR_H

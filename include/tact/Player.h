@@ -11,7 +11,11 @@
 #include "Mage.h"
 #include "Tank.h"
 
-class Player {
+namespace tact {
+    class Player;
+}
+
+class tact::Player {
 private:
     Fortress fort;
     std::vector<Character *> squadron;

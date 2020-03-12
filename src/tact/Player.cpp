@@ -4,6 +4,8 @@
 
 #include "../../include/tact/Player.h"
 
+using namespace tact;
+
 Player::Player(){
     is_turn = false;
     number_units = 3;

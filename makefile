@@ -1,5 +1,5 @@
 CC      = g++
-CFLAGS  = -std=c++14 -Wall -Wextra -pedantic
+CFLAGS  = -std=c++14 -Wall #-Wextra -pedantic
 INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
 BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)
@@ -14,6 +14,7 @@ TACTSRC	= $(SOURCE)tact/
 LIBSRC  = ./libsrc/
 LIBDIR  = ./lib/
 STTLIB	= $(LIBDIR)libgame.a
+CRDLIBPATH = $(LIBDIR)libselector.a
 
 # object files
 TACTOBJ	= $(TACTSRC)obj/
@@ -21,15 +22,19 @@ SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Game.o
-LIBDEP	= $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Cursor.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
+LIBDEP	= $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
+LIBCORD = $(TACTOBJ)Selector.o $(TACTOBJ)Coordinate.o $(TACTOBJ)Cursor.o
 
 .PHONY : clean all run
 
 # Rule to create the primary executable
-$(OUTBIN) : $(OUTBINDEPS) $(STTLIB)
-	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(STTLIB) -o $(OUTBIN)
+$(OUTBIN) : $(OUTBINDEPS) $(STTLIB) $(CRDLIBPATH)
+	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(STTLIB) $(CRDLIBPATH) -o $(OUTBIN)
 	@echo './bin/somethingTactics.out' is built!
-	
+
+$(CRDLIBPATH) : $(LIBCORD)
+	ar r $(CRDLIBPATH) $(LIBCORD)
+
 $(STTLIB) : $(LIBDEP)
 	ar r $(STTLIB) $(LIBDEP)
 
@@ -86,6 +91,9 @@ $(TACTOBJ)CharacterMap.o : $(TACTSRC)CharacterMap.cpp
 
 $(TACTOBJ)CoolText.o : $(TACTSRC)CoolText.cpp
 	$(COMPILE) $(TACTSRC)CoolText.cpp -o $(TACTOBJ)CoolText.o
+
+$(TACTOBJ)Speaker.o : $(TACTSRC)Speaker.cpp
+	$(COMPILE) $(TACTSRC)Speaker.cpp -o $(TACTOBJ)Speaker.o
 
 $(TACTOBJ)Game.o : $(TACTSRC)Game.cpp
 	$(COMPILE) $(TACTSRC)Game.cpp -o $(TACTOBJ)Game.o

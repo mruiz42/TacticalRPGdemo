@@ -8,8 +8,11 @@
 #include <iostream>
 // High defense, low attack, low speed "front liner", has a "armor" attribute
 const std::string tank_spritesheet_path = "share/sprites/tank.png";
+namespace tact {
+    class Tank;
+}
 
-class Tank : public Character {
+class tact::Tank : public tact::Character {
 private:
     unsigned int armor;
 public:

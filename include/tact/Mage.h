@@ -11,7 +11,11 @@
 
 const std::string mage_spritesheet_path = "share/sprites/mage.png";
 
-class Mage : public Character {
+namespace tact {
+    class Mage;
+}
+
+class tact::Mage : public tact::Character {
 private:
     std::vector<Spell> spell_list;
 protected:

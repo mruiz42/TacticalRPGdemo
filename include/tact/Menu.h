@@ -9,7 +9,11 @@
 #include <iostream>
 #include <SFML/System/Time.hpp>
 
-class Menu : public sf::Drawable {
+namespace tact {
+    class Menu;
+}
+
+class tact::Menu : public sf::Drawable {
 private:
     int selection;
     sf::Font font;

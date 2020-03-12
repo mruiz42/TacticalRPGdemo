@@ -5,12 +5,16 @@
 #ifndef CIS29GROUP2GAME_CURSOR_H
 #define CIS29GROUP2GAME_CURSOR_H
 #include "Sprite.h"
-#include <string>
 #include "Coordinate.h"
+#include <string>
 #include <iostream>
 const std::string cur_path = "share/sprites/cursor.png";
 
-class Cursor : public Coordinate {
+namespace tact {
+    class Cursor;
+}
+
+class tact::Cursor : public Coordinate {
 private:
     sf::Texture texture;
     sf::Sprite sprite;

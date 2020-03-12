@@ -6,7 +6,11 @@
 #define CIS29GROUP2GAME_SELECTOR_H
 #include "Character.h"
 
-class Selector {
+namespace tact {
+    class Selector;
+}
+
+class tact::Selector {
 private:
     Character* selection;
     Coordinate* selection_pos;

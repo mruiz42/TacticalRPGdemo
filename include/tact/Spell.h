@@ -5,8 +5,10 @@
 #ifndef CIS29GROUP2GAME_SPELL_H
 #define CIS29GROUP2GAME_SPELL_H
 #include "string"
-
-class Spell {
+namespace tact {
+    class Spell;
+}
+class tact::Spell {
 private:
     std::string spell_name;
     unsigned int cost;

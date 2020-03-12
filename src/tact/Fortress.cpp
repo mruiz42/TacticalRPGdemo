@@ -4,6 +4,9 @@
 
 #include "../../include/tact/Fortress.h"
 
+using namespace tact;
+
+
 Fortress::Fortress() {
     hit_points = 0;
     xy.set_x(0);

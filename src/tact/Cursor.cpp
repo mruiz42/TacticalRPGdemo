@@ -4,6 +4,8 @@
 
 #include "../../include/tact/Cursor.h"
 
+using namespace tact;
+
 Cursor::Cursor() : Coordinate(0, 0) {
     if (!texture.loadFromFile(cur_path, sf::IntRect(0,0,32,32))) {
         std::cerr << "Couldn't load sprite:" << cur_path;
@@ -47,7 +49,7 @@ void Cursor::jump_to(Coordinate coordinate) {
     this->sprite.setPosition(xf,yf);
 }
 
-std::ostream& operator<< (std::ostream& out, const Cursor& cursor){
+std::ostream& tact::operator<< (std::ostream& out, const Cursor& cursor){
     out << "(" + std::to_string(cursor.get_x()) + "," + std::to_string(cursor.get_y()) + ")" << std::endl;
     return out;
 }

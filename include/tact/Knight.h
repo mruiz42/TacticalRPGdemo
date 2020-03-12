@@ -8,8 +8,13 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
+
+namespace tact {
+    class Knight;
+}
+
 // Medium defense, medium attack
-class Knight : public Character {
+class tact::Knight : public tact::Character {
 private:
     Character knight;
     const std::string FileName = "./share/sprites/knight.png";

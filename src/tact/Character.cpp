@@ -5,6 +5,8 @@
 #include "../../include/tact/Character.h"
 #include <SFML/Audio/SoundBuffer.hpp>
 
+using namespace tact;
+
 Character::Character() : xy(0,0) {
     name = "";
     level = 0;

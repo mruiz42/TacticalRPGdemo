@@ -4,6 +4,9 @@
 
 #include "../../include/tact/Menu.h"
 
+using namespace tact;
+
+
 Menu::Menu(std::string font_filename) {
     if(!font.loadFromFile(font_filename)) {
         std::cout << "Could not open: " + font_filename << std::endl;

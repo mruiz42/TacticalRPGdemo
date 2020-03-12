@@ -47,22 +47,28 @@ const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_S
 const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
 const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
 
-class Game {
+namespace tact {
+    class Game;
+}
+class tact::Game {
 private:
     sf::Music music;
-    Cursor cur;
-    VertexMap v_map;
-    CharacterMap c_map;
+    tact::Cursor cur;
+    tact::VertexMap v_map;
+    tact::CharacterMap c_map;
+    tact::Cursor cur;
+    tact::VertexMap v_map;
+    tact::CharacterMap c_map;
     Speaker speaker;
     sf::Sound sound;
     sf::SoundBuffer buffer;
     sf::Event event;
-    Sidebar sidebar;
-    CoolText hit_text;
-    CoolText turn_text;
-    Player player1;
-    Player player2;
-    Selector selector;
+    tact::Sidebar sidebar;
+    tact::CoolText hit_text;
+    tact::CoolText turn_text;
+    tact::Player player1;
+    tact::Player player2;
+    tact::Selector selector;
     unsigned int move_frame;
     unsigned int iterator;
     bool game_end;
@@ -81,12 +87,12 @@ public:
     int set_iterator();
     int toggle_music();
     int swap_turns();
-    Player& get_current_player();
-    Player& get_enemy_player();
+    tact::Player& get_current_player();
+    tact::Player& get_enemy_player();
     int get_current_player_id();
     int get_enemy_player_id();
     int check_controllers();
-    bool belongs_to_current_player(Character*);
+    bool belongs_to_current_player(tact::Character*);
     void update_map();
     void set_framerate();
     void move_cursor_key_poll();
@@ -109,13 +115,15 @@ public:
     void defend_character_poll();
 
     void attack_character_key_poll(sf::RenderWindow& window);
-	void attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window);
+
+	void attack_character_rules(tact::Player* attackedP, tact::Character* attackerC, tact::Character* attackedC, int attackerPID,
+	        int attackedPID, sf::RenderWindow& window);
 
     bool has_enemy_adjacent();
 
-    bool belongs_to_enemy_player(Character *character);
+    bool belongs_to_enemy_player(tact::Character *character);
 
-    void draw_units(sf::RenderWindow &window, Player player);
+    void draw_units(sf::RenderWindow &window, tact::Player player);
 
     void foo();
 };

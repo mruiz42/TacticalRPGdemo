@@ -4,6 +4,8 @@
 
 #include "../../include/tact/Mage.h"
 
+using namespace tact;
+
 Mage::Mage() : Character() {
     if (!texture.loadFromFile(mage_spritesheet_path)){
         std::cout << "Error: " + mage_spritesheet_path + " could not be loaded." << std::endl;
