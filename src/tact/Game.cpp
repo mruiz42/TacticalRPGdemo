@@ -522,7 +522,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 //            }
 
             std::cout << "placed at :" << cur << std::endl;
-            except.hideExpect();
+            except.hide_expect();
             c_map.set_character_at(cur, selector.get_selection());
             c_map.null_character_at(*c_ptr->get_coordinate());
 //            selector.get_selection().set_coordinate(cur);
@@ -556,7 +556,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
     catch (sf::Vector2f input )
     {   
         
-        except.showExcept();
+        except.show_except();
         except.shift(input);
     }
    
