@@ -6,10 +6,17 @@
 #include <iostream>
 
 Sprite::Sprite (std::string s) {
-    if (!texture.loadFromFile(s, sf::IntRect(0,0,32,32)))
-    {
-        std::cerr << "Couldn't load sprite:" << filename;
-        exit(1);
+    try{
+
+    
+        if (!texture.loadFromFile(s, sf::IntRect(0,0,32,32)))
+        {
+            throw(filename);
+        }
+    }
+    catch(const std::string& error){
+    
+        std::cout << "Could not load " <<  error << " from file." << std::endl;
     }
     this->sprite.setTexture(this->texture);
 

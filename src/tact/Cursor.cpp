@@ -5,9 +5,13 @@
 #include "../../include/tact/Cursor.h"
 
 Cursor::Cursor() : Coordinate(0, 0) {
-    if (!texture.loadFromFile(cur_path, sf::IntRect(0,0,32,32))) {
-        std::cerr << "Couldn't load sprite:" << cur_path;
-        exit(1);
+    try{
+        if (!texture.loadFromFile(cur_path, sf::IntRect(0,0,32,32))) {
+            throw(cur_path);
+        }
+    }
+    catch(const std::string& error){
+        std::cout << "Could not load " <<  error << " from file." << std::endl;
     }
     this->sprite.setTexture(this->texture);
 }

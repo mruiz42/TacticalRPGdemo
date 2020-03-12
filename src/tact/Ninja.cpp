@@ -14,8 +14,13 @@
 #include "../../include/tact/Ninja.h"
 
 Ninja::Ninja() : Character() {
-    if (!texture.loadFromFile(ninja_spritesheet_path)){
-        std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
+    try {
+        if (!texture.loadFromFile(ninja_spritesheet_path)){
+            throw(ninja_spritesheet_path);
+        }
+    }
+    catch(const std::string& error){
+        std::cout << "Could not load " <<  error << " from file." << std::endl;
     }
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
@@ -37,8 +42,13 @@ Ninja::Ninja() : Character() {
 }
 
 Ninja::Ninja(int x, int y) : Character(x, y) {
-    if (!texture.loadFromFile(ninja_spritesheet_path)){
-        std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
+    try {
+        if (!texture.loadFromFile(ninja_spritesheet_path)){
+            throw(ninja_spritesheet_path);
+        }
+    }
+    catch(const std::string& error){
+        std::cout << "Could not load " <<  error << " from file." << std::endl;
     }
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
