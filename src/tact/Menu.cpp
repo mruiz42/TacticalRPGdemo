@@ -16,25 +16,25 @@ Menu::Menu(std::string font_filename) {
     // 0 - MOVE
     text[0].setCharacterSize(24);
     text[0].setFont(font);
-    text[0].setColor(sf::Color::White);
+    text[0].setFillColor(sf::Color::White);
     text[0].setString("MOVE");
     text[0].setPosition(sf::Vector2f(1054, 512));
     // 1 - WAIT
     text[1].setCharacterSize(24);
     text[1].setFont(font);
-    text[1].setColor(sf::Color::White);
+    text[1].setFillColor(sf::Color::White);
     text[1].setString("WAIT");
     text[1].setPosition(sf::Vector2f(1180, 512));
     // 2 - ATTACK
     text[2].setCharacterSize(24);
     text[2].setFont(font);
-    text[2].setColor(sf::Color::White);
+    text[2].setFillColor(sf::Color::White);
     text[2].setString("ATTACK");
     text[2].setPosition(sf::Vector2f(1046, 576));
     // 3 - DEFEND
     text[3].setCharacterSize(24);
     text[3].setFont(font);
-    text[3].setColor(sf::Color::White);
+    text[3].setFillColor(sf::Color::White);
     text[3].setString("DEFEND");
     text[3].setPosition(sf::Vector2f(1170, 576));
 

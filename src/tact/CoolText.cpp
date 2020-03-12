@@ -43,7 +43,7 @@ bool CoolText::draw_raising() {
 bool CoolText::draw_centered(){
     if (this->clock.getElapsedTime().asMilliseconds() < 2000) {
         text.setCharacterSize(32);
-        text.setColor(sf::Color::White);
+        text.setFillColor(sf::Color::White);
         text.setOutlineThickness(4);
         text.setOutlineColor(sf::Color::Black);
         this->set_position(1024/2 - (text.getGlobalBounds().width)/2, 704/2 - (text.getGlobalBounds().height)/2);

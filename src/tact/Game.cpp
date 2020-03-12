@@ -281,13 +281,14 @@ bool Game::has_enemy_adjacent(){
 //        // do exception here
 //    }
     Coordinate* xy = selector.get_selection()->get_coordinate();
-    const Player* enemy_player = &get_enemy_player();
+//    const Player* enemy_player = &get_enemy_player();
     int x = xy->get_x();
     int y = xy->get_y();
     Character* up = c_map.get_character_at(x, y-1);
     Character* down = c_map.get_character_at(x, y+1);
     Character* left = c_map.get_character_at(x-1, y);
     Character* right = c_map.get_character_at(x+1, y);
+
     if (belongs_to_enemy_player(up) && up != nullptr) {
         return true;
     }
@@ -302,8 +303,9 @@ bool Game::has_enemy_adjacent(){
     }
     return false;
 }
+
 bool Game::belongs_to_current_player(Character* character) {
-    for (auto i = 0; i < this->get_current_player().get_squadron().size(); i++) {
+    for (std::vector<tact::Character*>::size_type i = 0; i < this->get_current_player().get_squadron().size(); i++) {
         if (character == this->get_current_player().get_squadron()[i]) {
             return true;
         }
