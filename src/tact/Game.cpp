@@ -276,9 +276,11 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
             c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
             c_ptr->get_map_sprite().setScale({-1,1});
             c_ptr->get_map_sprite().move(x, y);
+            c_ptr->walk();
             window.draw(c_ptr->get_map_sprite());
             move_frame++;
             if (move_frame == 60) {
+                c_ptr->reset_pos();
                 c_ptr->set_walking(false);
                 unit_walking = false;
                 move_frame = 0;

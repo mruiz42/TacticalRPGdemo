@@ -54,6 +54,11 @@ Main_Menu::Main_Menu(float width, float height)
     instructions[3].setString("Select a sprite and place it within movement range\nEach sprite moves once per turn\nGoal: Eliminate opposing characters");
     instructions[3].setPosition(sf::Vector2f(30, 240)); // divide by 2 so itll be centered, ach character movesalso height will be centered
 
+    instructions[4].setFont(font); 
+    instructions[4].setColor(sf::Color::White);
+    instructions[4].setString("Press Return to go back to the main menu");
+    instructions[4].setPosition(sf::Vector2f(0, 400)); // divide by 2 so itll be centered, ach character movesalso height will be centered
+
     selectedItemIndex = 0;
 }
 
@@ -71,7 +76,7 @@ void Main_Menu::draw(sf::RenderWindow &window)
     sprite.setOrigin(sf::Vector2f(width/2, height/2));
     window.draw(sprite);
     */
-    for(int i = 0;i<MAX_NUMBER_OF_ITEMS;i++)
+    for(auto i = 0;i<MAX_NUMBER_OF_ITEMS;i++)
     {
         window.draw(main_menu[i]);
     }
@@ -101,7 +106,7 @@ void Main_Menu::moveDown()
 
 void Main_Menu::draw_instruction(sf::RenderWindow &window)
 {
-    for(int i = 0;i<4;i++)
+    for(auto i = 0;i<5;i++)
     {
         window.draw(instructions[i]);
     }

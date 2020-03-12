@@ -24,7 +24,7 @@ int main()
 
 void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions)
 {
-top:
+
     Main_Menu main_menu(window.getSize().x,window.getSize().y);
     window.clear();
     
@@ -32,6 +32,8 @@ top:
     
     while (window.isOpen())
     {
+        top:
+        window.clear();
         main_menu.draw(window);
         window.display();
         sf::Event event;
@@ -42,11 +44,13 @@ top:
             case sf::Event::KeyReleased:
                 switch(event.key.code)
                 {
+                case sf::Keyboard::W:
                 case sf::Keyboard::Up:
                     main_menu.moveUp();
                     break;
 
                 case sf::Keyboard::Down:
+                case sf::Keyboard::S:
                     main_menu.moveDown();
                     break;
                     
@@ -63,6 +67,20 @@ top:
                                 window.clear();
                                 main_menu.draw_instruction(window);
                                 window.display();
+                                while (window.pollEvent(event))
+                                {
+                                    /* code */
+                                    switch (event.type)
+                                    {
+                                    case sf::Event::KeyReleased:
+                                        switch(event.key.code)
+                                        {
+                                        case sf::Keyboard::Return: goto top;
+                                            break;
+                                        }
+                                    }
+                                }
+                                
                             }
                             break;
                         case 2:

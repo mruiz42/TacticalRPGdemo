@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "Coordinate.h"
 
+
 class Character : public sf::Drawable {
 protected:
     // sf::Audio voiceline
@@ -19,6 +20,7 @@ protected:
 	sf::Sprite charFace2;
     sf::Sprite map_sprite;
     std::string name;
+    sf::IntRect textureRect;
     Coordinate xy;
     bool attack_on;
     bool moved;
@@ -33,6 +35,7 @@ protected:
     unsigned int speed;
     unsigned int special_attack;
     unsigned int special_defense;
+    unsigned int walk_animation[1];
 public:
     Character();
     Character(Coordinate xy);
@@ -81,6 +84,10 @@ public:
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void walk();
+    void reset_pos();
+
+
 };
 
 

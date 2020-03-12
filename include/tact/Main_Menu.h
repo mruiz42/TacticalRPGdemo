@@ -29,7 +29,7 @@ private:
     int selectedItemIndex;
     sf::Font font;
     sf::Text main_menu[MAX_NUMBER_OF_ITEMS];
-    sf::Text instructions[4];
+    sf::Text instructions[5];
     //void makeMenu();
 };
 #endif //CIS29GROUP2GAME_MENU_H
