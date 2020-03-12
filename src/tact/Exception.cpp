@@ -26,7 +26,7 @@ sf::Text Exception::returnText()
 
 void Exception::draw(sf::RenderTarget& target, sf::RenderStates states) const {}
 
-void Exception::showExcept()
+void Exception::show_except()
 {
     text.setFillColor(sf::Color(255,255,255));
     text.setOutlineColor(sf::Color(0,0,0));
@@ -34,7 +34,7 @@ void Exception::showExcept()
     
 }
 
-void Exception::hideExpect()
+void Exception::hide_expect()
 {
     text.setFillColor(sf::Color(255,255,255,0));
     text.setOutlineThickness(0);

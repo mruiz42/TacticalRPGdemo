@@ -28,8 +28,8 @@ public:
     Exception();
     sf::Text returnText();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    void showExcept();
-    void hideExpect();
+    void show_except();
+    void hide_expect();
     void shift(sf::Vector2f);
     
     
