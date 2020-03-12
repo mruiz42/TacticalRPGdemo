@@ -56,9 +56,6 @@ private:
     tact::Cursor cur;
     tact::VertexMap v_map;
     tact::CharacterMap c_map;
-    tact::Cursor cur;
-    tact::VertexMap v_map;
-    tact::CharacterMap c_map;
     Speaker speaker;
     sf::Sound sound;
     sf::SoundBuffer buffer;

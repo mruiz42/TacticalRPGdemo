@@ -9,12 +9,15 @@
 using namespace tact;
 
 Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::string battleLog_font_filename) : menu(font_filename) {
-    if(!this->background.loadFromFile(texture_filename, sf::IntRect(0, 0, 256, 704)))
+    if(!this->background.loadFromFile(texture_filename, sf::IntRect(0, 0, 256, 704))) {
         std::cout << "Could not open: " + texture_filename << std::endl;
-    if(!font.loadFromFile(font_filename))
+    }
+    if(!font.loadFromFile(font_filename)) {
         std::cout << "Could not open: " + font_filename << std::endl;
-	if(!battleLog_font.loadFromFile(battleLog_font_filename))
+    }
+	if(!battleLog_font.loadFromFile(battleLog_font_filename)) {
         std::cout << "Could not open: " + battleLog_font_filename << std::endl;
+    }
     sidebar.setTexture(background);
     sidebar.setPosition(1024,0);
     text.resize(13);

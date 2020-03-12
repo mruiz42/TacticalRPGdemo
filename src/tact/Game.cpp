@@ -8,7 +8,6 @@
 #include <cmath>
 
 using namespace tact;
-using namespace std;
 // Game constructor
 Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
                hit_text(font_path), turn_text(font_path), speaker(),
@@ -170,6 +169,7 @@ int Game::play_game(sf::RenderWindow& window) {
     std::cout << "Game Over!" << std::endl;
     return 0;
 }
+
 void Game::poll_key_logic(sf::RenderWindow& window) {
     adjust_volume_key_poll();
     // Move cursor routine
@@ -189,6 +189,7 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
                 case 0: // Move
                     move_selected = true;
                     menu_selected = false;
+                    wait_selected = false;
                     break;
                 case 1: // Wait
                     selector.get_selection()->set_can_attack(false);
