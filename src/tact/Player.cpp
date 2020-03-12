@@ -36,7 +36,7 @@ Player::~Player() {
 }
 
 Character* Player::get_next_character(int iterator) {
-    for (auto i = iterator; i < squadron.size(); i++) {
+    for (unsigned short i = iterator; i < squadron.size(); i++) {
         Character* c_ptr = squadron[i];
         if (c_ptr->is_moved()){
             continue;
@@ -49,18 +49,25 @@ Character* Player::get_next_character(int iterator) {
 }
 
 void Player::reset_squadron_exhaustion() {
-    for (auto i = 0; i < squadron.size(); i++) {
-        this->squadron[i]->set_moved(false);
+    /*for (unsigned short i = 0; i < squadron.size(); i++) { 
+		this->squadron[i]->set_moved(fals);
         this->squadron[i]->set_defending(false);
-        this->squadron[i]->set_can_attack(false);
+        this->squadron[i]->set_can_attack(false); */
+	for (const auto& i : squadron) { 
+        i->set_moved(false);
+        i->set_defending(false);
+        i->set_can_attack(false);
     }
 }
 
 bool Player::is_turn_end() {
     bool is_end = true;
-    for (auto i = 0; i < squadron.size(); i++) {
-        if (!this->squadron[i]->is_moved() || this->squadron[i]->can_attack()){
-            is_end = false;
+    /* for (unsigned short i = 0; i < squadron.size(); i++) { 
+	        if (!this->squadron[i]->is_moved() || this->squadron[i]->can_attack()){
+				is_end = false; */
+	for (const auto& i : squadron) {
+		if (!i->is_moved() || i->can_attack()){
+            is_end = false; 
         }
     }
     return is_end;

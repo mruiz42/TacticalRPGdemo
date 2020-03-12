@@ -215,7 +215,9 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
         defend_character_poll();
     } else if (attack_selected) {
         attack_character_key_poll(window);
-    }
+    } /*else if (wait_selected) {
+        wait_character_key_poll();
+    } */
 }
 
 void Game::foo() {
@@ -278,14 +280,22 @@ bool Game::has_enemy_adjacent(){
 //    if (this->selector.is_selection_empty()){
 //        // do exception here
 //    }
-    Coordinate* xy = selector.get_selection()->get_coordinate();
+  /*Coordinate* xy = selector.get_selection()->get_coordinate();
     const Player* enemy_player = &get_enemy_player();
     int x = xy->get_x();
     int y = xy->get_y();
     Character* up = c_map.get_character_at(x, y-1);
     Character* down = c_map.get_character_at(x, y+1);
     Character* left = c_map.get_character_at(x-1, y);
-    Character* right = c_map.get_character_at(x+1, y);
+    Character* right = c_map.get_character_at(x+1, y); */
+	Coordinate* xy{selector.get_selection()->get_coordinate()};
+    const Player* enemy_player{&get_enemy_player()};
+    int x{xy->get_x()};
+    int y{xy->get_y()};
+    Character* up{c_map.get_character_at(x, y-1)};
+    Character* down{c_map.get_character_at(x, y+1)};
+    Character* left{c_map.get_character_at(x-1, y)};
+    Character* right{c_map.get_character_at(x+1, y)};
     if (belongs_to_enemy_player(up) && up != nullptr) {
         return true;
     }
@@ -338,10 +348,10 @@ int Game::check_controllers() {
 }
 void Game::draw_units(sf::RenderWindow& window, Player player){
     for (int i = 0; i < get_current_player().get_squadron().size(); i++){
-        Character* c_ptr = player.get_squadron()[i];
-        if (c_ptr->is_walking()) {
+        /// Character* c_ptr = player.get_squadron()[i];
+        if ( auto c_ptr = player.get_squadron()[i]; c_ptr->is_walking()) {
             unit_walking = true;
-            Coordinate delta = selector.get_delta_pos(*selector.get_selection_pos(), *selector.get_target_pos());
+            auto delta = selector.get_delta_pos(*selector.get_selection_pos(), *selector.get_target_pos());
             float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
             c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
             c_ptr->get_map_sprite().setScale({-1,1});
