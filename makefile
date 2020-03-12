@@ -1,5 +1,5 @@
 CC      = g++
-CFLAGS  = -std=c++14 -Wall -Wextra -pedantic
+CFLAGS  = -std=c++14 -Wall #-Wextra -pedantic
 INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
 BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)
