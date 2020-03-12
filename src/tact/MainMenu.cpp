@@ -84,23 +84,23 @@ void MainMenu::draw(sf::RenderWindow &window)
 
 }
 
-void MainMenu::moveUp()
+void MainMenu::move_up()
 {
     if(selectedItemIndex - 1 >=0)
     {
-        main_menu[selectedItemIndex].setColor(sf::Color::White);
+        main_menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex--;
-        main_menu[selectedItemIndex].setColor(sf::Color::Red);
+        main_menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
 
-void MainMenu::moveDown()
+void MainMenu::move_down()
 {
     if(selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
     {
-        main_menu[selectedItemIndex].setColor(sf::Color::White);
+        main_menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex++;
-        main_menu[selectedItemIndex].setColor(sf::Color::Red);
+        main_menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
 

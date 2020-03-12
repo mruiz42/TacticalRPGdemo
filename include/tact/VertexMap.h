@@ -12,7 +12,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <string>
-#include "Coordinate.h"
+#include "../Coordinate.h"
 
 namespace tact {
     class VertexMap;

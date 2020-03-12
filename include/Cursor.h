@@ -4,7 +4,7 @@
 
 #ifndef CIS29GROUP2GAME_CURSOR_H
 #define CIS29GROUP2GAME_CURSOR_H
-#include "Sprite.h"
+#include "tact/Sprite.h"
 #include "Coordinate.h"
 #include <string>
 #include <iostream>

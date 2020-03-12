@@ -22,7 +22,7 @@
 #include "Sidebar.h"
 #include "VertexMap.h"
 #include "Character.h"
-#include "Cursor.h"
+#include "../Cursor.h"
 #include "CharacterMap.h"
 #include "Selector.h"
 #include "CoolText.h"

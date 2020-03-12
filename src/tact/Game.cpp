@@ -9,6 +9,7 @@
 
 using namespace tact;
 using namespace std;
+
 // Game constructor
 Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
                hit_text(font_path), turn_text(font_path),

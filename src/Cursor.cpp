@@ -2,7 +2,7 @@
 // Created by michael on 2/7/20.
 //
 
-#include "../../include/tact/Cursor.h"
+#include "../include/Cursor.h"
 
 Cursor::Cursor() : Coordinate(0, 0) {
     if (!texture.loadFromFile(cur_path, sf::IntRect(0,0,32,32))) {

@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
-#include "Coordinate.h"
+#include "../Coordinate.h"
 
 const std::string death_sound_m_path = "share/audio/ff-death-scream-male.wav";
 const std::string death_sound_f_path = "share/audio/ff-death-scream-female.wav";

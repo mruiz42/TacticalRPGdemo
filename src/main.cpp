@@ -48,16 +48,16 @@ void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions)
                 {
                 case sf::Keyboard::W:
                 case sf::Keyboard::Up:
-                    main_menu.moveUp();
+                    main_menu.move_up();
                     break;
 
                 case sf::Keyboard::Down:
                 case sf::Keyboard::S:
-                    main_menu.moveDown();
+                    main_menu.move_down();
                     break;
 
                 case sf::Keyboard::Return:
-                    switch(main_menu.getSelectedIdx())
+                    switch(main_menu.get_selection_index())
                     {
                         case 0:
                             std::cout<<"Play button has been pressed"<<std::endl;

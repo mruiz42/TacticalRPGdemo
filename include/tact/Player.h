@@ -6,7 +6,7 @@
 #define CIS29GROUP2GAME_PLAYER_H
 #include "Fortress.h"
 #include "Character.h"
-#include "Coordinate.h"
+#include "../Coordinate.h"
 #include "Ninja.h"
 #include "Mage.h"
 #include "Tank.h"

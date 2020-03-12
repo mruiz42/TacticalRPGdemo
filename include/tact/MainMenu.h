@@ -21,9 +21,9 @@ public:
     ~MainMenu();
     void draw(sf::RenderWindow &window);
     void draw_instruction(sf::RenderWindow &window);
-    void moveUp();
-    void moveDown();
-    int getSelectedIdx(){return selectedItemIndex;}
+    void move_up();
+    void move_down();
+    int get_selection_index(){ return this->selectedItemIndex; }
 private:
     
     int selectedItemIndex;

@@ -4,7 +4,7 @@
 
 #ifndef CIS29GROUP2GAME_FORTRESS_H
 #define CIS29GROUP2GAME_FORTRESS_H
-#include "Coordinate.h"
+#include "../Coordinate.h"
 
 namespace tact {
     class Fortress;

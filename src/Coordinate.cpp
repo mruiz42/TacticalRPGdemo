@@ -2,7 +2,7 @@
 // Created by michael on 2/20/20.
 //
 
-#include "../../include/tact/Coordinate.h"
+#include "../include/Coordinate.h"
 
 //void Coordinate::set_coordinate(int x, int y) {
 //    this->x = x;
