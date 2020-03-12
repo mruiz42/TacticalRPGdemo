@@ -83,6 +83,7 @@ public:
     void set_speed(unsigned int speed) { this->speed = speed; }
     void set_special_attack(unsigned int special_attack) { this->special_attack = special_attack; }
     void set_special_defense(unsigned int special_defense) {this->special_defense = special_defense; }
+    void flip_map_sprite();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void walk();
     void reset_pos();
