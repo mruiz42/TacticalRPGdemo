@@ -215,6 +215,8 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
         defend_character_poll();
     } else if (attack_selected) {
         attack_character_key_poll(window);
+    } else if (wait_selected) {
+        wait_character_poll();
     }
 }
 
@@ -881,7 +883,6 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	int attackedHP = attackedC->get_hit_points();
 	int attackedATK = attackedC->get_attack();
 	int attackedSpeed = attackedC->get_speed();
-
 	int attackerDEF = attackerC->get_defense();
 	int attackerHP = attackerC->get_hit_points();
 	int attackerATK = attackerC->get_attack();
