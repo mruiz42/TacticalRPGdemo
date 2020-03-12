@@ -3,7 +3,7 @@ CFLAGS  = -std=c++14 #-Wall #-Wextra -pedantic
 INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
 BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)
-OUTBIN     = ./bin/somethingTactics.out
+OUTBIN     = ./bin/tactical_rpg_demo.out
 LINKSFML= -lsfml-graphics -lsfml-system -lsfml-window -lsfml-audio
 LINKSTT = -L$(LIBDIR)
 # source directories
@@ -14,7 +14,7 @@ TACTSRC	= $(SOURCE)tact/
 LIBSRC  = ./libsrc/
 LIBDIR  = ./lib/
 STTLIB	= $(LIBDIR)libgame.a
-CRDLIBPATH = $(LIBDIR)libselector.a
+CRDLIBPATH = $(LIBDIR)libcoordinate.a
 
 # object files
 TACTOBJ	= $(TACTSRC)obj/

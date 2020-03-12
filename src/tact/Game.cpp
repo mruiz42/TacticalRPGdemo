@@ -238,6 +238,7 @@ Player* Game::get_current_player() {
     else if (player2.get_is_turn()) {
         return &player2;
     }
+    return nullptr;
 }
 Player* Game::get_enemy_player() {
     if (player1.get_is_turn()) {
@@ -592,6 +593,7 @@ int Game::menu_key_poll() {
             return -1;
         }
     }
+    return -1;
 }
 
 // Joystick control routines
