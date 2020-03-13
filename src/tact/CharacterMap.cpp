@@ -45,8 +45,8 @@ void CharacterMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for (int y = 0; y < 22; ++y){
         for (int x = 0; x < 32; ++x){
             if (map[y][x] != nullptr) {
-                map[y][x]->get_map_sprite().setOrigin(map[y][x]->get_map_sprite().getLocalBounds().width, 0);
-                map[y][x]->get_map_sprite().setScale({-1,1});
+//                map[y][x]->get_map_sprite().setOrigin(map[y][x]->get_map_sprite().getLocalBounds().width, 0);
+//                map[y][x]->get_map_sprite().setScale({-1,1});
                 map[y][x]->get_map_sprite().setPosition(x*32,y*32);
                 target.draw(map[y][x]->get_map_sprite(), states);
             }

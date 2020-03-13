@@ -60,7 +60,7 @@ Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + 
     sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_prefix + font_path);
 
     for (auto i = 0; i < player2.get_squadron().size(); i++){
-        player2.get_squadron().at(i)->flip_map_sprite();
+        player1.get_squadron().at(i)->flip_map_sprite();
     }
 }
 // Main game loop
@@ -69,7 +69,7 @@ int Game::play_game(sf::RenderWindow& window) {
 	bool gameEnd = false;
     while (window.isOpen()) {
         if (!unit_selected) {
-            sidebar.get_menu().set_all_text_color(sf::Color(128,128,128, 255));
+            sidebar.get_menu().set_all_text_color(sf::Color(128,128,128,255));
         }
         while (window.pollEvent(event) && !unit_walking) {
 
@@ -366,8 +366,7 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
                 c_ptr->get_map_sprite().setColor(sf::Color(80,80,80,200));
             else
                 c_ptr->get_map_sprite().setColor(sf::Color(255,255,255,255));
-            c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
-            c_ptr->get_map_sprite().setScale({-1,1});
+
             float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
             c_ptr->get_map_sprite().setPosition(x, y);
             window.draw(c_ptr->get_map_sprite());
@@ -579,9 +578,6 @@ int Game::menu_key_poll() {
 
             int menu_selection = sidebar.get_menu().get_selection();
             // testing
-            selector.get_selection()->play_voice();
-            selector.get_selection()->get_map_sprite().setOrigin({selector.get_selection()->get_map_sprite().getLocalBounds().width,0});
-            selector.get_selection()->get_map_sprite().setScale({-3,3});
             if (menu_selection == 0 && selector.get_selection()->is_moved()) {
                 return -1;
             }

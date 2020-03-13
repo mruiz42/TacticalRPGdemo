@@ -55,9 +55,6 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     charFace2.setTextureRect(sf::IntRect(272,400,64,87));
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
-
-    map_sprite.setScale({-1,1});
-
     this->name = "Ninja";
     this->level = 1;
     this->experience = 0;

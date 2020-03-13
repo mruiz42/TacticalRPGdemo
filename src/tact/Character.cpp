@@ -105,9 +105,6 @@ void Character::play_voice() {
     voice.play();
 }
 
-void Character::flip_sprite() {
-//    this->map_sprite.setOrigin()
-}
 void Character::walk()
 {
     walk_animation[0]++;
@@ -133,6 +130,6 @@ void Character::reset_pos()
 }
 
 void Character::flip_map_sprite() {
+    this->get_map_sprite().setOrigin(this->get_map_sprite().getLocalBounds().width, 0);
     this->get_map_sprite().setScale({-1,1});
-
 }

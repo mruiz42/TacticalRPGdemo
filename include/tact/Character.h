@@ -94,11 +94,8 @@ public:
     void flip_map_sprite();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void play_voice();
-    void flip_sprite();
     void walk();
     void reset_pos();
-
-
 };
 
 #endif //CIS29GROUP2GAME_CHARACTER_H
