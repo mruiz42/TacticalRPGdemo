@@ -15,7 +15,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tactical RPG demo");
     sf::Event Event;
     sf::Vector2u dimmesions(WINDOW_WIDTH, WINDOW_HEIGHT);
-
     main_menu(window,dimmesions);
     window.clear();
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -26,12 +25,8 @@ int main()
 
 void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions)
 {
-
     MainMenu main_menu(window.getSize().x, window.getSize().y);
     window.clear();
-
-
-
     while (window.isOpen())
     {
         top:

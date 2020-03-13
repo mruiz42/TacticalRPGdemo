@@ -17,7 +17,7 @@ public:
     Coordinate() = default;
     Coordinate(const Coordinate&);
     Coordinate(int x, int y) : x(x), y(y) {}
-    void set_coordinate(int,int);
+    void set_coordinate(int, int);
     void set_coordinate(Coordinate);
     void set_x(int x);
     void set_y(int y);

@@ -4,11 +4,10 @@
 
 #include "../include/Coordinate.h"
 
-//void Coordinate::set_coordinate(int x, int y) {
-//    this->x = x;
-//    this->y = y;
-//}
-//
+void Coordinate::set_coordinate(int x, int y) {
+    this->x = x;
+    this->y = y;
+}
 
 Coordinate::Coordinate(const Coordinate& coordinate) { // Should this be a copy constructor?
     this->x = coordinate.x;
@@ -20,11 +19,6 @@ void Coordinate::set_x(int x) {
 }
 
 void Coordinate::set_y(int y) {
-    this->y = y;
-}
-
-void Coordinate::set_coordinate(int x, int y) {
-    this->x = x;
     this->y = y;
 }
 

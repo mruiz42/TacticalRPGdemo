@@ -5,9 +5,8 @@
 /.idea
 .directory
 CMakeLists.txt
-/bin/sfml-app
-/bin/somethingTactics.out
-/lib/libgame.a
+/bin/*.out
+/lib/*.a
 *.o
 *.out
 *.sh
