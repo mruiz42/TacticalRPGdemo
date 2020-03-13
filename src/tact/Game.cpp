@@ -159,7 +159,7 @@ int Game::play_game(sf::RenderWindow& window) {
         //window.draw(c_map);
         window.draw(cur.get_sprite());
         foo();
-        if (hit_text.draw_raising()){
+        if (hit_text.draw_raising()) {
             window.draw(hit_text.get_text());
         }
         if (turn_text.draw_centered()) {
@@ -345,7 +345,6 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
             unit_walking = true;
             Coordinate delta = selector.get_delta_pos(*selector.get_selection_pos(), *selector.get_target_pos());
             float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
-            c_ptr->get_map_sprite().setOrigin(c_ptr->get_map_sprite().getLocalBounds().width, 0);
             c_ptr->get_map_sprite().move(x, y);
             c_ptr->walk();
             window.draw(c_ptr->get_map_sprite());
