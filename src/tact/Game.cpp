@@ -249,6 +249,7 @@ Player* Game::get_current_player() {
     }
     return nullptr;
 }
+
 Player* Game::get_enemy_player() {
     if (player1.get_is_turn()) {
         return &player2;
@@ -268,6 +269,7 @@ int Game::get_current_player_id() {
     }
     return -1;
 }
+
 int Game::get_enemy_player_id() {
     if (player1.get_is_turn()) {
         return player2.get_player_id();
@@ -277,6 +279,7 @@ int Game::get_enemy_player_id() {
     }
     return -1;
 }
+
 bool Game::has_enemy_adjacent(){
     // TODO: If selector.get_selection() is empty, call exception
 //    if (this->selector.is_selection_empty()){
@@ -856,8 +859,6 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
                 selector.get_selection()->set_can_attack(false);
 
 				// Selection attacks target
-				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " initiates attack." );
-				sidebar.drawBattleLog(window);
 				attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
 
 				// Target can revenge attack if not defending and is still alive.
