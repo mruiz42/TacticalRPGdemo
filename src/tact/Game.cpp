@@ -532,7 +532,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
 
             std::cout << "placed at :" << cur << std::endl;
 
-            sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Red);
+            sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Black);
             c_map.set_character_at(cur, selector.get_selection());
 
             if (has_enemy_adjacent()) {
