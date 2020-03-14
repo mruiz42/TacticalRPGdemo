@@ -6,8 +6,6 @@
 #define CIS29GROUP2GAME_COORDINATE_H
 #include <iostream>
 
-#define TEXTURE_SIZE 32
-
 class Coordinate {
 protected:
     int x;
@@ -23,8 +21,6 @@ public:
     void set_y(int y);
     int get_x() const;
     int get_y() const;
-    float get_map_x() const;
-    float get_map_y() const;
     Coordinate operator - (const Coordinate&);
     bool operator == (const Coordinate&);
     friend std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate);

@@ -16,11 +16,12 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
 public:
-    Cursor() = default;
+    Cursor();
     Cursor(std::string cur_path);
     Cursor(int x, int y);
+    Cursor(int x, int y, int texture_size);
     Cursor(int x, int y, std::string cur_path);
-    Cursor(int x, int y, int tile_size, std::string cur_path);
+    Cursor(int x, int y, int texture_size, std::string cur_path);
 
     int get_texture_size() { return this->texture_size; }
     std::string get_cur_path() { return this->cur_path; }
@@ -39,6 +40,9 @@ public:
     void jump_to(int, int);
     void jump_to(Coordinate);
     friend std::ostream& operator<< (std::ostream& out, const Cursor& cursor);
+
+    float get_map_x() const;
+    float get_map_y() const;
 };
 
 

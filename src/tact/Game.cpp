@@ -11,7 +11,7 @@ using namespace tact;
 using namespace std;
 
 // Game constructor
-Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
+Game::Game() : cur(0, 0, TEXTURE_SIZE), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
                hit_text(font_path), turn_text(font_path),
                player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
     {
@@ -32,7 +32,8 @@ Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + 
     player1.set_is_turn(true);
     sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) + " turn");
 
-    cur.
+    cur.set_cur_path(cur_path);
+    cur.load_texture();
     cur.jump_to(*get_current_player()->get_squadron()[0]->get_coordinate());
 
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
@@ -347,7 +348,7 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
         if (c_ptr->is_walking()) {
             unit_walking = true;
             Coordinate delta = selector.get_delta_pos(*selector.get_selection_pos(), *selector.get_target_pos());
-            float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
+            float x = (delta.get_x()*TEXTURE_SIZE)/60.0f, y = (delta.get_y()*TEXTURE_SIZE)/60.0f;
             c_ptr->get_map_sprite().move(x, y);
             c_ptr->walk();
 
@@ -373,12 +374,13 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
                 c_ptr->get_map_sprite().setColor(sf::Color(80,80,80,200));
             else
                 c_ptr->get_map_sprite().setColor(sf::Color(255,255,255,255));
-            float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
+            float x = c_ptr->get_coordinate()->get_x() * TEXTURE_SIZE, y = c_ptr->get_coordinate()->get_y()*TEXTURE_SIZE;
             c_ptr->get_map_sprite().setPosition(x, y);
             window.draw(c_ptr->get_map_sprite());
         }
     }
 }
+
 int Game::swap_turns(){
     std::cout << "- End turn - \n";
     turn_count++;

@@ -36,18 +36,6 @@ int Coordinate::get_y() const {
     return this->y;
 }
 
-// // gets map coordiante so char can walk
-float Coordinate::get_map_x() const {
-     return static_cast<float>(this->x)*TEXTURE_SIZE;
- }
-
-// //gets map coordinate so char can walk
-float Coordinate::get_map_y() const {
-     return static_cast<float>(this->y)*TEXTURE_SIZE;
-}
-
-
-
 std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate){
     out << "(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")" << std::endl;
     return out;

@@ -7,7 +7,7 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 704
-
+#define TEXTURE_SIZE 32
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
