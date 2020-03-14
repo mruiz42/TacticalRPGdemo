@@ -43,7 +43,7 @@ Mage::Mage(int x, int y) : Character(x, y) {
     this->name = "Mage";
     this->level = 10;
     this->experience = 0;
-    this->hit_points = 550;
+    this->hit_points = 20; //550
     this->mana_points = 427;
     this->attack = 16;
     this->defense = 23;

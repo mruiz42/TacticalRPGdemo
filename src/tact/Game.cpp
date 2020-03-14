@@ -12,7 +12,7 @@ using namespace std;
 
 // Game constructor
 Game::Game() : cur(0, 0, TEXTURE_SIZE), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
-               hit_text(font_path), turn_text(font_path),
+               hit_text1(font_path), hit_text2(font_path), turn_text(font_path),
                player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
     {
     iterator = 0;
@@ -163,8 +163,11 @@ int Game::play_game(sf::RenderWindow& window) {
         //window.draw(c_map);
         window.draw(cur.get_sprite());
         foo();
-        if (hit_text.draw_raising()) {
-            window.draw(hit_text.get_text());
+        if (hit_text1.draw_raising()) {
+            window.draw(hit_text1.get_text());
+        }
+		if (hit_text2.draw_raising()) {
+            window.draw(hit_text2.get_text());
         }
         if (turn_text.draw_centered()) {
             window.draw(turn_text.get_text());
@@ -853,23 +856,23 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
                 unit_selected = false;
                 menu_selected = false;
                 attack_selected = false;
-                selector.set_target(c_map.get_character_at(cur));
+                selector.set_target(c_ptr);
                 // Do attack call here
                 selector.get_selection()->set_moved(true);
                 selector.get_selection()->set_can_attack(false);
 
 				// Selection attacks target
-				attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
-
+				attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window, hit_text1);
+				
 				// Target can revenge attack if not defending and is still alive.
-				if (!selector.get_target()->is_defending() && selector.get_target()->get_hit_points() > 0) {
-					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
-					sidebar.drawBattleLog(window);
-					attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
+				if ( selector.get_target() != nullptr) {
+					if (!selector.get_target()->is_defending()) {
+						sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
+						sidebar.drawBattleLog(window);
+						attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window, hit_text2);
+					}
 				}
-
                 selector.clear();
-
             }
             break;
         }
@@ -881,39 +884,44 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
 
 
 }
-void Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window) {
+void Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text) {
 	// Get used stats
 	int attackedDEF = attackedC->get_defense();
 	int attackedHP = attackedC->get_hit_points();
-	int attackedATK = attackedC->get_attack();
+	int attackedATK = attackedC->get_attack(); 
 	int attackedSpeed = attackedC->get_speed();
 	int attackerDEF = attackerC->get_defense();
 	int attackerHP = attackerC->get_hit_points();
 	int attackerATK = attackerC->get_attack();
 	int attackerSpeed = attackerC->get_speed();
 
-	int damage = 0, attackChance = 0, attackRoll = 0, numAttack = 0 , damageRoll = 0, thisDamage = 0;
+	int damage = 0, attackChance = 0, attackRoll = 0, numAttack = 0 , damageRoll = 0, thisDamage = 0, totalDamage = 0;
 
 	//First attack, attacker > attacked
-	damage = attackerATK * attackerATK / attackedDEF;
+	damage = attackerATK * (100* attackerATK / attackedDEF ) /100;
 	if (attackedC->is_defending()) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " defenses!");
 		sidebar.drawBattleLog(window);
 		damage /= 2;
 	}
 	// Chance for zero (evaded) or more attacks, based on speed
-	attackChance = (90 * attackerSpeed /attackedSpeed ) % 100;
+	attackChance = 90 * attackerSpeed /attackedSpeed;
 	srand (time(NULL) + 1 + attackedPID);
 	attackRoll = (rand() % 100 + 1); // random 1 to 100
 
 	while (attackRoll < attackChance && attackedHP > 0) {
-		numAttack += 1;
+		numAttack++;
 		// multiply damage by a random number between 0.9 and 1.1
 		srand (time(NULL) + 2 + numAttack + attackedPID);
-		damageRoll = 90 + (rand() % 20 + 1);
+		damageRoll = 90 + (rand() % 21);
 		thisDamage = damage * damageRoll / 100;
-		attackedHP -= round(thisDamage);
-		if (attackedHP < 0) attackedHP = 0;
+		attackedHP -= thisDamage;
+		totalDamage += thisDamage;
+		
+		if (attackedHP < 0) {
+			attackedHP = 0;
+			totalDamage = attackedC->get_hit_points();
+		}
 
 		//Update attack chance
 		attackChance /= 2;
@@ -921,46 +929,46 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 		attackRoll = (rand() % 100 + 1);
 	}
 	//Print outcome to battle log
+	hit_text.start_clock();
 	if (numAttack == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " evades!");
 		sidebar.drawBattleLog(window);
 
-        hit_text.start_clock();
         hit_text.set_text("MISS");
-        hit_text.set_position(cur.get_map_x(), cur.get_map_y());
-        hit_text.set_position(cur.get_map_x()+4, cur.get_map_y());
+		hit_text.set_position(attackedC->get_coordinate()->get_x() * TEXTURE_SIZE, (attackedC->get_coordinate()->get_y() - 0.5)* TEXTURE_SIZE);
 	}
 	else if (numAttack == 1) {
 		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks!");
-		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(totalDamage) + " damages!");
 		sidebar.drawBattleLog(window);
-        int damage_int = static_cast<unsigned int>(attackedC->get_hit_points() - attackedHP);
-        hit_text.start_clock();
-        hit_text.set_text(std::to_string(damage_int));
-        hit_text.set_position(cur.get_map_x(), cur.get_map_y());
-
+        // int damage_int = static_cast<unsigned int>(attackedC->get_hit_points() - attackedHP);
+        hit_text.set_text(std::to_string(totalDamage));
+		hit_text.set_position(attackedC->get_coordinate()->get_x() * TEXTURE_SIZE, attackedC->get_coordinate()->get_y() * TEXTURE_SIZE);
 	}
 	else {
 		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks " + std::to_string(numAttack) + " times!");
-		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(totalDamage) + " damages!");
 		sidebar.drawBattleLog(window);
-	}
 
+        hit_text.set_text(std::to_string(totalDamage));
+		hit_text.set_position(attackedC->get_coordinate()->get_x() * TEXTURE_SIZE, attackedC->get_coordinate()->get_y() * TEXTURE_SIZE);
+	}
+	
 	attackedC->set_hit_points(attackedHP);
 	if (attackedHP == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
-
 		c_map.null_character_at(*attackedC->get_coordinate());
 		delete attackedC;
 		attackedC = nullptr;
-		for (auto thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
-			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {
-				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+thischar);
+		for (auto i = 0; i < attackedP->get_squadron().size(); i++) {
+			if (attackedP->get_squadron()[i]->get_hit_points() == 0) {
+				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+i);
 				break;
 			}
 		}
+		
+		
 	}
-
 }
 
 void Game::wait_character_poll() {

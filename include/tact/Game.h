@@ -59,7 +59,8 @@ private:
     sf::SoundBuffer buffer;
     sf::Event event;
     tact::Sidebar sidebar;
-    tact::CoolText hit_text;
+    tact::CoolText hit_text1;
+	tact::CoolText hit_text2;
     tact::CoolText turn_text;
     tact::Player player1;
     tact::Player player2;
@@ -103,7 +104,7 @@ public:
     void defend_character_poll();
     void attack_character_key_poll(sf::RenderWindow& window);
 	void attack_character_rules(tact::Player* attackedP, tact::Character* attackerC, tact::Character* attackedC, int attackerPID,
-	        int attackedPID, sf::RenderWindow& window);
+	        int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text);
     bool has_enemy_adjacent();
     bool belongs_to_enemy_player(tact::Character *character);
     void draw_units(sf::RenderWindow &window, tact::Player player);
