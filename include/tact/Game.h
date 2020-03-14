@@ -1,6 +1,5 @@
-//
-// Created by michael on 2/19/20.
-//
+// Created by Michael Ruiz on 2/19/20.
+// Game.h - Main game loop and associated helper functions for the gameplay
 
 #ifndef CIS29GROUP2GAME_GAME_H
 #define CIS29GROUP2GAME_GAME_H
@@ -19,19 +18,20 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "Sidebar.h"
-#include "VertexMap.h"
-#include "Character.h"
-#include "../Cursor.h"
-#include "CharacterMap.h"
-#include "Selector.h"
-#include "CoolText.h"
-#include "Player.h"
-#include "Exception.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include "Sidebar.h"
+#include "VertexMap.h"
+#include "Character.h"
+#include "CharacterMap.h"
+#include "Selector.h"
+#include "CoolText.h"
+#include "Player.h"
+#include "../Cursor.h"
+
+#include "Exception.h"
 
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/maps/map_tiles32.png";
