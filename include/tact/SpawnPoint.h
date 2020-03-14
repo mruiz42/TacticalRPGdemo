@@ -7,17 +7,17 @@
 #include "../Coordinate.h"
 
 namespace tact {
-    class Fortress;
+    class SpawnPoint;
 }
 
-class tact::Fortress {
+class tact::SpawnPoint {
 private:
     unsigned int hit_points;
     Coordinate xy;
 public:
-    Fortress();
-    Fortress(int x, int y) : xy(x, y) {}
-    Fortress(Coordinate xy) : xy(xy) {}
+    SpawnPoint();
+    SpawnPoint(int x, int y) : xy(x, y) {}
+    SpawnPoint(Coordinate xy) : xy(xy) {}
     unsigned int get_hit_points() { return this->hit_points; }
     Coordinate& get_coordinate() { return this->xy; }
 

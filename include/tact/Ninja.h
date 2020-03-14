@@ -14,7 +14,6 @@ namespace tact {
 }
 
 class tact::Ninja : public tact::Character {
-private:
 public:
     Ninja();
     Ninja(Coordinate xy);

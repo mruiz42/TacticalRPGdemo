@@ -2,16 +2,16 @@
 // Created by michael on 1/21/20.
 //
 
-#include "../../include/tact/Fortress.h"
+#include "../../include/tact/SpawnPoint.h"
 
 using namespace tact;
 
 
-Fortress::Fortress() {
+SpawnPoint::SpawnPoint() {
     hit_points = 0;
     xy.set_x(0);
     xy.set_y(0);
 }
-void Fortress::set_coordinate(int x, int y) {
+void SpawnPoint::set_coordinate(int x, int y) {
     xy.set_coordinate(x, y);
 }

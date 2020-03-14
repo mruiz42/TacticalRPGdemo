@@ -110,13 +110,10 @@ void Character::walk()
     walk_animation[0]++;
     if(walk_animation[0]==walk_animation[1])
     {
-        if(textureRect == sf::IntRect(100,13,32,32))
-        {
+        if (textureRect == sf::IntRect(100,13,32,32)) {
             textureRect = sf::IntRect(67,13,32,32);
         }
-
-        else
-        {
+        else {
             textureRect.left += 33;
         }
         map_sprite.setTextureRect(textureRect);

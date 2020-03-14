@@ -22,7 +22,7 @@ SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Game.o
-LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)MainMenu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)Fortress.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o  $(TACTOBJ)Spell.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
+LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)MainMenu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)SpawnPoint.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
 LIBCORD = $(SRCOBJ)Coordinate.o $(SRCOBJ)Cursor.o
 
 .PHONY : clean all run
@@ -65,11 +65,8 @@ $(TACTOBJ)Mage.o : $(TACTSRC)Mage.cpp
 $(TACTOBJ)Ninja.o : $(TACTSRC)Ninja.cpp
 	$(COMPILE) $(TACTSRC)Ninja.cpp -o $(TACTOBJ)Ninja.o
 
-$(TACTOBJ)Fortress.o : $(TACTSRC)Fortress.cpp
-	$(COMPILE) $(TACTSRC)Fortress.cpp -o $(TACTOBJ)Fortress.o
-	
-$(TACTOBJ)Spell.o : $(TACTSRC)Spell.cpp
-	$(COMPILE) $(TACTSRC)Spell.cpp -o $(TACTOBJ)Spell.o
+$(TACTOBJ)SpawnPoint.o : $(TACTSRC)SpawnPoint.cpp
+	$(COMPILE) $(TACTSRC)SpawnPoint.cpp -o $(TACTOBJ)SpawnPoint.o
 	
 $(TACTOBJ)Tank.o : $(TACTSRC)Tank.cpp
 	$(COMPILE) $(TACTSRC)Tank.cpp -o $(TACTOBJ)Tank.o
@@ -102,10 +99,11 @@ $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 	$(COMPILE) $(SOURCE)Cursor.cpp -o $(SRCOBJ)Cursor.o
 
 clean :
-	@rm -f $(SRCOBJ)main.o
+	@rm -f $(SRCOBJ)*.o
 	@rm -f $(LIBOBJ)*.o
 	@rm -f $(TACTSRC)/obj/*.o
 	@rm -f $(STTLIB)
+	@rm -f $(CRDLIBPATH)
 	@rm -f $(OUTBIN)
 
 all : clean $(OUTBIN)

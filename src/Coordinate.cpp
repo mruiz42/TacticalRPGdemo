@@ -38,12 +38,12 @@ int Coordinate::get_y() const {
 
 // // gets map coordiante so char can walk
 float Coordinate::get_map_x() const {
-     return static_cast<float>(this->x)*32.0f;
+     return static_cast<float>(this->x)*TEXTURE_SIZE;
  }
 
 // //gets map coordinate so char can walk
 float Coordinate::get_map_y() const {
-     return static_cast<float>(this->y)*32.0f;
+     return static_cast<float>(this->y)*TEXTURE_SIZE;
 }
 
 

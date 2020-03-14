@@ -31,7 +31,10 @@ Game::Game() : cur(0, 0), sidebar(root_prefix + sidebar_bg_path , root_prefix + 
     std::cout << "- Start Game -\n";
     player1.set_is_turn(true);
     sidebar.setTurn("Player" + std::to_string(get_current_player_id() + 1) + " turn");
+
+    cur.
     cur.jump_to(*get_current_player()->get_squadron()[0]->get_coordinate());
+
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
     }
@@ -339,7 +342,7 @@ int Game::check_controllers() {
     }
 }
 void Game::draw_units(sf::RenderWindow& window, Player player){
-    for (int i = 0; i < get_current_player()->get_squadron().size(); i++){
+    for (int i = 0; i < get_current_player()->get_squadron().size(); i++) {
         Character* c_ptr = player.get_squadron()[i];
         if (c_ptr->is_walking()) {
             unit_walking = true;
@@ -347,8 +350,12 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
             float x = delta.get_map_x() / 60, y = delta.get_map_y() / 60;
             c_ptr->get_map_sprite().move(x, y);
             c_ptr->walk();
-            window.draw(c_ptr->get_map_sprite());
-            move_frame++;
+
+            // TODO: doign the walk flip here
+            if (move_frame == 0) {
+                std::cout << "hi" << std::endl;
+                c_ptr->flip_map_sprite();
+            }
             if (move_frame == 60) {
                 c_ptr->reset_pos();
                 c_ptr->set_walking(false);
@@ -357,15 +364,15 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
                 c_map.null_character_at(*selector.get_selection_pos());
                 c_ptr->set_coordinate(*selector.get_target_pos());
                 selector.get_selection()->set_coordinate(cur);
-
             }
+            window.draw(c_ptr->get_map_sprite());
+            move_frame++;
         }
         else {
             if (c_ptr->is_moved() && !c_ptr->can_attack())
                 c_ptr->get_map_sprite().setColor(sf::Color(80,80,80,200));
             else
                 c_ptr->get_map_sprite().setColor(sf::Color(255,255,255,255));
-
             float x = c_ptr->get_coordinate()->get_map_x(), y = c_ptr->get_coordinate()->get_map_y();
             c_ptr->get_map_sprite().setPosition(x, y);
             window.draw(c_ptr->get_map_sprite());
