@@ -7,8 +7,15 @@
 using namespace tact;
 
 CoolText::CoolText(std::string font_path) {
-    if (!font.loadFromFile(font_path)) {
-        std::cout << "Could not load " <<  font_path << " from file." << std::endl;
+
+    try {
+        if (!font.loadFromFile(font_path))
+        {
+            throw(font_path);
+        }
+    }
+    catch(const std::string& error){
+         std::cout << "Could not load " <<  error << " from file." << std::endl;
     }
     this->text.setFont(font);
     this->text.setOutlineColor(sf::Color::Black);

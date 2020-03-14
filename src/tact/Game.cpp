@@ -169,8 +169,10 @@ int Game::play_game(sf::RenderWindow& window) {
         if (turn_text.draw_centered()) {
             window.draw(turn_text.get_text());
         }
+         window.draw(except.returnText());
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
+
         sidebar.drawStat(window);
         sidebar.drawBattleLog(window);
         window.display();
@@ -487,6 +489,9 @@ void Game::move_cursor_key_poll() {
 }
 void Game::move_character_key_poll(sf::RenderWindow& window){
     std::cout << "pickedup ";
+    try {
+
+
     switch (event.key.code) {
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992){
@@ -523,10 +528,14 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player()->get_player_id());
                 break;
+
             }
             else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
-                break;
+                std::string s = "Can't go here\n";
+
+                throw (cur.get_sprite().getPosition());
+
             }
 //            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
 //                std::cout << "character can't move that far. ";
@@ -536,6 +545,7 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             std::cout << "placed at :" << cur << std::endl;
 
             sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Black);
+            except.hide_expect();
             c_map.set_character_at(cur, selector.get_selection());
 
             if (has_enemy_adjacent()) {
@@ -563,6 +573,15 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
             selector.clear();
             break;
     }
+    }
+    catch (sf::Vector2f input )
+    {
+
+        except.show_except();
+        except.shift(input);
+    }
+
+
 }
 int Game::menu_key_poll() {
     if (has_enemy_adjacent()){

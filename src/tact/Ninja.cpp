@@ -18,11 +18,14 @@
 using namespace tact;
 
 Ninja::Ninja() : Character() {
-    if (!texture.loadFromFile(ninja_spritesheet_path))
-        std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
-    if (!buffer.loadFromFile(death_sound_f_path))
-        std::cout << "Error: " + death_sound_f_path + " could not be loaded." << std::endl;
-    voice.setBuffer(buffer);
+    try {
+        if (!texture.loadFromFile(ninja_spritesheet_path)){
+            throw(ninja_spritesheet_path);
+        }
+    }
+    catch(const std::string& error){
+        std::cout << "Could not load " <<  error << " from file." << std::endl;
+    }
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
     charFace1.setTextureRect(sf::IntRect(8,400,64,87));
@@ -43,11 +46,14 @@ Ninja::Ninja() : Character() {
 }
 
 Ninja::Ninja(int x, int y) : Character(x, y) {
-    if (!texture.loadFromFile(ninja_spritesheet_path))
-        std::cout << "Error: " + ninja_spritesheet_path + " could not be loaded." << std::endl;
-    if (!buffer.loadFromFile(death_sound_f_path))
-        std::cout << "Error: " + death_sound_f_path + " could not be loaded." << std::endl;
-    voice.setBuffer(buffer);
+    try {
+        if (!texture.loadFromFile(ninja_spritesheet_path)){
+            throw(ninja_spritesheet_path);
+        }
+    }
+    catch(const std::string& error){
+        std::cout << "Could not load " <<  error << " from file." << std::endl;
+    }
     sidebar_sprite.setTexture(texture);
 	charFace1.setTexture(texture);
     charFace1.setTextureRect(sf::IntRect(8,400,64,87));

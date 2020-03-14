@@ -98,6 +98,9 @@ $(SRCOBJ)Coordinate.o : $(SOURCE)Coordinate.cpp
 $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 	$(COMPILE) $(SOURCE)Cursor.cpp -o $(SRCOBJ)Cursor.o
 
+$(TACTOBJ)Exception.o : $(TACTSRC)Exception.cpp
+	$(COMPILE) $(TACTSRC)Exception.cpp -o $(TACTOBJ)Exception.o
+
 clean :
 	@rm -f $(SRCOBJ)*.o
 	@rm -f $(LIBOBJ)*.o

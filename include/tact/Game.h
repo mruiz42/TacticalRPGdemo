@@ -27,6 +27,7 @@
 #include "Selector.h"
 #include "CoolText.h"
 #include "Player.h"
+#include "Exception.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -53,6 +54,7 @@ class tact::Game {
 private:
     sf::Music music;
     Cursor cur;
+    Exception except;
     tact::VertexMap v_map;
     tact::CharacterMap c_map;
     sf::Sound sound;
