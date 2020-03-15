@@ -8,6 +8,7 @@
 #include <iostream>
 // High defense, low attack, low speed "front liner", has a "armor" attribute
 const std::string tank_spritesheet_path = "share/sprites/tank.png";
+
 namespace tact {
     class Tank;
 }
@@ -19,7 +20,8 @@ public:
     Tank();
     Tank(Coordinate xy);
     Tank(int x, int y);
-
+	~Tank();
+	
     unsigned int get_armor() { return this->armor; }
 
     void set_armor(unsigned int armor) { this->armor = armor;}

@@ -958,16 +958,17 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	if (attackedHP == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
 		c_map.null_character_at(*attackedC->get_coordinate());
-		delete attackedC;
-		attackedC = nullptr;
+		
 		for (auto i = 0; i < attackedP->get_squadron().size(); i++) {
 			if (attackedP->get_squadron()[i]->get_hit_points() == 0) {
+				delete attackedP->get_squadron()[i];
 				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+i);
-				break;
+				std::cout << "squadron[" << i << "] deleted\n";
+				// break;
 			}
 		}
-		
-		
+		// delete attackedC;
+		attackedC = nullptr;
 	}
 }
 

@@ -96,6 +96,8 @@ public:
     virtual void play_voice();
     void walk();
     void reset_pos();
+	
+	virtual ~Character();
 };
 
 #endif //CIS29GROUP2GAME_CHARACTER_H

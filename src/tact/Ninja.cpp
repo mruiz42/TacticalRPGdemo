@@ -67,3 +67,6 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     this->special_defense = 26;
 }
 
+Ninja::~Ninja() {
+	std::cout << "Ninja dtor called.\n"; 
+}

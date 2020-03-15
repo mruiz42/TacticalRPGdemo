@@ -51,3 +51,7 @@ Mage::Mage(int x, int y) : Character(x, y) {
     this->special_attack = 56;
     this->special_defense = 67;
 }
+
+Mage::~Mage() {
+	std::cout << "Mage dtor called.\n"; 
+}

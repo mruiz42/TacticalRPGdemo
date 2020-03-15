@@ -19,7 +19,7 @@ Tank::Tank() : Character() {
     this->name = "Tank";
     this->level = 19;
     this->experience = 0;
-    this->hit_points = 950;
+    this->hit_points = 650;
     this->mana_points = 673;
     this->attack = 11;
     this->defense = 55;
@@ -42,11 +42,15 @@ Tank::Tank(int x, int y) : Character(x, y) {
     this->name = "Tank";
     this->level = 19;
     this->experience = 0;
-    this->hit_points = 950;
+    this->hit_points = 2; //650
     this->mana_points = 673;
     this->attack = 11;
     this->defense = 55;
     this->speed = 6;
     this->special_attack = 27;
     this->special_defense = 101;
+}
+
+Tank::~Tank() {
+	std::cout << "Tank dtor called.\n"; 
 }
