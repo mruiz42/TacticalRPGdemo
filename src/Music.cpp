@@ -14,8 +14,9 @@ Music::Music(std::string a){
 		std::cout << "Error: " << this->name() << std::endl;
 		exit(-1);
 	}
-	music.setVolume(50);
+	music.setVolume(100);
 	music.play();
+	music.setLoop(true);
 }
 
 void Music::raiseVolume(){

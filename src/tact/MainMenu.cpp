@@ -40,7 +40,7 @@ MainMenu::MainMenu(float width, float height)
     //inc by 30
     instructions[1].setFont(font);
     instructions[1].setFillColor(sf::Color::White);
-    instructions[1].setString("WASD/D-pad: move\nEnter/A:select and move\nQ/L2:automatically go to character\nBackspace/B:Undo\nDash:volume down\nEqual:volume up");
+    instructions[1].setString("WASD/D-pad: move\nEnter/A:select and move\nQ/L2:automatically go to character\nBackspace/B:Undo\nP:Backdoor - unrestricted move and\nstronger attack");
     instructions[1].setPosition(sf::Vector2f(30, 30)); // divide by 2 so itll be centered, also height will be centered
 
 

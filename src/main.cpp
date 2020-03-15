@@ -1,7 +1,6 @@
 #include "../include/tact/Game.h"
 #include "../include/tact/MainMenu.h"
 #include "../include/Music.h"
-#include "../include/Sound.h"
 
 //const int HP_MAX = 200;
 //const int HP_MIN = 0;
@@ -11,7 +10,6 @@
 
 const std::string music_path = "./share/audio/BattleTheme.wav";
 const std::string music_menu_path = "./share/audio/Vanadiel_March.wav";
-const std::string sound_path = "./share/audio/volume_change.wav";
 
 void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions);
 
@@ -26,7 +24,6 @@ int main()
     window.setSize(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT));
     tact::Game game;
 	Music gameMusic(music_path);
-	Sound adjustVolumeSound(sound_path);
     game.play_game(window);
     return 0;
 }
@@ -35,7 +32,6 @@ void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions)
 {
     MainMenu main_menu(window.getSize().x, window.getSize().y);
 	Music gameMusic(music_menu_path);
-	Sound adjustVolumeSound(sound_path);
     window.clear();
     while (window.isOpen())
     {
@@ -60,16 +56,6 @@ void main_menu(sf::RenderWindow& window,sf::Vector2u &screenDimensions)
                 case sf::Keyboard::S:
                     main_menu.move_down();
                     break;
-
-				case sf::Keyboard::Key::Dash: // Volume Down
-					gameMusic.lowerVolume();
-					adjustVolumeSound.lowerVolume();
-					break;
-				case sf::Keyboard::Key::Equal:  // Volume Up
-					gameMusic.raiseVolume();
-					adjustVolumeSound.raiseVolume();
-					break;
-					
                 case sf::Keyboard::Return:
                     switch(main_menu.get_selection_index())
                     {
