@@ -23,7 +23,7 @@ SRCOBJ	= $(SOURCE)obj/
 # execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o $(TACTOBJ)Game.o
 LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)MainMenu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)SpawnPoint.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Knight.o $(TACTOBJ)Mage.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
-LIBCORD = $(SRCOBJ)Coordinate.o $(SRCOBJ)Cursor.o
+LIBCORD = $(SRCOBJ)Coordinate.o $(SRCOBJ)Cursor.o $(SRCOBJ)Music.o $(SRCOBJ)Sound.o
 
 .PHONY : clean all run
 
@@ -97,6 +97,12 @@ $(SRCOBJ)Coordinate.o : $(SOURCE)Coordinate.cpp
 
 $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 	$(COMPILE) $(SOURCE)Cursor.cpp -o $(SRCOBJ)Cursor.o
+	
+$(SRCOBJ)Music.o : $(SOURCE)Music.cpp
+	$(COMPILE) $(SOURCE)Music.cpp -o $(SRCOBJ)Music.o
+	
+$(SRCOBJ)Sound.o : $(SOURCE)Sound.cpp
+	$(COMPILE) $(SOURCE)Sound.cpp -o $(SRCOBJ)Sound.o
 
 clean :
 	@rm -f $(SRCOBJ)*.o
