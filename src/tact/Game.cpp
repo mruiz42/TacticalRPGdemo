@@ -959,11 +959,14 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
 		c_map.null_character_at(*attackedC->get_coordinate());
 		
-		for (auto i = 0; i < attackedP->get_squadron().size(); i++) {
+		//for (auto i = attackedP->get_squadron().size() - 1 ; i >= 0 ; i--) {
+		for (auto i = 2 ; i >= 0 ; i--) {
+std::cout << "\ni is " << i << "\n";
 			if (attackedP->get_squadron()[i]->get_hit_points() == 0) {
+std::cout << "attackedP->get_squadron()[i]->get_hit_points() : " << attackedP->get_squadron()[i]->get_hit_points() << "\n";
 				delete attackedP->get_squadron()[i];
 				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+i);
-				std::cout << "squadron[" << i << "] deleted\n";
+std::cout << "squadron[" << i << "] deleted\n";
 				// break;
 			}
 		}
