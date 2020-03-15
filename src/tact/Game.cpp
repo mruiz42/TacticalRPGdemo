@@ -862,16 +862,52 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
                 selector.get_selection()->set_can_attack(false);
 
 				// Selection attacks target
-				attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window, hit_text1);
+				bool attacked_dead = attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window, hit_text1);
 				
-				// Target can revenge attack if not defending and is still alive.
-				if ( selector.get_target() != nullptr) {
-					if (!selector.get_target()->is_defending()) {
-						sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
-						sidebar.drawBattleLog(window);
-						attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window, hit_text2);
+				if (attacked_dead) {
+					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + "'s " + selector.get_target()->get_name() + " is dead!");
+					c_map.null_character_at(*(selector.get_target()->get_coordinate()));
+					for (auto i = get_enemy_player()->get_squadron().size() - 1 ; i >= 0 ; i--) {
+std::cout << "\ni is " << i << "\n";
+						if (get_enemy_player()->get_squadron()[i]->get_hit_points() == 0) {
+std::cout << "get_enemy_player()->get_squadron()[i]->get_hit_points() : " << get_enemy_player()->get_squadron()[i]->get_hit_points() << "\n";
+							delete get_enemy_player()->get_squadron()[i];
+							get_enemy_player()->get_squadron().erase(get_enemy_player()->get_squadron().begin()+i);
+std::cout << "squadron[" << i << "] deleted\n";
+							break;
+						}
 					}
 				}
+
+				// Target can revenge attack if not defending and is still alive.
+				if (!attacked_dead ) {
+					if (!selector.get_target()->is_defending()) {
+										bool revenged_dead = 0;
+										
+						sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
+						sidebar.drawBattleLog(window);
+						revenged_dead = attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window, hit_text2);
+						
+										if (revenged_dead) {
+					sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + "'s " + selector.get_selection()->get_name() + " is dead!");
+					c_map.null_character_at(*(selector.get_selection()->get_coordinate()));
+					
+					for (auto i = get_current_player()->get_squadron().size() - 1 ; i >= 0 ; i--) {
+std::cout << "\ni is " << i << "\n";
+						if (get_current_player()->get_squadron()[i]->get_hit_points() == 0) {
+std::cout << "get_current_player()()->get_squadron()[i]->get_hit_points() : " << get_current_player()->get_squadron()[i]->get_hit_points() << "\n";
+							delete get_current_player()->get_squadron()[i];
+							get_current_player()->get_squadron().erase(get_current_player()->get_squadron().begin()+i);
+std::cout << "squadron[" << i << "] deleted\n";
+							break;
+						}
+					}
+				}
+					}
+					
+				}
+				
+				
                 selector.clear();
             }
             break;
@@ -884,7 +920,7 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
 
 
 }
-void Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text) {
+bool Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text) {
 	// Get used stats
 	int attackedDEF = attackedC->get_defense();
 	int attackedHP = attackedC->get_hit_points();
@@ -955,24 +991,7 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 	}
 	
 	attackedC->set_hit_points(attackedHP);
-	if (attackedHP == 0) {
-		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
-		c_map.null_character_at(*attackedC->get_coordinate());
-		
-		//for (auto i = attackedP->get_squadron().size() - 1 ; i >= 0 ; i--) {
-		for (auto i = 2 ; i >= 0 ; i--) {
-std::cout << "\ni is " << i << "\n";
-			if (attackedP->get_squadron()[i]->get_hit_points() == 0) {
-std::cout << "attackedP->get_squadron()[i]->get_hit_points() : " << attackedP->get_squadron()[i]->get_hit_points() << "\n";
-				delete attackedP->get_squadron()[i];
-				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+i);
-std::cout << "squadron[" << i << "] deleted\n";
-				// break;
-			}
-		}
-		// delete attackedC;
-		attackedC = nullptr;
-	}
+	return attackedHP == 0;
 }
 
 void Game::wait_character_poll() {

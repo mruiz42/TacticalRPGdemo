@@ -103,8 +103,7 @@ public:
     void wait_character_poll();
     void defend_character_poll();
     void attack_character_key_poll(sf::RenderWindow& window);
-	void attack_character_rules(tact::Player* attackedP, tact::Character* attackerC, tact::Character* attackedC, int attackerPID,
-	        int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text);
+	bool attack_character_rules(tact::Player* attackedP, tact::Character* attackerC, tact::Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text);
     bool has_enemy_adjacent();
     bool belongs_to_enemy_player(tact::Character *character);
     void draw_units(sf::RenderWindow &window, tact::Player player);
