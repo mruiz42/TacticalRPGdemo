@@ -3,9 +3,7 @@
 //
 
 #include "../../include/tact/Game.h"
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
+
 
 using namespace tact;
 using namespace std;
@@ -476,12 +474,20 @@ void Game::move_cursor_key_poll() {
             break;
         }
         case sf::Keyboard::Key::Q:
-            if (iterator == get_current_player()->get_squadron().size())
+            if (get_current_player()->get_squadron().size() > 1) {
+                if (iterator == get_current_player()->get_squadron().size())
+                    iterator = 0;
+                Character *c_ptr = get_current_player()->get_next_character(iterator);
+                cur.jump_to(*c_ptr->get_coordinate());
+                iterator++;
+                break;
+            }
+            else {
                 iterator = 0;
-            Character* c_ptr = get_current_player()->get_next_character(iterator);
-            cur.jump_to(*c_ptr->get_coordinate());
-            iterator++;
-            break;
+                Character *c_ptr = get_current_player()->get_next_character(iterator);
+                cur.jump_to(*c_ptr->get_coordinate());
+                break;
+            }
     }
 }
 void Game::move_character_key_poll(sf::RenderWindow& window){
