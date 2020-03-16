@@ -3,7 +3,10 @@
 //
 
 #include "../../include/tact/Game.h"
-
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
 
 using namespace tact;
 using namespace std;
@@ -66,14 +69,14 @@ int Game::play_game(sf::RenderWindow& window) {
                 wait_selected = false;
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id()) +" turn");
             }
-			if (get_enemy_player()->get_squadron().size() == 0) {
+			if (get_enemy_player()->get_squadron().empty()) {
 				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " wins!");
 				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
 				gameEnd = true;
 				break;
 			}
-			if (get_current_player()->get_squadron().size() == 0) {
+			if (get_current_player()->get_squadron().empty()) {
 				sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " wins!");
 				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;

@@ -27,10 +27,6 @@
 #include "Selector.h"
 #include "CoolText.h"
 #include "Player.h"
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
 
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/maps/map_tiles32.png";
