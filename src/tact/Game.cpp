@@ -20,7 +20,6 @@ Game::Game() : cur(0, 0, TEXTURE_SIZE), sidebar(root_prefix + sidebar_bg_path , 
     move_frame = 0;
     turn_count = 1;
     unit_selected = false;
-    game_end = false;
     unit_walking = false;
     menu_selected = false;
     move_selected = false;
@@ -48,7 +47,14 @@ Game::Game() : cur(0, 0, TEXTURE_SIZE), sidebar(root_prefix + sidebar_bg_path , 
     for (auto i = 0; i < player2.get_squadron().size(); i++){
         player1.get_squadron().at(i)->flip_map_sprite();
     }
-}
+    if(!music.openFromFile(music_path)){
+        std::cout << "Error: could not load file" << music_path << std::endl;
+        exit(-1);
+    }
+    music.setVolume(30);
+    music.play();
+    music.setLoop(true);
+    }
 // Main game loop
 int Game::play_game(sf::RenderWindow& window) {
     window.setFramerateLimit(60);
@@ -58,6 +64,7 @@ int Game::play_game(sf::RenderWindow& window) {
             sidebar.get_menu().set_all_text_color(sf::Color(128,128,128,255));
         }
         while (window.pollEvent(event) && !unit_walking && !gameEnd) {
+            adjust_volume_key_poll();
             if(this->get_current_player()->is_turn_end() && !unit_walking && !menu_selected){
                 this->swap_turns();
                 menu_selected = false;
@@ -149,7 +156,7 @@ int Game::play_game(sf::RenderWindow& window) {
         if (turn_text.draw_centered()) {
             window.draw(turn_text.get_text());
         }
-         window.draw(except.returnText());
+        window.draw(except.returnText());
         window.draw(sidebar);
         window.draw(sidebar.get_menu());
 
@@ -417,26 +424,14 @@ void Game::update_map() {
         c_map.set_character_at(*player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }
-/* TO-BE-REMOVED
 void Game::adjust_volume_key_poll() {
-    switch (event.key.code) {
-        case sf::Keyboard::Key::Dash: // Volume Down
-            music.setVolume(music.getVolume() - 10);
-            sound.setVolume(sound.getVolume() - 10);
-            sound.play();
-            break;
-
-        case sf::Keyboard::Key::Equal:  // Volume Up
-            music.setVolume(music.getVolume() + 10);
-            sound.setVolume(sound.getVolume() + 10);
-            sound.play();
-            if (music.getVolume() >= 100) {
-                music.setVolume(100);
-                sound.setVolume(100);
-            }
-            break;
-    }
-} */
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Dash)) {
+            music.setVolume(0);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Equal)){
+            music.setVolume(30);
+        }
+}
 void Game::move_cursor_key_poll() {
     switch (event.key.code) {
 		//Backdoor

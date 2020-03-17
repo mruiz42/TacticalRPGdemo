@@ -4,9 +4,7 @@
 #ifndef CIS29GROUP2GAME_GAME_H
 #define CIS29GROUP2GAME_GAME_H
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 704
-#define TEXTURE_SIZE 32
+
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
@@ -29,22 +27,22 @@
 #include "Selector.h"
 #include "CoolText.h"
 #include "Player.h"
+#include "Exception.h"
 #include "../Cursor.h"
 
-#include "Exception.h"
-
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 704
+#define TEXTURE_SIZE 32
 const std::string root_prefix = "./";    // Linux
 const std::string map_texture_path = "share/maps/map_tiles32.png";
 const std::string font_path = "share/resources/PressStart2P-Regular.ttf";
 const std::string sidebar_font_path = "share/resources/ChunkyDunk.ttf";
-const std::string battleLog_font_path = "share/resources/ChunkyDunk.ttf";
 const std::string sidebar_bg_path = "share/textures/sidebar_background.png";
-const std::string vol_change_sound_path = "share/audio/volume_change.wav";
 const std::string cur_path = "share/sprites/cursor.png";
+const std::string music_path = "./share/audio/BattleTheme.wav";
 
 const unsigned int num_tiles_x = (WINDOW_WIDTH - (TEXTURE_SIZE * 8)) / TEXTURE_SIZE;
 const unsigned int num_tiles_y = WINDOW_HEIGHT / TEXTURE_SIZE;
-const unsigned int num_tiles_total = num_tiles_x * num_tiles_y;
 
 namespace tact {
     class Game;
@@ -57,8 +55,6 @@ private:
     Exception except;
     tact::VertexMap v_map;
     tact::CharacterMap c_map;
-    sf::Sound sound;
-    sf::SoundBuffer buffer;
     sf::Event event;
     tact::Sidebar sidebar;
     tact::CoolText hit_text1;
@@ -69,7 +65,6 @@ private:
     tact::Selector selector;
     unsigned int move_frame;
     unsigned int iterator;
-    bool game_end;
     bool unit_selected;
     bool unit_walking;
     bool menu_selected;
@@ -92,7 +87,6 @@ public:
     int check_controllers();
     bool belongs_to_current_player(tact::Character*);
     void update_map();
-    void set_framerate();
     void move_cursor_key_poll();
     void adjust_volume_key_poll();
     void move_character_key_poll(sf::RenderWindow&);
