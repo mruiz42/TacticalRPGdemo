@@ -3,6 +3,7 @@
 //
 
 #include "../../include/tact/Game.h"
+#include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -12,7 +13,7 @@ using namespace std;
 
 // Game constructor
 Game::Game() : cur(0, 0, TEXTURE_SIZE), sidebar(root_prefix + sidebar_bg_path , root_prefix + sidebar_font_path, root_prefix + sidebar_font_path),
-               hit_text(font_path), turn_text(font_path),
+               hit_text1(font_path), hit_text2(font_path), turn_text(font_path),
                player1(0, Coordinate(2, 17)), player2(1, Coordinate(29, 3))
     {
     iterator = 0;
@@ -39,26 +40,7 @@ Game::Game() : cur(0, 0, TEXTURE_SIZE), sidebar(root_prefix + sidebar_bg_path , 
     if (!v_map.loadMap(root_prefix + map_texture_path, root_prefix + cur_path, sf::Vector2u(TEXTURE_SIZE, TEXTURE_SIZE), num_tiles_x, num_tiles_y)) {
 //        return -1;
     }
-    // add background music (stream directly from music file)
-//	if(!music.openFromFile(root_path + "share/audio/BattleTheme.wav")){
-//		std::cout << "Error: backgound music." << std::endl;
-//		return -1;
-//	}
-//	if(!music.openFromFile(root_path + "share/audio/Vanadiel_March.wav")){
-//		std::cout << "Error: backgound music." << std::endl;
-//		return -1;
-//	}
-    music.setVolume(50);  /// range 0 - 100
-    music.play();
 
-    // add sound effect (pre-load small audio file to memory for fast response)
-    // credit to https://www.noiseforfun.com/2012-sound-effects/menu-05-a/
-    if(!buffer.loadFromFile(root_prefix + vol_change_sound_path)){
-        std::cout << "Error: sound effect: " + vol_change_sound_path + " could not be loaded." << std::endl;
-//        return -1;
-    }
-    sound.setBuffer(buffer);
-    sound.setVolume(50);	/// range 0-100
 
     /// display character's info on sidebar
     sidebar.createStat(WINDOW_WIDTH, WINDOW_HEIGHT, root_prefix + font_path);
@@ -75,20 +57,7 @@ int Game::play_game(sf::RenderWindow& window) {
         if (!unit_selected) {
             sidebar.get_menu().set_all_text_color(sf::Color(128,128,128,255));
         }
-        while (window.pollEvent(event) && !unit_walking) {
-
-        if (get_enemy_player()->get_squadron().size() == 0) {
-            std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
-            game_end = true;
-            break;
-        }
-        if (get_current_player()->get_squadron().size() == 0) {
-            std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;
-            game_end = true;
-            break;
-        }
-
-
+        while (window.pollEvent(event) && !unit_walking && !gameEnd) {
             if(this->get_current_player()->is_turn_end() && !unit_walking && !menu_selected){
                 this->swap_turns();
                 menu_selected = false;
@@ -100,14 +69,14 @@ int Game::play_game(sf::RenderWindow& window) {
                 wait_selected = false;
                 sidebar.setTurn("Player" + std::to_string(get_current_player_id()) +" turn");
             }
-			if (get_enemy_player()->get_squadron().size() == 0) {
+			if (get_enemy_player()->get_squadron().empty()) {
 				sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + " wins!");
 				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
 				gameEnd = true;
 				break;
 			}
-			if (get_current_player()->get_squadron().size() == 0) {
+			if (get_current_player()->get_squadron().empty()) {
 				sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " wins!");
 				sidebar.drawBattleLog(window);
 				std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;
@@ -122,7 +91,6 @@ int Game::play_game(sf::RenderWindow& window) {
 					sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_enemy_player_id());
 				}
             }
-
             else {
                 sidebar.clear();
                 sidebar.update_sidebar(cur, turn_count, get_current_player_id());
@@ -145,27 +113,39 @@ int Game::play_game(sf::RenderWindow& window) {
 
             }
             if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
-                poll_joy_logic();
+                poll_joy_logic(window);
             }
             else if (event.type == sf::Event::KeyPressed) {
                 poll_key_logic(window);
             }
         }
-		if (gameEnd) break;
-
-
+        
+		
         // These objects will only be updated when a poll event is detected
+		if (get_enemy_player()->get_squadron().size() == 0) {
+			std::cout << "Player " << get_current_player_id() + 1 << " wins!" << std::endl;
+			turn_text.set_text("Player " + std::to_string(get_current_player_id() + 1) + " wins!\n");
+			sidebar.clear();
+            sidebar.update_sidebar(cur, turn_count, get_current_player_id());
+		}
+		if (get_current_player()->get_squadron().size() == 0) {
+			std::cout << "Player " << get_enemy_player_id() + 1 << " wins!" << std::endl;
+			turn_text.set_text("Player " + std::to_string(get_enemy_player_id() + 1) + " wins!\n");
+			sidebar.clear();
+            sidebar.update_sidebar(cur, turn_count, get_enemy_player_id());
+		}
         window.clear();
         update_map();
         window.draw(v_map);
-        draw_units(window, player1);
-        draw_units(window, player2);
+		if (get_current_player()->get_squadron().size() != 0) {
+			draw_units(window, *get_current_player());
+		}
+		if (get_enemy_player()->get_squadron().size() != 0) {
+			draw_units(window, *get_enemy_player());
+		}
         //window.draw(c_map);
         window.draw(cur.get_sprite());
-        foo();
-        if (hit_text.draw_raising()) {
-            window.draw(hit_text.get_text());
-        }
+        set_menu_grey();
         if (turn_text.draw_centered()) {
             window.draw(turn_text.get_text());
         }
@@ -175,14 +155,26 @@ int Game::play_game(sf::RenderWindow& window) {
 
         sidebar.drawStat(window);
         sidebar.drawBattleLog(window);
+		if (hit_text1.draw_raising()) {
+			window.draw(hit_text1.get_text());
+		}
+		if (hit_text2.draw_raising()) {
+			window.draw(hit_text2.get_text());
+		}
         window.display();
+		
+		if (gameEnd) {
+			if (event.type == sf::Event::KeyPressed) {
+				break;
+			}
+		}
     }
 
     std::cout << "Game Over!" << std::endl;
     return 0;
 }
 void Game::poll_key_logic(sf::RenderWindow& window) {
-    adjust_volume_key_poll();
+    /// adjust_volume_key_poll(); TO-BE-REMOVED
     // Move cursor routine
     if (!unit_selected) {
         if (event.type == sf::Event::KeyPressed) {
@@ -231,7 +223,7 @@ void Game::poll_key_logic(sf::RenderWindow& window) {
     }
 }
 
-void Game::foo() {
+void Game::set_menu_grey() {
     // Set attack grey
     if (!unit_selected){
         sidebar.get_menu().turn_off();
@@ -348,7 +340,7 @@ int Game::check_controllers() {
     }
 }
 void Game::draw_units(sf::RenderWindow& window, Player player){
-    for (int i = 0; i < get_current_player()->get_squadron().size(); i++) {
+    for (int i = 0; i < player.get_squadron().size(); i++) {
         Character* c_ptr = player.get_squadron()[i];
         if (c_ptr->is_walking()) {
             unit_walking = true;
@@ -357,7 +349,7 @@ void Game::draw_units(sf::RenderWindow& window, Player player){
             c_ptr->get_map_sprite().move(x, y);
             c_ptr->walk();
 
-            // TODO: doign the walk flip here
+            // TODO: doing the walk flip here
             if (move_frame == 0) {
                 std::cout << "hi" << std::endl;
                 c_ptr->flip_map_sprite();
@@ -390,9 +382,8 @@ int Game::swap_turns(){
     std::cout << "- End turn - \n";
     turn_count++;
     turn_text.start_clock();
-    player1.reset_squadron_exhaustion();
-    player2.reset_squadron_exhaustion();
     if (player1.get_is_turn()){
+		player2.reset_squadron_exhaustion();
         std::cout << "- Player " + std::to_string(player2.get_player_id() + 1) << "'s Turn begin -\n";
         player1.set_is_turn(false);
         player2.set_is_turn(true);
@@ -402,6 +393,7 @@ int Game::swap_turns(){
         return player2.get_player_id();
     }
     else if (player2.get_is_turn()) {
+		player1.reset_squadron_exhaustion();
         std::cout << "Player " + std::to_string(player1.get_player_id() + 1) << "'s Turn -\n";
         player2.set_is_turn(false);
         player1.set_is_turn(true);
@@ -425,7 +417,7 @@ void Game::update_map() {
         c_map.set_character_at(*player2.get_squadron().at(i)->get_coordinate(), player2.get_squadron().at(i));
     }
 }
-
+/* TO-BE-REMOVED
 void Game::adjust_volume_key_poll() {
     switch (event.key.code) {
         case sf::Keyboard::Key::Dash: // Volume Down
@@ -444,9 +436,17 @@ void Game::adjust_volume_key_poll() {
             }
             break;
     }
-}
+} */
 void Game::move_cursor_key_poll() {
     switch (event.key.code) {
+		//Backdoor
+		case sf::Keyboard::Key::P:
+			for (auto i = 0 ; i < get_current_player()->get_squadron().size() ; i++) {
+				std::cout << "\nTest" << i << "\n";
+				get_current_player()->get_squadron()[i]->set_speed(1000) ;
+				get_current_player()->get_squadron()[i]->set_attack(1000) ;
+			}
+
         case sf::Keyboard::Key::D:   // Right
             if (cur.get_sprite().getPosition().x < 992)
                 cur.moveSprite(TEXTURE_SIZE, 0);
@@ -479,12 +479,20 @@ void Game::move_cursor_key_poll() {
             break;
         }
         case sf::Keyboard::Key::Q:
-            if (iterator == get_current_player()->get_squadron().size())
+            if (get_current_player()->get_squadron().size() > 1) {
+                if (iterator == get_current_player()->get_squadron().size())
+                    iterator = 0;
+                Character *c_ptr = get_current_player()->get_next_character(iterator);
+                cur.jump_to(*c_ptr->get_coordinate());
+                iterator++;
+                break;
+            }
+            else {
                 iterator = 0;
-            Character* c_ptr = get_current_player()->get_next_character(iterator);
-            cur.jump_to(*c_ptr->get_coordinate());
-            iterator++;
-            break;
+                Character *c_ptr = get_current_player()->get_next_character(iterator);
+                cur.jump_to(*c_ptr->get_coordinate());
+                break;
+            }
     }
 }
 void Game::move_character_key_poll(sf::RenderWindow& window){
@@ -520,11 +528,13 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
                 selector.get_selection()->get_map_sprite().move(0, TEXTURE_SIZE);
             }
             break;
+		
 
         case sf::Keyboard::Key::Return: {                  // Set down
             selector.set_selection_pos(selector.get_selection()->get_coordinate());
             selector.set_target_pos(&cur);
             Character* c_ptr = selector.get_selection();
+			Coordinate xy = *(selector.get_selection()->get_coordinate());
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player()->get_player_id());
                 break;
@@ -537,10 +547,10 @@ void Game::move_character_key_poll(sf::RenderWindow& window){
                 throw (cur.get_sprite().getPosition());
 
             }
-//            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
-//                std::cout << "character can't move that far. ";
-//                break;
-//            }
+            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection()->get_speed() / 3) {
+                std::cout << "character can't move that far. " << std::endl;
+                break;
+            }
 
             std::cout << "placed at :" << cur << std::endl;
 
@@ -629,59 +639,55 @@ int Game::menu_key_poll() {
 }
 
 // Joystick control routines
-void Game::poll_joy_logic() {
-    adjust_volume_key_poll();
+void Game::poll_joy_logic(sf::RenderWindow& window) {
     // Move cursor routine
     if (!unit_selected) {
-        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonReleased || event.type == sf::Event::JoystickButtonPressed) {
             move_cursor_joy_poll();
         }
     }
         // Menu selection routine
     else if (menu_selected) {
-        int selection = menu_joy_poll();
-        if (selection == -1) {
-            return;
+        int selection = -1;
+        if (event.type == sf::Event::JoystickMoved || event.type == sf::Event::JoystickButtonReleased || event.type == sf::Event::JoystickButtonPressed) {
+            selection = menu_joy_poll();
         }
-        else if (selection == 0) {
-            move_selected = true;
-            menu_selected = false;
-            return;
+        if (selection != -1) {
+            switch (selection) {
+                case 0: // Move
+                    move_selected = true;
+                    menu_selected = false;
+                    break;
+                case 1: // Wait
+                    selector.get_selection()->set_can_attack(false);
+                    wait_selected = true;
+                    move_selected = false;
+                    menu_selected = false;
+                    break;
+                case 2: // Attack
+                    attack_selected = true;
+                    move_selected = false;
+                    menu_selected = false;
+                    break;
+                case 3: // Defend
+                    selector.get_selection()->set_can_attack(false);
+                    defend_selected = true;
+                    move_selected = false;
+                    menu_selected = false;
+                    break;
+            }
         }
-        else if (selection == 1) { // Wait
-            wait_selected = true;
-            menu_selected = false;
-            return;
-        }
-        else if (selection == 2) { // Attack
-            attack_selected = true;
-            menu_selected = false;
-            return;
-        }
-        else if (selection == 3) { // Defend
-            defend_selected = true;
-            menu_selected = false;
-            return;
-
-        }
-    }
-
-    else if (move_selected){
-        move_character_joy_poll();
-    }
-
-    else if (defend_selected) {
-
-    }
-
-    else if (attack_selected) {
-
-    }
-
-    else if (wait_selected) {
-
+    } else if (move_selected) {
+        move_character_joy_poll(window);
+    } else if (defend_selected) {
+        defend_character_poll();
+    } else if (attack_selected) {
+        attack_character_joy_poll(window);
+    } else if (wait_selected) {
+        wait_character_poll();
     }
 }
+
 void Game::move_cursor_joy_poll() {
     if(event.type == sf::Event::JoystickMoved) {  // Controller input events
         // Get direction of D pad press
@@ -718,64 +724,76 @@ void Game::move_cursor_joy_poll() {
         }
 }
     else if (sf::Joystick::isButtonPressed(get_current_player_id(), 4)) {
-        if (iterator == get_current_player()->get_squadron().size())
+        if (get_current_player()->get_squadron().size() > 1) {
+            if (iterator == get_current_player()->get_squadron().size())
+                iterator = 0;
+            Character *c_ptr = get_current_player()->get_next_character(iterator);
+            cur.jump_to(*c_ptr->get_coordinate());
+            iterator++;
+        }
+        else {
             iterator = 0;
-        Character* c_ptr = get_current_player()->get_next_character(iterator);
-        cur.jump_to(*c_ptr->get_coordinate());
-        iterator++;
+            Character *c_ptr = get_current_player()->get_next_character(iterator);
+            cur.jump_to(*c_ptr->get_coordinate());
+        }
     }
 }
-
 int Game::menu_joy_poll() {
     int selection = -1;
     if(event.type == sf::Event::JoystickMoved) { // Controller input events
+        if (has_enemy_adjacent()){
+            this->selector.get_selection()->set_can_attack(true);
+        }
         // Get direction of D pad press
         float p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
         float p_y = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovY);
-        std::cout << p_x << " " << p_y << std::endl;
-
         // Down
         if (p_y > 0) {
-            sidebar.get_menu().move_down();
-            return selection;
+            this->sidebar.get_menu().move_down();
+            return -1;
         }
 
         // Up
         else if (p_y < 0) {
-            sidebar.get_menu().move_up();
-            return selection;
+            this->sidebar.get_menu().move_up();
+            return -1;
         }
 
         // Left
         else if (p_x < 0) {
-            sidebar.get_menu().move_left();
-            return selection;
+            this->sidebar.get_menu().move_left();
+            return -1;
         }
 
         // Right
         else if (p_x > 0) {
-            sidebar.get_menu().move_right();
-            return selection;
+            this->sidebar.get_menu().move_right();
+            return -1;
         }
     }
     else if(event.type == sf::Event::JoystickButtonReleased || event.type == sf::Event::JoystickButtonPressed) { // Controller input events
         if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
-            sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
-            selection = sidebar.get_menu().get_selection();
-            return selection;
+            int menu_selection = sidebar.get_menu().get_selection();
+            // testing
+            if (menu_selection == 0 && selector.get_selection()->is_moved()) {
+                return -1;
+            }
+            else if (menu_selection == 2 && !this->selector.get_selection()->can_attack()) {
+                return -1;
+            }
+//            this->sidebar.get_menu().set_selection_text_color(sf::Color::Cyan);
+            return menu_selection;
         } else if (sf::Joystick::isButtonPressed(get_current_player_id(), 1)) {
-            sidebar.get_menu().set_selection_text_color(sf::Color::Red);
-            sidebar.get_menu().set_all_text_color(sf::Color::White);
             menu_selected = false;
             unit_selected = false;
-            return selection;
+            return -1;
         }
     }
-    return selection;
+    return -1;
 }
-void Game::move_character_joy_poll() {
-    std::cout << "pickedup ";
 
+void Game::move_character_joy_poll(sf::RenderWindow& window) {
+    std::cout << "pickedup ";
     if (event.type == sf::Event::JoystickMoved) {  // Controller input events
         // Get direction of D pad press
         float p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
@@ -811,32 +829,153 @@ void Game::move_character_joy_poll() {
     }
     else if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased)
         if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
+            selector.set_selection_pos(selector.get_selection()->get_coordinate());
+            selector.set_target_pos(&cur);
             Character* c_ptr = selector.get_selection();
-            Coordinate xy = *c_ptr->get_coordinate();
+            Coordinate xy = *(selector.get_selection()->get_coordinate());
             if (c_map.get_map()[cur.get_y()][cur.get_x()] != nullptr) {
                 sidebar.update_statbar(c_map.get_character_at(cur), cur, turn_count, get_current_player()->get_player_id());
+                return;
             }
             else if (v_map.get_type_at(cur) >= 69) {
                 std::cout << "impassible ";
+                return;
             }
-//            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection().get_speed() / 5) {
-//                std::cout << "character can't move that far. ";
-//            }
+            else if (std::abs(xy.get_y() - cur.get_y()) + std::abs(xy.get_x() - cur.get_x()) > selector.get_selection()->get_speed() / 3) {
+                std::cout << "character can't move that far. " << std::endl;
+                return;
+            }
+
+            std::cout << "placed at :" << cur << std::endl;
+
+            sidebar.update_battleLog("Unit moved to (" + std::to_string(cur.get_x()) + "," + std::to_string(cur.get_y()) + ")", sf::Color::Black);
+            c_map.set_character_at(cur, selector.get_selection());
+
+            if (has_enemy_adjacent()) {
+                c_ptr->set_moved(true);
+                c_ptr->set_can_attack(true);
+                std::cout << "enemy adjacent!" << std::endl;
+                menu_selected = true;
+                move_selected = false;
+                //unit_selected = false;
+            }
             else {
-                std::cout << "placed at :" << cur << std::endl;
-                c_map.set_character_at(cur, selector.get_selection());
-                c_map.null_character_at(*selector.get_selection()->get_coordinate());
-                selector.get_selection()->set_coordinate(cur);
-                selector.get_selection()->set_moved(true);
-                selector.clear_selection();
-                unit_selected = false;
+                c_ptr->set_moved(true);
+//                selector.clear_selection();
+                menu_selected = true;
+                //unit_selected = false;
             }
+            c_ptr->set_walking(true);
+            unit_walking = true;
+            menu_selected = true;
         }
         else if (sf::Joystick::isButtonPressed(get_current_player_id(), 1)) {
             unit_selected = false;
+            unit_walking = false;
             selector.clear();
+            return;
         }
 }
+
+void Game::attack_character_joy_poll(sf::RenderWindow& window) {
+
+    Coordinate* sprite_coordinate = selector.get_selection()->get_coordinate();
+    float up_bound = (sprite_coordinate->get_y() * 32 ) - 32;
+    float down_bound = (sprite_coordinate->get_y() * 32 ) + 32;
+    float left_bound = (sprite_coordinate->get_x() * 32 ) - 32;
+    float right_bound = (sprite_coordinate->get_x() * 32 ) + 32;
+    if (event.type == sf::Event::JoystickMoved) {  // Controller input events
+        // Get direction of D pad press
+        float p_x = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovX);
+        float p_y = sf::Joystick::getAxisPosition(get_current_player_id(), sf::Joystick::PovY);
+
+        if (p_x > 0) {
+            // Right
+            if (cur.get_sprite().getPosition().x < 992 && cur.get_sprite().getPosition().x < right_bound)
+                cur.moveSprite(TEXTURE_SIZE, 0);
+        } else if (p_x < 0) {
+            // Left
+            if (cur.get_sprite().getPosition().x > 0 && cur.get_sprite().getPosition().x > left_bound)
+                cur.moveSprite(-TEXTURE_SIZE, 0);
+        } else if (p_y < 0) { // UP
+            if (cur.get_sprite().getPosition().y > 0 && cur.get_sprite().getPosition().y > up_bound)
+                cur.moveSprite(0, -TEXTURE_SIZE);
+        } else if (p_y > 0) {
+            // DOWN
+            if (cur.get_sprite().getPosition().y < 672 && cur.get_sprite().getPosition().y < down_bound)
+                cur.moveSprite(0, TEXTURE_SIZE);
+        }
+    }
+    else if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+        if (sf::Joystick::isButtonPressed(get_current_player_id(), 0)) {
+
+            std::cout << "Attacking!" << std::endl;
+            Character *c_ptr = c_map.get_character_at(cur);
+            if (c_ptr != nullptr && !belongs_to_current_player(c_ptr)) {
+                unit_selected = false;
+                menu_selected = false;
+                attack_selected = false;
+                selector.set_target(c_ptr);
+                // Do attack call here
+                selector.get_selection()->set_moved(true);
+                selector.get_selection()->set_can_attack(false);
+
+                // Selection attacks target
+                bool attacked_dead = attack_character_rules(get_enemy_player(), selector.get_selection(),
+                                                            selector.get_target(), get_current_player_id(),
+                                                            get_enemy_player_id(), window, hit_text1);
+
+                if (attacked_dead) {
+                    sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + "'s " +
+                                             selector.get_target()->get_name() + " is dead!");
+                    c_map.null_character_at(*(selector.get_target()->get_coordinate()));
+                    for (auto i = 0; i < get_enemy_player()->get_squadron().size(); i++) {
+                        if (get_enemy_player()->get_squadron()[i]->get_hit_points() == 0) {
+                            delete get_enemy_player()->get_squadron()[i];
+                            get_enemy_player()->get_squadron().erase(get_enemy_player()->get_squadron().begin() + i);
+                            break;
+                        }
+                    }
+                }
+
+                // Target can revenge attack if not defending and is still alive.
+                if (!attacked_dead) {
+                    if (!selector.get_target()->is_defending()) {
+                        bool revenged_dead = 0;
+
+                        sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges.");
+                        sidebar.drawBattleLog(window);
+                        revenged_dead = attack_character_rules(get_current_player(), selector.get_target(),
+                                                               selector.get_selection(), get_enemy_player_id(),
+                                                               get_current_player_id(), window, hit_text2);
+
+                        if (revenged_dead) {
+                            sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + "'s " +
+                                                     selector.get_selection()->get_name() + " is dead!");
+                            c_map.null_character_at(*(selector.get_selection()->get_coordinate()));
+
+                            for (auto i = 0; get_current_player()->get_squadron().size(); i++) {
+                                if (get_current_player()->get_squadron()[i]->get_hit_points() == 0) {
+                                    delete get_current_player()->get_squadron()[i];
+                                    get_current_player()->get_squadron().erase(
+                                            get_current_player()->get_squadron().begin() + i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                }
+                selector.clear();
+            }
+        }
+    }
+//    else if (sf::Joystick::isButtonPressed(get_current_player_id(), 1)) {
+//        attack_selected = false;
+//        menu_selected = true;
+//    }
+}
+
 void Game::attack_character_key_poll(sf::RenderWindow& window) {
     Coordinate* sprite_coordinate = selector.get_selection()->get_coordinate();
     float up_bound = (sprite_coordinate->get_y() * 32 ) - 32;
@@ -872,67 +1011,106 @@ void Game::attack_character_key_poll(sf::RenderWindow& window) {
                 unit_selected = false;
                 menu_selected = false;
                 attack_selected = false;
-                selector.set_target(c_map.get_character_at(cur));
+                selector.set_target(c_ptr);
                 // Do attack call here
                 selector.get_selection()->set_moved(true);
                 selector.get_selection()->set_can_attack(false);
 
 				// Selection attacks target
-				attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window);
+				bool attacked_dead = attack_character_rules(get_enemy_player(), selector.get_selection(), selector.get_target(), get_current_player_id(), get_enemy_player_id(), window, hit_text1);
 
-				// Target can revenge attack if not defending and is still alive.
-				if (!selector.get_target()->is_defending() && selector.get_target()->get_hit_points() > 0) {
-					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
-					sidebar.drawBattleLog(window);
-					attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window);
+				if (attacked_dead) {
+					sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + "'s " + selector.get_target()->get_name() + " is dead!");
+					c_map.null_character_at(*(selector.get_target()->get_coordinate()));
+					for (auto i = 0; i < get_enemy_player()->get_squadron().size() ; i++) {
+						if (get_enemy_player()->get_squadron()[i]->get_hit_points() == 0) {
+							delete get_enemy_player()->get_squadron()[i];
+							get_enemy_player()->get_squadron().erase(get_enemy_player()->get_squadron().begin()+i);
+							break;
+						}
+					}
 				}
 
-                selector.clear();
+				// Target can revenge attack if not defending and is still alive.
+				if (!attacked_dead ) {
+					if (!selector.get_target()->is_defending()) {
+										bool revenged_dead = 0;
 
+						sidebar.update_battleLog("Player " + std::to_string(get_enemy_player_id() + 1) + " revenges." );
+						sidebar.drawBattleLog(window);
+						revenged_dead = attack_character_rules(get_current_player(), selector.get_target(), selector.get_selection(), get_enemy_player_id(), get_current_player_id(), window, hit_text2);
+
+										if (revenged_dead) {
+					sidebar.update_battleLog("Player " + std::to_string(get_current_player_id() + 1) + "'s " + selector.get_selection()->get_name() + " is dead!");
+					c_map.null_character_at(*(selector.get_selection()->get_coordinate()));
+
+					for (auto i = 0; get_current_player()->get_squadron().size() ; i++) {
+						if (get_current_player()->get_squadron()[i]->get_hit_points() == 0) {
+							delete get_current_player()->get_squadron()[i];
+							get_current_player()->get_squadron().erase(get_current_player()->get_squadron().begin()+i);
+							break;
+						}
+					}
+				}
+					}
+
+				}
+
+
+                selector.clear();
             }
             break;
         }
-        case sf::Keyboard::Key::BackSpace:              // Cancel
-            attack_selected = false;
-            menu_selected = true;
-            break;
+//        case sf::Keyboard::Key::BackSpace:              // Cancel
+//            attack_selected = false;
+//            menu_selected = true;
+//            selector.get_selection()->set_moved(true);
+//            selector.get_selection()->set_can_attack(false);
+//            break;
     }
 
 
 }
-void Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window) {
+
+
+bool Game::attack_character_rules(Player* attackedP, Character* attackerC, Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text) {
 	// Get used stats
 	int attackedDEF = attackedC->get_defense();
 	int attackedHP = attackedC->get_hit_points();
-	int attackedATK = attackedC->get_attack();
+	int attackedATK = attackedC->get_attack(); 
 	int attackedSpeed = attackedC->get_speed();
 	int attackerDEF = attackerC->get_defense();
 	int attackerHP = attackerC->get_hit_points();
 	int attackerATK = attackerC->get_attack();
 	int attackerSpeed = attackerC->get_speed();
 
-	int damage = 0, attackChance = 0, attackRoll = 0, numAttack = 0 , damageRoll = 0, thisDamage = 0;
+	int damage = 0, attackChance = 0, attackRoll = 0, numAttack = 0 , damageRoll = 0, thisDamage = 0, totalDamage = 0;
 
 	//First attack, attacker > attacked
-	damage = attackerATK * attackerATK / attackedDEF;
+	damage = attackerATK * (100* attackerATK / attackedDEF ) /100 / 2;
 	if (attackedC->is_defending()) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " defenses!");
 		sidebar.drawBattleLog(window);
 		damage /= 2;
 	}
 	// Chance for zero (evaded) or more attacks, based on speed
-	attackChance = (90 * attackerSpeed /attackedSpeed ) % 100;
+	attackChance = 90 * attackerSpeed /attackedSpeed;
 	srand (time(NULL) + 1 + attackedPID);
 	attackRoll = (rand() % 100 + 1); // random 1 to 100
 
 	while (attackRoll < attackChance && attackedHP > 0) {
-		numAttack += 1;
+		numAttack++;
 		// multiply damage by a random number between 0.9 and 1.1
 		srand (time(NULL) + 2 + numAttack + attackedPID);
-		damageRoll = 90 + (rand() % 20 + 1);
+		damageRoll = 90 + (rand() % 21);
 		thisDamage = damage * damageRoll / 100;
-		attackedHP -= round(thisDamage);
-		if (attackedHP < 0) attackedHP = 0;
+		attackedHP -= thisDamage;
+		totalDamage += thisDamage;
+		
+		if (attackedHP < 0) {
+			attackedHP = 0;
+			totalDamage = attackedC->get_hit_points();
+		}
 
 		//Update attack chance
 		attackChance /= 2;
@@ -940,46 +1118,33 @@ void Game::attack_character_rules(Player* attackedP, Character* attackerC, Chara
 		attackRoll = (rand() % 100 + 1);
 	}
 	//Print outcome to battle log
+	hit_text.start_clock();
 	if (numAttack == 0) {
 		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " evades!");
 		sidebar.drawBattleLog(window);
 
-        hit_text.start_clock();
         hit_text.set_text("MISS");
-        hit_text.set_position(cur.get_map_x(), cur.get_map_y());
-        hit_text.set_position(cur.get_map_x()+4, cur.get_map_y());
+		hit_text.set_position(attackedC->get_coordinate()->get_x() * TEXTURE_SIZE, (attackedC->get_coordinate()->get_y() - 0.5)* TEXTURE_SIZE);
 	}
 	else if (numAttack == 1) {
 		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks!");
-		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(totalDamage) + " damages!");
 		sidebar.drawBattleLog(window);
-        int damage_int = static_cast<unsigned int>(attackedC->get_hit_points() - attackedHP);
-        hit_text.start_clock();
-        hit_text.set_text(std::to_string(damage_int));
-        hit_text.set_position(cur.get_map_x(), cur.get_map_y());
-
+        // int damage_int = static_cast<unsigned int>(attackedC->get_hit_points() - attackedHP);
+        hit_text.set_text(std::to_string(totalDamage));
+		hit_text.set_position(attackedC->get_coordinate()->get_x() * TEXTURE_SIZE, attackedC->get_coordinate()->get_y() * TEXTURE_SIZE);
 	}
 	else {
 		sidebar.update_battleLog("Player " + std::to_string(attackerPID + 1) + "'s " + attackerC->get_name() + " attacks " + std::to_string(numAttack) + " times!");
-		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(attackedC->get_hit_points() - attackedHP) + " damages!");
+		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " took " + std::to_string(totalDamage) + " damages!");
 		sidebar.drawBattleLog(window);
-	}
 
+        hit_text.set_text(std::to_string(totalDamage));
+		hit_text.set_position(attackedC->get_coordinate()->get_x() * TEXTURE_SIZE, attackedC->get_coordinate()->get_y() * TEXTURE_SIZE);
+	}
+	
 	attackedC->set_hit_points(attackedHP);
-	if (attackedHP == 0) {
-		sidebar.update_battleLog("Player " + std::to_string(attackedPID + 1) + "'s " + attackedC->get_name() + " is dead!");
-
-		c_map.null_character_at(*attackedC->get_coordinate());
-		delete attackedC;
-		attackedC = nullptr;
-		for (auto thischar = 0; thischar < attackedP->get_squadron().size(); thischar++) {
-			if (attackedP->get_squadron()[thischar]->get_hit_points() == 0) {
-				attackedP->get_squadron().erase(attackedP->get_squadron().begin()+thischar);
-				break;
-			}
-		}
-	}
-
+	return attackedHP == 0;
 }
 
 void Game::wait_character_poll() {

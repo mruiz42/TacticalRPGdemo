@@ -20,11 +20,11 @@ Mage::Mage() : Character() {
     this->name = "Mage";
     this->level = 10;
     this->experience = 0;
-    this->hit_points = 550;
+    this->hit_points = 120;
     this->mana_points = 427;
-    this->attack = 16;
-    this->defense = 23;
-    this->speed = 21;
+    this->attack = 38;
+    this->defense = 21;
+    this->speed = 36;
     this->special_attack = 56;
     this->special_defense = 67;
 }
@@ -43,11 +43,15 @@ Mage::Mage(int x, int y) : Character(x, y) {
     this->name = "Mage";
     this->level = 10;
     this->experience = 0;
-    this->hit_points = 550;
+    this->hit_points = 120;
     this->mana_points = 427;
-    this->attack = 16;
-    this->defense = 23;
-    this->speed = 21;
+    this->attack = 38;
+    this->defense = 21;
+    this->speed = 36;
     this->special_attack = 56;
     this->special_defense = 67;
+}
+
+Mage::~Mage() {
+	std::cout << "Mage dtor called.\n"; 
 }

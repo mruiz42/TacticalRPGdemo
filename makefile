@@ -1,4 +1,4 @@
-CC      = g++
+CC      = g++ -g
 CFLAGS  = -std=c++14 #-Wall #-Wextra -pedantic
 INCLUDE = ./include/tact/
 COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
@@ -97,6 +97,9 @@ $(SRCOBJ)Coordinate.o : $(SOURCE)Coordinate.cpp
 
 $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 	$(COMPILE) $(SOURCE)Cursor.cpp -o $(SRCOBJ)Cursor.o
+
+$(SRCOBJ)Music.o : $(SOURCE)Music.cpp
+	$(COMPILE) $(SOURCE)Music.cpp -o $(SRCOBJ)Music.o
 
 $(TACTOBJ)Exception.o : $(TACTSRC)Exception.cpp
 	$(COMPILE) $(TACTSRC)Exception.cpp -o $(TACTOBJ)Exception.o

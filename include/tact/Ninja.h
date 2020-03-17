@@ -18,5 +18,6 @@ public:
     Ninja();
     Ninja(Coordinate xy);
     Ninja(int x, int y);
+	~Ninja();
 };
 #endif //CIS29GROUP2GAME_NINJA_H

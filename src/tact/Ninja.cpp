@@ -36,11 +36,11 @@ Ninja::Ninja() : Character() {
     this->name = "Ninja";
     this->level = 10;
     this->experience = 0;
-    this->hit_points = 800;
-    this->mana_points = 625;
-    this->attack = 28;
+    this->hit_points = 160;
+    this->mana_points = 10;
+    this->attack = 30;
     this->defense = 20;
-    this->speed = 39;
+    this->speed = 42;
     this->special_attack = 23;
     this->special_defense = 26;
 }
@@ -64,12 +64,15 @@ Ninja::Ninja(int x, int y) : Character(x, y) {
     this->name = "Ninja";
     this->level = 1;
     this->experience = 0;
-    this->hit_points = 800;
-    this->mana_points = 625;
-    this->attack = 28;
+    this->hit_points = 160;
+    this->mana_points = 10;
+    this->attack = 30;
     this->defense = 20;
-    this->speed = 39;
+    this->speed = 42;
     this->special_attack = 23;
     this->special_defense = 26;
 }
 
+Ninja::~Ninja() {
+	std::cout << "Ninja dtor called.\n"; 
+}

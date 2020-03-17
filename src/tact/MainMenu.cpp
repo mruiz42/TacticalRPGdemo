@@ -40,19 +40,19 @@ MainMenu::MainMenu(float width, float height)
     //inc by 30
     instructions[1].setFont(font);
     instructions[1].setFillColor(sf::Color::White);
-    instructions[1].setString("WASD/D-pad: move\nEnter/A:select and move\nQ/L2:automatically go to character\nBackspace/B:Undo");
+    instructions[1].setString("WASD/D-pad: move\nEnter/A:select and move\nQ/L2:automatically go to character\nBackspace/B:Undo\nP:Backdoor - unrestricted move and\nstronger attack");
     instructions[1].setPosition(sf::Vector2f(30, 30)); // divide by 2 so itll be centered, also height will be centered
 
 
     instructions[2].setFont(font); 
     instructions[2].setFillColor(sf::Color::Red);
     instructions[2].setString("Instructions:");
-    instructions[2].setPosition(sf::Vector2f(0, 200)); // divide by 2 so itll be centered, also height will be centered
+    instructions[2].setPosition(sf::Vector2f(0, 220)); // divide by 2 so itll be centered, also height will be centered
 
     instructions[3].setFont(font); 
     instructions[3].setFillColor(sf::Color::White);
-    instructions[3].setString("Select a sprite and place it within movement range\nEach sprite moves once per turn\nGoal: Eliminate opposing characters");
-    instructions[3].setPosition(sf::Vector2f(30, 240)); // divide by 2 so itll be centered, ach character movesalso height will be centered
+    instructions[3].setString("Select a sprite and place it within\nmovement range\nEach sprite moves once per turn\nGoal: Eliminate opposing characters");
+    instructions[3].setPosition(sf::Vector2f(30, 260)); // divide by 2 so itll be centered, ach character movesalso height will be centered
 
     instructions[4].setFont(font); 
     instructions[4].setFillColor(sf::Color::White);

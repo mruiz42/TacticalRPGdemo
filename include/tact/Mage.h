@@ -19,7 +19,7 @@ protected:
 public:
     Mage();
     Mage(Coordinate xy);
-    Mage(int x, int y);};
-
-
+    Mage(int x, int y);
+	~Mage();
+};
 #endif //CIS29GROUP2GAME_MAGE_H

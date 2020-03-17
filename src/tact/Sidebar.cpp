@@ -25,7 +25,7 @@ Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::s
 		text[i].setCharacterSize(12);
 		if(i == 0) {
 		    text[i].setString("Player_ turn");
-            int pw = 1024 + 174 / 2 - text[i].getLocalBounds().width / 2;
+            int pw = 1024 + 224 / 2 - text[i].getLocalBounds().width / 2;
             text[i].setPosition(sf::Vector2f(pw, 10));
         }
 		else if ( i != 0 && i < 6) {
@@ -74,7 +74,7 @@ void Sidebar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Sidebar::update_sidebar(Coordinate coordinate, int turn, int player_id) {
-    text[0].setString("Player" + std::to_string(player_id + 1) +" turn");
+    text[0].setString("Player" + std::to_string(player_id + 1));
     text[11].setString("TURN." + std::to_string(turn));
     text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
 }
@@ -106,7 +106,7 @@ void Sidebar::update_battleLog(std::string newlog, sf::Color color) {
 
 
 void Sidebar::update_statbar(Character* character, Coordinate coordinate, int turn, int player_id) {
-        text[0].setString("Player" + std::to_string(player_id + 1) +" turn");
+        text[0].setString("Player" + std::to_string(player_id + 1));
         text[1].setString(character->get_name());
         text[2].setString("LV." + std::to_string(character->get_level()));
         text[3].setString("EXP." + std::to_string(character->get_experience()));

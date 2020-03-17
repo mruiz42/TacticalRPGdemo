@@ -130,3 +130,7 @@ void Character::flip_map_sprite() {
     this->get_map_sprite().setOrigin(this->get_map_sprite().getLocalBounds().width, 0);
     this->get_map_sprite().setScale({-1,1});
 }
+
+Character::~Character() { 
+	std::cout << "Character dtor called.\n"; 
+}
