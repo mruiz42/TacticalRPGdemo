@@ -91,19 +91,20 @@ public:
     void adjust_volume_key_poll();
     void move_character_key_poll(sf::RenderWindow&);
     int menu_key_poll();
-    void poll_key_logic(sf::RenderWindow& window);
+    void poll_key_logic(sf::RenderWindow&);
     int menu_joy_poll();
     void move_cursor_joy_poll();
-    void poll_joy_logic();
-    void move_character_joy_poll();
+    void poll_joy_logic(sf::RenderWindow&);
+    void move_character_joy_poll(sf::RenderWindow&);
     void wait_character_poll();
     void defend_character_poll();
-    void attack_character_key_poll(sf::RenderWindow& window);
+    void attack_character_joy_poll(sf::RenderWindow&);
+    void attack_character_key_poll(sf::RenderWindow&);
 	bool attack_character_rules(tact::Player* attackedP, tact::Character* attackerC, tact::Character* attackedC, int attackerPID, int attackedPID, sf::RenderWindow& window, tact::CoolText& hit_text);
     bool has_enemy_adjacent();
     bool belongs_to_enemy_player(tact::Character *character);
     void draw_units(sf::RenderWindow &window, tact::Player player);
-    void foo();
+    void set_menu_grey();
 };
 
 
