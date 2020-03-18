@@ -3,6 +3,10 @@
 
 #ifndef CIS29GROUP2GAME_GAME_H
 #define CIS29GROUP2GAME_GAME_H
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
@@ -14,10 +18,6 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
 #include "Sidebar.h"
 #include "VertexMap.h"
 #include "Character.h"
@@ -76,7 +76,6 @@ public:
     // Main game loop
     int play_game(sf::RenderWindow&);
     int set_iterator();
-    int toggle_music();
     int swap_turns();
     tact::Player* get_current_player();
     tact::Player* get_enemy_player();

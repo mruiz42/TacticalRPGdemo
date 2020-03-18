@@ -4,10 +4,11 @@
 
 #ifndef CIS29GROUP2GAME_COOLTEXT_H
 #define CIS29GROUP2GAME_COOLTEXT_H
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/System/Clock.hpp>
+
 #include <iostream>
 #include <string>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/System/Clock.hpp>
 
 namespace tact {
     class CoolText;
@@ -31,12 +32,8 @@ public:
     void set_position(float, float);
     void set_clock(sf::Clock clock) { this->clock = clock; }
     void set_text(std::string string);
-
     bool draw_raising();
-
     void start_clock();
-
-
     bool draw_centered();
 };
 

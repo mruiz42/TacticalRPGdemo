@@ -7,10 +7,8 @@
 using namespace tact;
 
 CoolText::CoolText(std::string font_path) {
-
     try {
-        if (!font.loadFromFile(font_path))
-        {
+        if (!font.loadFromFile(font_path)){
             throw(font_path);
         }
     }

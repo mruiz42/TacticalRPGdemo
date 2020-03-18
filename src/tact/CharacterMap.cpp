@@ -2,10 +2,10 @@
 // Created by michael on 2/17/20.
 //
 
+#include <iostream>
 #include "../../include/tact/CharacterMap.h"
 #include "../../include/tact/Ninja.h"
 #include "../../include/tact/Mage.h"
-#include <iostream>
 
 using namespace tact;
 

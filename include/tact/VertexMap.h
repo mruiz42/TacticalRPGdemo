@@ -5,13 +5,13 @@
 #ifndef CIS29GROUP2GAME_VERTEXMAP_H
 #define CIS29GROUP2GAME_VERTEXMAP_H
 
+#include <string>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <string>
 #include "../Coordinate.h"
 
 namespace tact {

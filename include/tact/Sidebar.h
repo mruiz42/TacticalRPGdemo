@@ -4,6 +4,12 @@
 
 #ifndef CIS29GROUP2GAME_SIDEBAR_H
 #define CIS29GROUP2GAME_SIDEBAR_H
+
+#include <string>
+#include <sstream>
+#include <vector>
+#include <deque>
+#include <iostream>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
@@ -11,17 +17,14 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics.hpp>
 #include "Character.h"
 #include "Menu.h"
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <deque>
+
 namespace tact {
     class Sidebar;
 }
+
 class tact::Sidebar : public sf::Drawable, public sf::Transformable {
 private:
     sf::Texture background;

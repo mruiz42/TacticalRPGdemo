@@ -1,9 +1,9 @@
 //
 // Created by michael on 1/21/20.
 //
-
-#include "../../include/tact/VertexMap.h"
 #include <iostream>
+#include "../../include/tact/VertexMap.h"
+
 using namespace tact;
 
 VertexMap::VertexMap() {
@@ -43,11 +43,9 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
     m_vertices.setPrimitiveType(sf::Quads);
     m_vertices.resize(w * h * 4);
 
-
     // populate the vertex array, with one quad per tile
     for (unsigned int x = 0; x < w; ++x)
-        for (unsigned int y = 0; y < h; ++y)
-        {
+        for (unsigned int y = 0; y < h; ++y){
             /// get the current tile number
             int tileNumber = map[y][x];
             int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);

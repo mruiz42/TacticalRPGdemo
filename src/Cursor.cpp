@@ -80,14 +80,3 @@ int Cursor::load_texture() {
     this->sprite.setTexture(this->texture);
     return 0;
 }
-
-
-// // gets map coordiante so char can walk
-float Cursor::get_map_x() const {
-    return static_cast<float>(this->x)*texture_size;
-}
-
-// //gets map coordinate so char can walk
-float Cursor::get_map_y() const {
-    return static_cast<float>(this->y)*texture_size;
-}

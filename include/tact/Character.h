@@ -3,12 +3,13 @@
 //
 #ifndef CIS29GROUP2GAME_CHARACTER_H
 #define CIS29GROUP2GAME_CHARACTER_H
-#include <string>
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
+#include <string>
 #include "../Coordinate.h"
 
 const std::string death_sound_m_path = "share/audio/ff-death-scream-male.wav";

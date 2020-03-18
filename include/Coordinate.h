@@ -17,10 +17,10 @@ public:
     Coordinate(int x, int y) : x(x), y(y) {}
     void set_coordinate(int, int);
     void set_coordinate(Coordinate);
-    void set_x(int x);
-    void set_y(int y);
-    int get_x() const;
-    int get_y() const;
+    void set_x(int x) { this->x = x; }
+    void set_y(int y) { this->y = y; }
+    int get_x() const { return this->x; }
+    int get_y() const { return this->y; }
     Coordinate operator - (const Coordinate&);
     bool operator == (const Coordinate&);
     friend std::ostream& operator<< (std::ostream& out, const Coordinate& coordinate);

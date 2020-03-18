@@ -5,6 +5,11 @@
 #ifndef CIS29GROUP2GAME_EXCEPTION_H
 #define CIS29GROUP2GAME_EXCEPTION_H
 
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
@@ -12,11 +17,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <iostream>
 #include <SFML/Graphics.hpp>
-#include <string>
-#include <sstream>
-#include <vector>
+
 const std::string exception_path = "./share/resources/ChunkyDunk.ttf";
 
 class Exception : public sf::Drawable, public sf::Transformable
@@ -31,8 +33,6 @@ public:
     void show_except();
     void hide_expect();
     void shift(sf::Vector2f);
-    
-    
 };
 
 

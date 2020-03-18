@@ -2,17 +2,6 @@
 // Created by michael on 1/21/20.
 //
 
-
-/*    unsigned int level;
-    unsigned int experience;
-    unsigned int hit_points;
-    unsigned int mana_points;
-    unsigned int attack;
-    unsigned int defense;
-    unsigned int speed;
-    unsigned int special_attack;
-    unsigned int special_defense;*/
-
 #include "../../include/tact/Ninja.h"
 
 using namespace tact;

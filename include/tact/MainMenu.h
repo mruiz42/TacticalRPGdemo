@@ -25,7 +25,6 @@ public:
     void move_down();
     int get_selection_index(){ return this->selectedItemIndex; }
 private:
-    
     int selectedItemIndex;
     sf::Font font;
     sf::Text main_menu[MAX_NUMBER_OF_ITEMS];

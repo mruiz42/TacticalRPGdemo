@@ -4,10 +4,11 @@
 
 #ifndef CIS29GROUP2GAME_CURSOR_H
 #define CIS29GROUP2GAME_CURSOR_H
-#include "tact/Sprite.h"
-#include "Coordinate.h"
+
 #include <string>
 #include <iostream>
+#include "tact/Sprite.h"
+#include "Coordinate.h"
 
 class Cursor : public Coordinate {
 private:
@@ -35,14 +36,14 @@ public:
 
     int load_texture();
 
-
     virtual void moveSprite(float x, float y);
     void jump_to(int, int);
     void jump_to(Coordinate);
     friend std::ostream& operator<< (std::ostream& out, const Cursor& cursor);
 
-    float get_map_x() const;
-    float get_map_y() const;
+	//gets map coordinate so char can walk
+    float get_map_x() const { return static_cast<float>(this->x)*texture_size; }
+    float get_map_y() const {     return static_cast<float>(this->y)*texture_size; }
 };
 
 

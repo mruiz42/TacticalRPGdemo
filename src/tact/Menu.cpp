@@ -41,13 +41,14 @@ Menu::Menu(std::string font_filename) {
     selection = -1;
 }
 
-Menu::~Menu() { }
+Menu::~Menu() { 
+	std::cout << "Menu dtor called.\n"; 
+}
 
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     for(int i = 0; i < text.size(); i++) {
         target.draw(text[i]);
     }
-
 }
 
 void Menu::move_right() {
@@ -57,9 +58,7 @@ void Menu::move_right() {
     else if (selection == 0){
         selection = 1;
     }
-
     std::cout << selection << std::endl;
-
 }
 
 void Menu::move_left() {
@@ -70,7 +69,6 @@ void Menu::move_left() {
         selection = 2;
     }
     std::cout << selection << std::endl;
-
 }
 
 void Menu::move_up() {
@@ -81,7 +79,6 @@ void Menu::move_up() {
         selection = 1;
     }
     std::cout << selection << std::endl;
-
 }
 
 void Menu::move_down() {

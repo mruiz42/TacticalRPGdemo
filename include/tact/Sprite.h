@@ -4,9 +4,10 @@
 
 #ifndef CIS29GROUP2GAME_SPRITE_H
 #define CIS29GROUP2GAME_SPRITE_H
+
+#include <string>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include <string>
 
 namespace tact {
     class Sprite;

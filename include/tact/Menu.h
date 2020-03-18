@@ -4,9 +4,10 @@
 
 #ifndef CIS29GROUP2GAME_MENU_H
 #define CIS29GROUP2GAME_MENU_H
+
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
-#include <iostream>
 #include <SFML/System/Time.hpp>
 
 namespace tact {
@@ -33,11 +34,8 @@ public:
     void set_one_text_color(sf::Color, int);
     void set_selection_text_color(sf::Color);
     void set_all_text_color(sf::Color color);
-
     void toggle_selection();
-
     void turn_on();
-
     void turn_off();
 };
 #endif //CIS29GROUP2GAME_MENU_H

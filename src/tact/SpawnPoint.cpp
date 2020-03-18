@@ -6,7 +6,6 @@
 
 using namespace tact;
 
-
 SpawnPoint::SpawnPoint() {
     hit_points = 0;
     xy.set_x(0);
