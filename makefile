@@ -21,7 +21,7 @@ TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
 # execution dependencies
-OUTBINDEPS	= $(SRCOBJ)main.o  $(SRCOBJ)Music.o
+OUTBINDEPS	= $(SRCOBJ)main.o
 LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)Game.o $(TACTOBJ)Exception.o $(TACTOBJ)MainMenu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)SpawnPoint.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Mage.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
 LIBCORD = $(SRCOBJ)Coordinate.o $(SRCOBJ)Cursor.o
 
@@ -94,9 +94,6 @@ $(SRCOBJ)Coordinate.o : $(SOURCE)Coordinate.cpp
 
 $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 	$(COMPILE) $(SOURCE)Cursor.cpp -o $(SRCOBJ)Cursor.o
-
-$(SRCOBJ)Music.o : $(SOURCE)Music.cpp
-	$(COMPILE) $(SOURCE)Music.cpp -o $(SRCOBJ)Music.o
 
 $(TACTOBJ)Exception.o : $(TACTSRC)Exception.cpp
 	$(COMPILE) $(TACTSRC)Exception.cpp -o $(TACTOBJ)Exception.o
