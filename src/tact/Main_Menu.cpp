@@ -20,17 +20,22 @@ Main_Menu::Main_Menu(float width, float height)
     main_menu[0].setFont(font);
     main_menu[0].setColor(sf::Color::Red);
     main_menu[0].setString("Play");
-    main_menu[0].setPosition(sf::Vector2f(width-250, height/(MAX_NUMBER_OF_ITEMS+1))); // divide by 2 so itll be centered, also height will be centered
+    main_menu[0].setPosition(sf::Vector2f(width-250, height/(MAX_NUMBER_OF_ITEMS+1)+100)); // divide by 2 so itll be centered, also height will be centered
 
     main_menu[1].setFont(font);
     main_menu[1].setColor(sf::Color::White);
     main_menu[1].setString("Instructions");
-    main_menu[1].setPosition(sf::Vector2f(width-250, height/(MAX_NUMBER_OF_ITEMS+1)*2)); // divide by 2 so itll be centered, also height will be centered
+    main_menu[1].setPosition(sf::Vector2f(width-250, height/(MAX_NUMBER_OF_ITEMS+1)+200)); // divide by 2 so itll be centered, also height will be centered
 
     main_menu[2].setFont(font);
     main_menu[2].setColor(sf::Color::White);
     main_menu[2].setString("Exit");
-    main_menu[2].setPosition(sf::Vector2f(width-250, height/(MAX_NUMBER_OF_ITEMS+1)*3)); // divide by 2 so itll be centered, also height will be centered
+    main_menu[2].setPosition(sf::Vector2f(width-250, height/(MAX_NUMBER_OF_ITEMS+1)+300)); // divide by 2 so itll be centered, also height will be centered
+
+    title.setFont(font);
+    title.setColor(sf::Color::White);
+    title.setString("TATICS RPG DEMO");
+    title.setPosition(sf::Vector2f((width/2 - 125), height/(MAX_NUMBER_OF_ITEMS+1)*1)); // divide by 2 so itll be centered, also height will be centered
 
     instructions[0].setFont(font);
     instructions[0].setColor(sf::Color::Red);
@@ -76,6 +81,7 @@ void Main_Menu::draw(sf::RenderWindow &window)
     sprite.setOrigin(sf::Vector2f(width/2, height/2));
     window.draw(sprite);
     */
+    window.draw(title);
     for(auto i = 0;i<MAX_NUMBER_OF_ITEMS;i++)
     {
         window.draw(main_menu[i]);

@@ -136,3 +136,4 @@ void Character::flip_map_sprite() {
     this->get_map_sprite().setScale({-1,1});
 
 }
+

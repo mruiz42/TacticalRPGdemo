@@ -30,6 +30,7 @@ private:
     sf::Font font;
     sf::Text main_menu[MAX_NUMBER_OF_ITEMS];
     sf::Text instructions[5];
+    sf::Text title;
     //void makeMenu();
 };
 #endif //CIS29GROUP2GAME_MENU_H
