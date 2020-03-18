@@ -16,14 +16,12 @@ A simple turn based tactical rpg game. The point of the game is to eliminate the
 `WSAD - move cursor`
 `Enter - select`
 `Backspace - back`
-`Q - next unit`
 
 #### Controller:
 `DPad - move cursor`
 `A - select`
 `B - back`
-`L1 - next unit
-`
+
 ## Getting started
 #### Mac OS & Linux
 ##### Requirements:
@@ -45,7 +43,6 @@ However, it should run fine if you are able to get `gcc make` on some sort of wi
 ##### Requirements:
  * SFML https://www.sfml-dev.org/tutorials/2.5/
  * GCC & GNU make (probably using cygwin)
-## Gameplay
 
  ## Credit
  * Music / Sprite / Art credits here
