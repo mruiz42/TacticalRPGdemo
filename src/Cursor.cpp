@@ -40,7 +40,7 @@ Cursor::Cursor(int x, int y, int tile_size, std::string cur_path) : Coordinate(x
     this->sprite.setTexture(this->texture);
 }
 
-void Cursor::moveSprite(float x, float y) {
+void Cursor::move_Sprite(float x, float y) {
     this->sprite.move(sf::Vector2f(x,y));
     this->x = (this->sprite.getPosition().x/texture_size);
     this->y = (this->sprite.getPosition().y/texture_size);

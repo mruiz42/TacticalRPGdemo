@@ -24,7 +24,7 @@ Character::Character() : xy(0,0) {
     special_defense = 0;
     walk_animation[0] = 0;
     walk_animation[1] =10;
-    textureRect = sf::IntRect(1,13,32,32);
+    Texture_Rect = sf::IntRect(1,13,32,32);
 }
 
 Character::Character(Coordinate xy) : xy(xy) {
@@ -44,7 +44,7 @@ Character::Character(Coordinate xy) : xy(xy) {
     special_defense = 0;
     walk_animation[0] = 0;
     walk_animation[1] =10;
-    textureRect = sf::IntRect(1,13,32,32);
+    Texture_Rect = sf::IntRect(1,13,32,32);
 
 }
 
@@ -63,7 +63,7 @@ Character::Character(int x, int y) : xy(x, y){
     speed = 0;
     special_attack = 0;
     special_defense = 0;
-    textureRect = sf::IntRect(1,13,32,32);
+    Texture_Rect = sf::IntRect(1,13,32,32);
     walk_animation[0] = 0;
     walk_animation[1] =10;
 }
@@ -72,7 +72,7 @@ Character::Character(std::string filename){
     texture.loadFromFile(filename);
     sidebar_sprite.setTexture(texture);
     map_sprite.setTexture(texture);
-    textureRect = sf::IntRect(1,13,32,32);
+    Texture_Rect = sf::IntRect(1,13,32,32);
     name = "";
     attack_on = false;
     moved = false;
@@ -110,13 +110,13 @@ void Character::walk()
     walk_animation[0]++;
     if(walk_animation[0]==walk_animation[1])
     {
-        if (textureRect == sf::IntRect(100,13,32,32)) {
-            textureRect = sf::IntRect(67,13,32,32);
+        if (Texture_Rect == sf::IntRect(100,13,32,32)) {
+            Texture_Rect = sf::IntRect(67,13,32,32);
         }
         else {
-            textureRect.left += 33;
+            Texture_Rect.left += 33;
         }
-        map_sprite.setTextureRect(textureRect);
+        map_sprite.setTextureRect(Texture_Rect);
         walk_animation[0]=0;
     }
 }

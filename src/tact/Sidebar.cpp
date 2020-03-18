@@ -8,13 +8,13 @@
 
 using namespace tact;
 
-Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::string battleLog_font_filename) : menu(font_filename) {
+Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::string battle_Log_font_filename) : menu(font_filename) {
     if(!this->background.loadFromFile(texture_filename, sf::IntRect(0, 0, 256, 704)))
         std::cout << "Could not open: " + texture_filename << std::endl;
     if(!font.loadFromFile(font_filename))
         std::cout << "Could not open: " + font_filename << std::endl;
-	if(!battleLog_font.loadFromFile(battleLog_font_filename))
-        std::cout << "Could not open: " + battleLog_font_filename << std::endl;
+	if(!battle_Log_font.loadFromFile(battle_Log_font_filename))
+        std::cout << "Could not open: " + battle_Log_font_filename << std::endl;
     sidebar.setTexture(background);
     sidebar.setPosition(1024,0);
     text.resize(13);
@@ -51,16 +51,16 @@ Sidebar::Sidebar(std::string texture_filename, std::string font_filename, std::s
             text[i].setPosition(sf::Vector2f(pw, py));
         }
     }
-	battleLog.resize(8);
-	for(int i = 0; i < battleLog.size(); i++) {
-		battleLog[i].setFont(battleLog_font);
-		battleLog[i].setFillColor(sf::Color::Black);
-		battleLog[i].setCharacterSize(15);
+	battle_Log.resize(8);
+	for(int i = 0; i < battle_Log.size(); i++) {
+		battle_Log[i].setFont(battle_Log_font);
+		battle_Log[i].setFillColor(sf::Color::Black);
+		battle_Log[i].setCharacterSize(15);
 		int pw = 1040;
-		battleLog[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
+		battle_Log[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
     }
 }
-void Sidebar::setTurn(std::string turn){
+void Sidebar::set_Turn(std::string turn){
     this->text[0].setString(turn);
 }
 
@@ -79,29 +79,30 @@ void Sidebar::update_sidebar(Coordinate coordinate, int turn, int player_id) {
     text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
 }
 
-void Sidebar::update_battleLog(std::string newlog) {
-	std::cout << "BL Update" <<  battleLog.size() << std::endl;
-	battleLog.push_back(battleLog.front());
-	battleLog.pop_front();
-	for(int i = 0; i < battleLog.size(); i++) {
-		int pw = 1040;
-		battleLog[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
+void Sidebar::update_battle_Log(std::string newlog) {
+	int pw = 1040;
+	std::cout << "BL Update" <<  battle_Log.size() << std::endl;
+	battle_Log.push_back(battle_Log.front());
+	battle_Log.pop_front();
+	for(int i = 0; i < battle_Log.size(); i++) {
+		pw = 1040;
+		battle_Log[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
     }
-	battleLog.back().setString(newlog);
+	battle_Log.back().setString(newlog);
 }
 
-void Sidebar::update_battleLog(std::string newlog, sf::Color color) {
-    std::cout << "BL Update" <<  battleLog.size() << std::endl;
-
-    battleLog.push_back(battleLog.front());
-    battleLog.pop_front();
-    auto it = battleLog.end() - 1;
+void Sidebar::update_battle_Log(std::string newlog, sf::Color color) {
+    std::cout << "BL Update" <<  battle_Log.size() << std::endl;
+    int pw = 1040;
+    battle_Log.push_back(battle_Log.front());
+    battle_Log.pop_front();
+    auto it = battle_Log.end() - 1;
     it->setFillColor(color);
-    for(int i = 0; i < battleLog.size(); i++) {
-        int pw = 1040;
-        battleLog[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
+    for(int i = 0; i < battle_Log.size(); i++) {
+        pw = 1040;
+        battle_Log[i].setPosition(sf::Vector2f(pw, (i + 11) * 26));
     }
-    battleLog.back().setString(newlog);
+    battle_Log.back().setString(newlog);
 }
 
 
@@ -120,19 +121,19 @@ void Sidebar::update_statbar(Character* character, Coordinate coordinate, int tu
         text[11].setString("TURN." + std::to_string(turn));
         text[12].setString("(" + std::to_string(coordinate.get_x()) + "," + std::to_string(coordinate.get_y()) + ")");
 		if(player_id == 0){
-			charFace = character->get_charFace1();
-			charFace.setPosition(sf::Vector2f(1046, 35));
-			charFace.scale(sf::Vector2f(1.5, 1.5));
+			character_Face = character->get_character_Face1();
+			character_Face.setPosition(sf::Vector2f(1046, 35));
+			character_Face.scale(sf::Vector2f(1.5, 1.5));
 		}
 		else {
-			charFace = character->get_charFace2();
-			charFace.setPosition(sf::Vector2f(1046, 35));
-			charFace.scale(sf::Vector2f(1.5, 1.5));
+			character_Face = character->get_character_Face2();
+			character_Face.setPosition(sf::Vector2f(1046, 35));
+			character_Face.scale(sf::Vector2f(1.5, 1.5));
 		}
 }
 
 
-void Sidebar::createStat(float const width, float const height, std::string filename) {
+void Sidebar::create_Stat(float const width, float const height, std::string filename) {
 	if(!font.loadFromFile(filename)) {
 		std::cout << "Could not open: " + filename << std::endl;
 	}
@@ -143,20 +144,20 @@ void Sidebar::clear() {
         text[i].setString("");
     }
 	sf::Sprite newCF;
-	charFace = newCF;
+	character_Face = newCF;
 }
 
-void Sidebar::drawStat(sf::RenderTarget &window) {
+void Sidebar::draw_Stat(sf::RenderTarget &window) {
 	for(int i =0; i < text.size(); i++)
 		window.draw(text[i]);
-	window.draw(charFace);
+	window.draw(character_Face);
 }
 
-void Sidebar::drawBattleLog(sf::RenderTarget &window) {
+void Sidebar::draw_Battle_Log(sf::RenderTarget &window) {
 	//std::cout << "BL draw" << std::endl;
-	for(int i =0; i < battleLog.size(); i++) {
-		window.draw(battleLog[i]);
-		std::string thisS = battleLog[i].getString();
+	for(int i =0; i < battle_Log.size(); i++) {
+		window.draw(battle_Log[i]);
+		std::string thisS = battle_Log[i].getString();
 	}
 	//std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }

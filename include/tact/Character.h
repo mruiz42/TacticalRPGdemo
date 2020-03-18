@@ -25,11 +25,11 @@ protected:
     sf::Sound voice;
     sf::Texture texture;
     sf::Sprite sidebar_sprite;
-	sf::Sprite charFace1;
-	sf::Sprite charFace2;
+	sf::Sprite character_Face1;
+	sf::Sprite character_Face2;
     sf::Sprite map_sprite;
     std::string name;
-    sf::IntRect textureRect;
+    sf::IntRect Texture_Rect;
     Coordinate xy;
     bool attack_on;
     bool moved;
@@ -70,10 +70,10 @@ public:
     unsigned int get_speed() { return this->speed; }
     unsigned int get_special_attack() { return this->special_attack; }
     unsigned int get_special_defense() { return this->special_defense; }
-	sf::Sprite get_charFace1() { return this->charFace1; }
-	sf::Sprite get_charFace2() { return this->charFace2; }
+	sf::Sprite get_character_Face1() { return this->character_Face1; }
+	sf::Sprite get_character_Face2() { return this->character_Face2; }
 
-    void set_texture(sf::Texture& texture) { this->texture = texture; }
+    void setTexture(sf::Texture& texture) { this->texture = texture; }
     void set_sidebar_sprite(sf::Sprite& sidebar_sprite) {this->sidebar_sprite = sidebar_sprite; }
     void set_map_sprite(sf::Sprite& map_sprite) { this->map_sprite = map_sprite; }
     void set_name(std::string& name) { this->name = name; }

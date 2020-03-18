@@ -30,28 +30,28 @@ private:
     sf::Texture background;
     sf::Sprite sidebar;
 	sf::Font font;
-	sf::Font battleLog_font;
+	sf::Font battle_Log_font;
 	sf::Text turn;
-	std::deque<sf::Text> battleLog;
+	std::deque<sf::Text> battle_Log;
 	std::vector<sf::Text> text;
 	//sf::Text HPtext;
     Menu menu;
-	sf::Sprite charFace;
+	sf::Sprite character_Face;
 public:
     Sidebar(std::string, std::string, std::string);
-    sf::Texture getBackground() const { return this->background; }
+    sf::Texture get_Background() const { return this->background; }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	void createStat(float const width, float const height, std::string filename);
+	void create_Stat(float const width, float const height, std::string filename);
 	void update_statbar(Character*, Coordinate, int, int);
-	void update_battleLog(std::string newlog);
+	void update_battle_Log(std::string newlog);
     void update_sidebar(Coordinate, int, int);
-    void drawStat(sf::RenderTarget &window);
-	void drawBattleLog(sf::RenderTarget &window);
-    void setTurn(std::string);
+    void draw_Stat(sf::RenderTarget &window);
+	void draw_Battle_Log(sf::RenderTarget &window);
+    void set_Turn(std::string);
     void clear();
 
     Menu& get_menu() { return this->menu; }
 
-	void update_battleLog(std::string newlog, sf::Color color);
+	void update_battle_Log(std::string newlog, sf::Color color);
 };
 #endif //CIS29GROUP2GAME_SIDEBAR_H

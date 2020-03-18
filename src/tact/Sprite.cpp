@@ -30,13 +30,13 @@ sf::Sprite& Sprite::get_sprite(){
 void Sprite::set_filename(std::string& filename) {
     this->filename = filename;
 }
-void Sprite::set_texture(sf::Texture& texture) {
+void Sprite::setTexture(sf::Texture& texture) {
     this->texture = texture;
 }
 void Sprite::set_sprite(sf::Sprite& sprite) {
     this->sprite = sprite;
 }
 
-void Sprite::moveSprite(float x, float y){
+void Sprite::move_Sprite(float x, float y){
     sprite.move(sf::Vector2f(x,y));
 }

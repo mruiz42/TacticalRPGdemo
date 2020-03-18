@@ -35,6 +35,7 @@ VertexMap::VertexMap() {
 
 bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& cur_img_path,
                         sf::Vector2u tileSize, const unsigned int w, const unsigned int h) {
+    int tileNumber = 0, tu = 0, tv = 0, left = 0, top = 0, tex_Left = 0, tex_Right = 0, tex_Top = 0, tex_Bottom = 0;
     // load the tileset texture
     if (!m_tileset.loadFromFile(tileset_img_path))
         return false;
@@ -47,31 +48,31 @@ bool VertexMap::loadMap(const std::string& tileset_img_path, const std::string& 
     for (unsigned int x = 0; x < w; ++x)
         for (unsigned int y = 0; y < h; ++y){
             /// get the current tile number
-            int tileNumber = map[y][x];
-            int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
-            int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
+            tileNumber = map[y][x];
+            tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
+            tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
             // get a pointer to the current tile's quad
             sf::Vertex* quad = &m_vertices[(x + y * w) * 4];
             // define the top, bottom, left, and right of the tiles on the screen
-            int left = x * tileSize.x;
+            left = x * tileSize.x;
 //            int right = left + tileSize.x;
-            int top = y * tileSize.y;
+            top = y * tileSize.y;
 //            int bottom = top + tileSize.y;
             quad[0].position = sf::Vector2f(x * tileSize.x, y * tileSize.y);
             quad[1].position = sf::Vector2f((x + 1) * tileSize.x, y * tileSize.y);
             quad[2].position = sf::Vector2f((x + 1) * tileSize.x, (y + 1) * tileSize.y);
             quad[3].position = sf::Vector2f(x * tileSize.x, (y + 1) * tileSize.y);
             // define top, bottom, left, and right of the tile on the texture
-            int texLeft = tu * (tileSize.x+2);
-            int texRight = texLeft + tileSize.x;
-            int texTop = tv * (tileSize.y+2);
-            int texBottom = texTop + tileSize.y;
+            tex_Left = tu * (tileSize.x+2);
+            tex_Right = tex_Left + tileSize.x;
+            tex_Top = tv * (tileSize.y+2);
+            tex_Bottom = tex_Top + tileSize.y;
 
             // define its 4 texture coordinates
-            quad[0].texCoords = sf::Vector2f(texLeft, texTop);
-            quad[1].texCoords = sf::Vector2f(texRight, texTop);
-            quad[2].texCoords = sf::Vector2f(texRight, texBottom);
-            quad[3].texCoords = sf::Vector2f(texLeft, texBottom);
+            quad[0].texCoords = sf::Vector2f(tex_Left, tex_Top);
+            quad[1].texCoords = sf::Vector2f(tex_Right, tex_Top);
+            quad[2].texCoords = sf::Vector2f(tex_Right, tex_Bottom);
+            quad[3].texCoords = sf::Vector2f(tex_Left, tex_Bottom);
         }
         return true;
     }

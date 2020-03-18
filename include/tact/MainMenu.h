@@ -23,9 +23,9 @@ public:
     void draw_instruction(sf::RenderWindow &window);
     void move_up();
     void move_down();
-    int get_selection_index(){ return this->selectedItemIndex; }
+    int get_selection_index(){ return this->selected_Item_Index; }
 private:
-    int selectedItemIndex;
+    int selected_Item_Index;
     sf::Font font;
     sf::Text main_menu[MAX_NUMBER_OF_ITEMS];
     sf::Text instructions[5];

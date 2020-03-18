@@ -10,10 +10,10 @@ Tank::Tank() : Character() {
         std::cout << "Error: " + tank_spritesheet_path + " could not be loaded." << std::endl;
     }
     sidebar_sprite.setTexture(texture);
-	charFace1.setTexture(texture);
-    charFace1.setTextureRect(sf::IntRect(8,406,84,100));
-	charFace2.setTexture(texture);
-    charFace2.setTextureRect(sf::IntRect(272,405,84,100));
+	character_Face1.setTexture(texture);
+    character_Face1.setTextureRect(sf::IntRect(8,406,84,100));
+	character_Face2.setTexture(texture);
+    character_Face2.setTextureRect(sf::IntRect(272,405,84,100));
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
     this->name = "Tank";
@@ -33,10 +33,10 @@ Tank::Tank(int x, int y) : Character(x, y) {
         std::cout << "Error: " + tank_spritesheet_path + " could not be loaded." << std::endl;
     }
     sidebar_sprite.setTexture(texture);
-	charFace1.setTexture(texture);
-    charFace1.setTextureRect(sf::IntRect(8,406,84,100));
-	charFace2.setTexture(texture);
-    charFace2.setTextureRect(sf::IntRect(272,405,84,100));
+	character_Face1.setTexture(texture);
+    character_Face1.setTextureRect(sf::IntRect(8,406,84,100));
+	character_Face2.setTexture(texture);
+    character_Face2.setTextureRect(sf::IntRect(272,405,84,100));
     map_sprite.setTexture(texture);
     map_sprite.setTextureRect(sf::IntRect(1,13,32,32));
     this->name = "Tank";

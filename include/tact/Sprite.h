@@ -27,9 +27,9 @@ public:
     sf::Sprite& get_sprite();
 
     void set_filename(std::string&);
-    void set_texture(sf::Texture&);
+    void setTexture(sf::Texture&);
     void set_sprite(sf::Sprite&);
-    void moveSprite(float x, float y);
+    void move_Sprite(float x, float y);
 };
 
 

@@ -56,7 +56,7 @@ MainMenu::MainMenu(float width, float height){
     instructions[4].setString("Press Return to go back to the main menu");
     instructions[4].setPosition(sf::Vector2f(0, 400)); // divide by 2 so itll be centered, ach character movesalso height will be centered
 
-    selectedItemIndex = 0;
+    selected_Item_Index = 0;
 }
 
 MainMenu::~MainMenu(){
@@ -79,18 +79,18 @@ void MainMenu::draw(sf::RenderWindow &window)
 }
 
 void MainMenu::move_up(){
-    if(selectedItemIndex - 1 >=0){
-        main_menu[selectedItemIndex].setFillColor(sf::Color::White);
-        selectedItemIndex--;
-        main_menu[selectedItemIndex].setFillColor(sf::Color::Red);
+    if(selected_Item_Index - 1 >=0){
+        main_menu[selected_Item_Index].setFillColor(sf::Color::White);
+        selected_Item_Index--;
+        main_menu[selected_Item_Index].setFillColor(sf::Color::Red);
     }
 }
 
 void MainMenu::move_down(){
-    if(selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS){
-        main_menu[selectedItemIndex].setFillColor(sf::Color::White);
-        selectedItemIndex++;
-        main_menu[selectedItemIndex].setFillColor(sf::Color::Red);
+    if(selected_Item_Index + 1 < MAX_NUMBER_OF_ITEMS){
+        main_menu[selected_Item_Index].setFillColor(sf::Color::White);
+        selected_Item_Index++;
+        main_menu[selected_Item_Index].setFillColor(sf::Color::Red);
     }
 }
 

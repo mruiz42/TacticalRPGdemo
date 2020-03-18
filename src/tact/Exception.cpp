@@ -17,7 +17,7 @@ Exception::Exception(){
     
 }
 
-sf::Text Exception::returnText(){
+sf::Text Exception::return_Text(){
     return text;
 }
 

@@ -28,7 +28,7 @@ private:
    sf::Font font;
 public:
     Exception();
-    sf::Text returnText();
+    sf::Text return_Text();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void show_except();
     void hide_expect();

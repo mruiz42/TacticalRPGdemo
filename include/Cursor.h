@@ -31,12 +31,12 @@ public:
     Coordinate get_tile_coordinate();
     sf::Sprite get_sprite() { return this->sprite; }
 
-    void set_texture_size(int texture_size) { this->texture_size = texture_size; }
+    void setTexture_size(int texture_size) { this->texture_size = texture_size; }
     void set_cur_path(std::string cur_path) { this->cur_path = cur_path; }
 
     int load_texture();
 
-    virtual void moveSprite(float x, float y);
+    virtual void move_Sprite(float x, float y);
     void jump_to(int, int);
     void jump_to(Coordinate);
     friend std::ostream& operator<< (std::ostream& out, const Cursor& cursor);
