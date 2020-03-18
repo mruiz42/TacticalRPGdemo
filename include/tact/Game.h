@@ -3,8 +3,6 @@
 
 #ifndef CIS29GROUP2GAME_GAME_H
 #define CIS29GROUP2GAME_GAME_H
-
-
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
