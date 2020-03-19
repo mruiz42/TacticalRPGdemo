@@ -49,6 +49,19 @@ However, it should run fine if you are able to get `gcc make` on some sort of wi
  * GCC & GNU make (probably using cygwin)
 ## Gameplay
 
+
+## Style Guidelines
+* 1) Class attribute and methods are lowercase and words separated by underscore, to differentiate SFML camelcase methods.
+* 2) File paths are const strings in their respective class headers.
+* 3) Brackets are inline with the function definition.
+* 4) Variables declared at beginning of each function and initialized to some default value.
+* 5) Class accessor/mutator functions are inline header functions if they are only one line.
+* 6) Use define guards in header files as #CIS29GROUP2GAME_(CLASSNAME)_H
+* 7) Include headers in the following order: C++ library headers, SFML headers, project headers, const definitions.
+* 8) Do not use 'using-directives', with few exceptions the game's classes should be in it's own namespace.
+* 9) Each call on new should have a comment listing which function(s) triggers it's deletion. Furthermore, each deletion should assign that pointer to nullptr.
+* 10) Class data members should be private or protected, unless they are constant.
+
  ## Credit
  * SFML
  https://www.sfml-dev.org/index.php
