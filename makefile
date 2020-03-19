@@ -1,25 +1,37 @@
-CC      = g++                                           # Compiler command
-CFLAGS  = -g -std=c++14 #-Wall #-Wextra -pedantic       # Extra flags
-INCLUDE = ./include/tact/                               # Include directory
-COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c               # Compile command used
-BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)                  # Build command
-OUTBIN     = ./bin/tactical_rpg_demo.out                # Binary output directory and filename
-LINKSFML= -lsfml-graphics -lsfml-system -lsfml-window -lsfml-audio      # Linked SFML Libraries
-LINKSTT = -L$(LIBDIR)                                                   # Library linking option variable
-# source directories
-SOURCE	= ./src/                                        # Main source directory
-TACTSRC	= $(SOURCE)tact/                                # Game source directory
+# Compiler flags macro
+CC      = g++ -g
+# Extra flags macro
+CFLAGS  = -std=c++14 #-Wall #-Wextra -pedantic
+# Header file dir for game library
+INCLUDE = ./include/tact/
+# Compile command macro
+COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
+# Build command macro
+BUILD   = $(CC) $(CFLAGS) -I$
+# Binary file output macro
+OUTBIN     = ./bin/tactical_rpg_demo.out
+# SFML Linking macro
+LINKSFML= -lsfml-graphics -lsfml-system -lsfml-window -lsfml-audio
+# Game linking macro
+LINKSTT = -L$(LIBDIR)
+# Source directories
+# Main source file dir
+SOURCE	= ./src/
+# Game source file dir
+TACTSRC	= $(SOURCE)tact/
 
-# library directories
-LIBDIR  = ./lib/                                        # Main library directory
-STTLIB	= $(LIBDIR)libgame.a                            # Game library file
-CRDLIBPATH = $(LIBDIR)libcoordinate.a                   # Coordinate library file
+# library directory
+LIBDIR  = ./lib/
+# Game library
+STTLIB	= $(LIBDIR)libgame.a
+# Lib coordinate library
+CRDLIBPATH = $(LIBDIR)libcoordinate.a
 
-# object files
-TACTOBJ	= $(TACTSRC)obj/                                # Directory for game object files
-SRCOBJ	= $(SOURCE)obj/                                 # Directory for main object files
+# object file output directories
+TACTOBJ	= $(TACTSRC)obj/
+SRCOBJ	= $(SOURCE)obj/
 
-# execution object dependencies to be compiled
+# execution dependencies
 OUTBINDEPS	= $(SRCOBJ)main.o
 LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)Game.o $(TACTOBJ)Exception.o $(TACTOBJ)MainMenu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)SpawnPoint.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Mage.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
 LIBCORD = $(SRCOBJ)Coordinate.o $(SRCOBJ)Cursor.o
@@ -32,15 +44,15 @@ $(OUTBIN) : $(OUTBINDEPS) $(STTLIB) $(CRDLIBPATH)
 	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(STTLIB) $(CRDLIBPATH) -o $(OUTBIN)
 	@echo './bin/somethingTactics.out' is built!
 
-# Linking the coordinate library using ar
+# Create library coordinate using ar
 $(CRDLIBPATH) : $(LIBCORD)
 	ar r $(CRDLIBPATH) $(LIBCORD)
 
-# Linking the game library using ar
+# Create game library using ar
 $(STTLIB) : $(LIBDEP)
 	ar r $(STTLIB) $(LIBDEP)
 
-# Compile source code into objects files
+# Compile source into object files
 $(SRCOBJ)main.o : $(SOURCE)main.cpp
 	$(COMPILE) $(SOURCE)main.cpp -o $(SRCOBJ)main.o
 
@@ -101,7 +113,7 @@ $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 $(TACTOBJ)Exception.o : $(TACTSRC)Exception.cpp
 	$(COMPILE) $(TACTSRC)Exception.cpp -o $(TACTOBJ)Exception.o
 
-# clean phony command to remove all generated files and libraries.
+# Clean command
 clean :
 	@rm -f $(SRCOBJ)*.o
 	@rm -f $(LIBOBJ)*.o
@@ -111,6 +123,6 @@ clean :
 	@rm -f $(OUTBIN)
 
 all : clean $(OUTBIN)
-# Execute the command
+
 run : $(OUTBIN)
 	@$(OUTBIN) #run program
