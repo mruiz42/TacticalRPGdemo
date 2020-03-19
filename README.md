@@ -16,6 +16,8 @@ A simple turn based tactical rpg game. The point of the game is to eliminate the
 `WSAD - move cursor`
 `Enter - select`
 `Backspace - back`
+`- mute volume`
+`+ raise volume`
 
 #### Controller:
 `DPad - move cursor`
@@ -37,6 +39,8 @@ A simple turn based tactical rpg game. The point of the game is to eliminate the
 
 ##### How to run:
 `make && make run`
+or
+`make clean && make run`
 #### Windows
 Due to the annoying nature of developing on windows, it is not officially supported. 
 However, it should run fine if you are able to get `gcc make` on some sort of windows bash shell or compile the source files yourself.
