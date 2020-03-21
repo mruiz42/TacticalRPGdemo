@@ -1,33 +1,22 @@
-# Compiler flags macro
 CC      = g++ -g
-# Extra flags macro
 CFLAGS  = -std=c++14 #-Wall #-Wextra -pedantic
-# Header file dir for game library
 INCLUDE = ./include/tact/
-# Compile command macro
 COMPILE = $(CC) $(CFLAGS) -I$(INCLUDE) -c
-# Build command macro
-BUILD   = $(CC) $(CFLAGS) -I$
-# Binary file output macro
+BUILD   = $(CC) $(CFLAGS) -I$(INCLUDE)
 OUTBIN     = ./bin/tactical_rpg_demo.out
-# SFML Linking macro
 LINKSFML= -lsfml-graphics -lsfml-system -lsfml-window -lsfml-audio
-# Game linking macro
 LINKSTT = -L$(LIBDIR)
-# Source directories
-# Main source file dir
+# source directories
 SOURCE	= ./src/
-# Game source file dir
 TACTSRC	= $(SOURCE)tact/
 
-# library directory
+# library directories
+LIBSRC  = ./libsrc/
 LIBDIR  = ./lib/
-# Game library
 STTLIB	= $(LIBDIR)libgame.a
-# Lib coordinate library
 CRDLIBPATH = $(LIBDIR)libcoordinate.a
 
-# object file output directories
+# object files
 TACTOBJ	= $(TACTSRC)obj/
 SRCOBJ	= $(SOURCE)obj/
 
@@ -36,7 +25,6 @@ OUTBINDEPS	= $(SRCOBJ)main.o
 LIBDEP	= $(TACTOBJ)Selector.o $(TACTOBJ)Game.o $(TACTOBJ)Exception.o $(TACTOBJ)MainMenu.o $(TACTOBJ)Menu.o $(TACTOBJ)CoolText.o $(TACTOBJ)SpawnPoint.o $(TACTOBJ)Player.o $(TACTOBJ)Ninja.o $(TACTOBJ)CharacterMap.o $(TACTOBJ)Sidebar.o $(TACTOBJ)Sprite.o $(TACTOBJ)VertexMap.o $(TACTOBJ)Mage.o $(TACTOBJ)Tank.o $(TACTOBJ)Character.o
 LIBCORD = $(SRCOBJ)Coordinate.o $(SRCOBJ)Cursor.o
 
-# PHONY commands
 .PHONY : clean all run
 
 # Rule to create the primary executable
@@ -44,15 +32,12 @@ $(OUTBIN) : $(OUTBINDEPS) $(STTLIB) $(CRDLIBPATH)
 	$(BUILD) $(OUTBINDEPS) $(LINKSFML) $(STTLIB) $(CRDLIBPATH) -o $(OUTBIN)
 	@echo './bin/somethingTactics.out' is built!
 
-# Create library coordinate using ar
 $(CRDLIBPATH) : $(LIBCORD)
 	ar r $(CRDLIBPATH) $(LIBCORD)
 
-# Create game library using ar
 $(STTLIB) : $(LIBDEP)
 	ar r $(STTLIB) $(LIBDEP)
 
-# Compile source into object files
 $(SRCOBJ)main.o : $(SOURCE)main.cpp
 	$(COMPILE) $(SOURCE)main.cpp -o $(SRCOBJ)main.o
 
@@ -76,13 +61,13 @@ $(TACTOBJ)Knight.o : $(TACTSRC)Knight.cpp
 
 $(TACTOBJ)Mage.o : $(TACTSRC)Mage.cpp
 	$(COMPILE) $(TACTSRC)Mage.cpp -o $(TACTOBJ)Mage.o
-
+	
 $(TACTOBJ)Ninja.o : $(TACTSRC)Ninja.cpp
 	$(COMPILE) $(TACTSRC)Ninja.cpp -o $(TACTOBJ)Ninja.o
 
 $(TACTOBJ)SpawnPoint.o : $(TACTSRC)SpawnPoint.cpp
 	$(COMPILE) $(TACTSRC)SpawnPoint.cpp -o $(TACTOBJ)SpawnPoint.o
-
+	
 $(TACTOBJ)Tank.o : $(TACTSRC)Tank.cpp
 	$(COMPILE) $(TACTSRC)Tank.cpp -o $(TACTOBJ)Tank.o
 
@@ -113,7 +98,6 @@ $(SRCOBJ)Cursor.o : $(SOURCE)Cursor.cpp
 $(TACTOBJ)Exception.o : $(TACTSRC)Exception.cpp
 	$(COMPILE) $(TACTSRC)Exception.cpp -o $(TACTOBJ)Exception.o
 
-# Clean command
 clean :
 	@rm -f $(SRCOBJ)*.o
 	@rm -f $(LIBOBJ)*.o
